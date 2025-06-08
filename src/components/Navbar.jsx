@@ -9,16 +9,8 @@ export default function Navbar() {
         <span className="brand">Otomobil</span>
       </div>
       <div className="navbar-right">
-        <Button
-          label="Sign Up"
-          variant="secondary"
-          onClick={() => alert("Sign Up clicked")}
-        />
-        <Button
-          label="Login"
-          variant="primary"
-          onClick={() => alert("Login clicked")}
-        />
+        <Button label="Sign Up" variant="secondary" onClick={() => alert("Sign Up clicked")} />
+        <Button label="Login" variant="primary" onClick={() => alert("Login clicked")} />
       </div>
     </nav>
   );

@@ -1,14 +1,12 @@
-import Navbar from "./components/navbar"
-
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
-
-
   return (
     <>
-     <Navbar></Navbar>
+      <Login />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
