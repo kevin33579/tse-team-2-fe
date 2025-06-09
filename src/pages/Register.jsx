@@ -3,30 +3,32 @@ import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import "./Login.css";
 
-const Login = () => {
+const Register = () => {
   return (
     <div>
       <div className="login__page">
         <div className="login__container">
           <Navbar />
           <div className="form__container">
-            <h1 className="login__title">Welcome Back!</h1>
-            <h2 className="login__subtext">Please login first</h2>
+            <h1 className="login__title">Lets Join our course!</h1>
+            <h2 className="login__subtext">Please register first</h2>
+            <Input placeholder={"Name"} inputName={"name"} />
             <Input placeholder={"Email"} inputName={"email"} />
             <Input placeholder={"Password"} inputName={"password"} />
-            <div className="forgot__password">
-              Forgot Password? <a href="#">Click Here</a>
-            </div>
+            <Input
+              placeholder={"Confirm Password"}
+              inputName={"confirmpassword"}
+            />
             <div style={{ display: "flex", justifyContent: "end" }}>
               <Button
                 className="button__login"
-                label="Login"
+                label="Sign Up"
                 variant="primary"
-                onClick={() => alert("Login clicked")}
+                onClick={() => alert("Sign Up clicked")}
               />
             </div>
             <div className="signup__text">
-              Don’t have an account? <a href="#"> Sign Up here</a>
+              Have account? <a href="#"> Login here</a>
             </div>
           </div>
         </div>
@@ -35,4 +37,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
