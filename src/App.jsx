@@ -1,16 +1,13 @@
 import Footer from "./components/Footer"
 import Navbar from "./components/navbar"
+import Landing from "./pages/Landing"
 
 function App() {
 
 
   return (
     <>
-     <Navbar></Navbar>
-       <div className="main-content">
-        {/* Your page content goes here */}
-      </div>
-     <Footer></Footer>
+    <Landing/>
     </>
   )
 }
