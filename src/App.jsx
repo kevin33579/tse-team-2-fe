@@ -1,10 +1,11 @@
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Footer from "./components/Footer"
+import Navbar from "./components/navbar"
+import Landing from "./pages/Landing"
 
 function App() {
   return (
     <>
-      <Login />
+    <Landing/>
     </>
   );
 }

@@ -1,0 +1,129 @@
+.footer {
+  width: 100%;
+  display: flex;
+  color: #fff;
+  justify-content: space-between;
+   gap: 20px;
+  padding: 20px 60px;
+   font-family: 'Poppins', sans-serif;
+}
+
+.footer-section {
+    flex: auto;
+  padding: 0 20px;
+   box-sizing: border-box;
+}
+
+.footer-section.left {
+  width: 350px;
+  height: 137px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-section.middle {
+  width: 228px; 
+  height: 146px;
+  margin-left: 150px;
+}
+
+.footer-section.right {
+  width: 228px;
+  height: 172px;
+}
+
+.about-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #790B0A;
+  padding: 10px;
+}
+
+.about-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: justify;
+  color: #333333;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.product-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #790B0A;
+  margin-bottom: 10px;
+}
+
+.product-columns {
+  display: flex;
+  gap: 100px; 
+}
+
+.product-columns ul {
+  padding: 0;
+  margin: 0;
+}
+
+.product-columns li {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+
+.footer-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #790B0A;
+  margin-bottom: 8px;
+}
+
+.footer-subtext {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #333333;
+  text-align: justify;
+}
+
+.contact-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 20px;
+  color: #333333;
+}
+
+
+.footer-section h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.footer-section p {
+  margin: 6px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.footer-section p:hover {
+  text-decoration: underline;
+}
