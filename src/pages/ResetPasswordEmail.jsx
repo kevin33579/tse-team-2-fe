@@ -1,4 +1,4 @@
-import Input from "../components/Input";
+import FormInput from "../components/FormInput";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import 'typeface-montserrat';
@@ -15,20 +15,20 @@ const ResetPasswordEmail = () => {
             Send OTP code to your email address
           </p>
 
-          <Input placeholder="Email" inputName="email" />
+          <FormInput placeholder="Email" inputName="email" />
 
           <div className="reset-password-actions">
             <Button
               className="btn cancel"
               label="Cancel"
               variant="secondary"
-              onClick={() => console.log("Cancel clicked")}
+              onClick={() => alert("Cancel clicked")}
             />
             <Button
               className="btn confirm"
               label="Confirm"
               variant="primary"
-              onClick={() => console.log("Confirm clicked")}
+              onClick={() => alert("Confirm clicked")}
             />
           </div>
         </div>

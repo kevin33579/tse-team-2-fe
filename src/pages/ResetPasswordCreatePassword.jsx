@@ -1,4 +1,4 @@
-import Input from "../components/Input";
+import FormInput from "../components/FormInput";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import 'typeface-montserrat';
@@ -14,21 +14,21 @@ const ResetPasswordEmail = () => {
           <br />
           <br />
           <br />
-          <Input placeholder="New Password" inputName="Password" />
-          <Input placeholder="Confirm New Password" inputName="ConfirmPassword" />
+          <FormInput placeholder="New Password" inputName="Password" />
+          <FormInput placeholder="Confirm New Password" inputName="ConfirmPassword" />
 
           <div className="reset-password-actions">
             <Button
               className="btn cancel"
               label="Cancel"
               variant="secondary"
-              onClick={() => console.log("Cancel clicked")}
+              onClick={() => alert("Cancel clicked")}
             />
             <Button
               className="btn confirm"
               label="Confirm"
               variant="primary"
-              onClick={() => console.log("Confirm clicked")}
+              onClick={() => alert("Confirm clicked")}
             />
           </div>
         </div>
