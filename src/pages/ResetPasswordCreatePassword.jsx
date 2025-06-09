@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import 'typeface-montserrat';
 import "./ResetPassword.css";
 
-const ResetPasswordEmail = () => {
+const ResetPasswordCreateNewPassword = () => {
   return (
     <>
       <Navbar />
@@ -37,4 +37,4 @@ const ResetPasswordEmail = () => {
   );
 };
 
-export default ResetPasswordEmail;
+export default ResetPasswordCreateNewPassword;
