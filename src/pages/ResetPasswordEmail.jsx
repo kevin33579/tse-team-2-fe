@@ -1,5 +1,5 @@
-import React from "react";
-import Box from "@mui/material/Box";
+import React, { useState } from "react";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -7,43 +7,37 @@ import Navbar from "../components/Navbar";
 import "@fontsource/montserrat";
 
 const ResetPasswordEmail = () => {
+  const [email, setEmail] = useState("");
+
   return (
     <>
       <Navbar />
-      <Box
+      <Stack
         sx={{
           minHeight: "100vh",
-          padding: "40px",
-          display: "flex",
-          flexDirection: "column",
           alignItems: "center",
           fontFamily: "Montserrat",
+          backgroundColor: "#f5f5f5",
         }}
       >
-        <Box
+        <Stack
+          spacing={2}
           sx={{
             padding: "40px",
-            borderRadius: "20px",
             maxWidth: "600px",
             width: "100%",
-            display: "flex",
-            flexDirection: "column",
             alignItems: "flex-start",
             textAlign: "left",
             marginTop: "60px",
-            fontFamily: "Montserrat",
           }}
         >
-          <Typography
-            variant="h5"
-            sx={{ fontWeight: "medium", marginBottom: "10px", width: "100%" }}
-          >
+          <Typography variant="h5" sx={{ width: "100%" }}>
             Reset Password
           </Typography>
 
           <Typography
             variant="body1"
-            sx={{ fontWeight:'light',color: "#666", marginBottom: "30px", width: "100%" }}
+            sx={{ color: "#666", width: "100%", paddingBottom: "40px" }}
           >
             Send OTP code to your email address
           </Typography>
@@ -53,23 +47,19 @@ const ResetPasswordEmail = () => {
             name="email"
             fullWidth
             variant="outlined"
-            sx={{ marginBottom: "30px" }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: "20px",
-              width: "100%",
-            }}
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ width: "100%", justifyContent: "flex-end" }}
           >
             <Button
               variant="outlined"
               size="large"
               sx={{
-                borderColor: "#790B0A",
-                color: "#790B0A",
                 textTransform: "none",
                 width: "140px",
                 height: "38px",
@@ -82,7 +72,6 @@ const ResetPasswordEmail = () => {
               variant="contained"
               size="medium"
               sx={{
-                backgroundColor: "#790B0A",
                 color: "#fff",
                 textTransform: "none",
                 width: "140px",
@@ -92,9 +81,9 @@ const ResetPasswordEmail = () => {
             >
               Confirm
             </Button>
-          </Box>
-        </Box>
-      </Box>
+          </Stack>
+        </Stack>
+      </Stack>
     </>
   );
 };
