@@ -13,7 +13,6 @@ const Login = () => {
   return (
     <>
       <Navbar />
-
       <Stack
         sx={{
           minHeight: "100vh",
