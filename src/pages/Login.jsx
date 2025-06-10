@@ -36,7 +36,11 @@ const Login = () => {
             Welcome Back!
           </Typography>
 
-          <Typography variant="h4" color="#4f4f4f" sx={{ width: "100%", padding: "10px  0" }}>
+          <Typography
+            variant="h4"
+            color="#4f4f4f"
+            sx={{ width: "100%", padding: "10px  0" }}
+          >
             Please login first
           </Typography>
 
@@ -85,11 +89,19 @@ const Login = () => {
             }}
           />
 
-          <Typography variant="h6" color="#4f4f4f" sx={{ width: "100%", padding: "10px  0" }}>
+          <Typography
+            variant="h6"
+            color="#4f4f4f"
+            sx={{ width: "100%", padding: "10px  0" }}
+          >
             Forgot Password? <a href="#">Click Here</a>
           </Typography>
 
-          <Stack direction="row" spacing={2} sx={{ width: "100%", justifyContent: "flex-end" }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ width: "100%", justifyContent: "flex-end" }}
+          >
             <Button
               variant="contained"
               size="medium"
@@ -106,8 +118,16 @@ const Login = () => {
               Login
             </Button>
           </Stack>
-          <Stack direction="row" spacing={2} sx={{ width: "100%", justifyContent: "center", padding: "40px 0" }}>
-            <Typography variant="h6" color="#4f4f4f" x={{ width: "100%", padding: "0px  0" }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ width: "100%", justifyContent: "center", padding: "40px 0" }}
+          >
+            <Typography
+              variant="h6"
+              color="#4f4f4f"
+              x={{ width: "100%", padding: "0px  0" }}
+            >
               Don’t have an account? <a href="#"> Sign Up here</a>
             </Typography>
           </Stack>
