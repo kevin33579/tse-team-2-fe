@@ -1,40 +1,97 @@
-import FormInput from "../components/FormInput";
+import React, { useState } from "react";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import Navbar from "../components/Navbar";
-import Button from "../components/Button";
-import 'typeface-montserrat';
-import "./ResetPassword.css";
+import "@fontsource/montserrat";
 
-const ResetPasswordCreateNewPassword = () => {
+const ResetPasswordCreatePassword = () => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   return (
     <>
       <Navbar />
-      <div className="reset-password-page">
-        <div className="reset-password-container">
-          <h2 className="reset-password-title">Create Password</h2>
-          <br />
-          <br />
-          <br />
-          <FormInput placeholder="New Password" inputName="Password" />
-          <FormInput placeholder="Confirm New Password" inputName="ConfirmPassword" />
+      <Stack
+        sx={{
+          minHeight: "100vh",
+          alignItems: "center",
+          fontFamily: "Montserrat",
+          backgroundColor: "#f5f5f5",
+          paddingTop: "70px",
+        }}
+      >
+        <Stack
+          spacing={2}
+          sx={{
+            maxWidth: "600px",
+            width: "100%",
+            alignItems: "flex-start",
+            textAlign: "left",
+            marginTop: "60px",
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{ width: "100%", paddingBottom: "40px" }}
+          >
+            Create Password
+          </Typography>
 
-          <div className="reset-password-actions">
+          <TextField
+            label="New Password"
+            type="password"
+            fullWidth
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <TextField
+            label="Confirm New Password"
+            type="password"
+            fullWidth
+            variant="outlined"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ width: "100%", justifyContent: "flex-end" }}
+          >
             <Button
-              className="btn cancel"
-              label="Cancel"
-              variant="secondary"
+              variant="outlined"
+              size="large"
+              sx={{
+                textTransform: "none",
+                width: "140px",
+                height: "38px",
+              }}
               onClick={() => alert("Cancel clicked")}
-            />
+            >
+              Cancel
+            </Button>
             <Button
-              className="btn confirm"
-              label="Confirm"
-              variant="primary"
+              variant="contained"
+              size="medium"
+              sx={{
+                color: "#fff",
+                textTransform: "none",
+                width: "140px",
+                height: "38px",
+              }}
               onClick={() => alert("Confirm clicked")}
-            />
-          </div>
-        </div>
-      </div>
+            >
+              Confirm
+            </Button>
+          </Stack>
+        </Stack>
+      </Stack>
     </>
   );
 };
 
-export default ResetPasswordCreateNewPassword;
+export default ResetPasswordCreatePassword;
