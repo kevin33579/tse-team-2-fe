@@ -15,9 +15,17 @@ const Register = () => {
             <Input placeholder={"Name"} inputName={"name"} />
             <Input placeholder={"Email"} inputName={"email"} />
             <Input placeholder={"Password"} inputName={"password"} />
-            <Input placeholder={"Confirm Password"} inputName={"confirmpassword"} />
+            <Input
+              placeholder={"Confirm Password"}
+              inputName={"confirmpassword"}
+            />
             <div style={{ display: "flex", justifyContent: "end" }}>
-              <Button className="button__login" label="Sign Up" variant="primary" onClick={() => alert("Sign Up clicked")} />
+              <Button
+                className="button__login"
+                label="Sign Up"
+                variant="primary"
+                onClick={() => alert("Sign Up clicked")}
+              />
             </div>
             <div className="signup__text">
               Have account? <a href="#"> Login here</a>
