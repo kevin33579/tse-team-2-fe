@@ -60,8 +60,6 @@ const ResetPasswordEmail = () => {
               variant="outlined"
               size="large"
               sx={{
-                borderColor: "#790B0A",
-                color: "#790B0A",
                 textTransform: "none",
                 width: "140px",
                 height: "38px",
@@ -74,7 +72,6 @@ const ResetPasswordEmail = () => {
               variant="contained"
               size="medium"
               sx={{
-                backgroundColor: "#790B0A",
                 color: "#fff",
                 textTransform: "none",
                 width: "140px",
