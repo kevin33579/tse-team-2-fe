@@ -26,7 +26,7 @@ export default function Bottom_section() {
           fontWeight: 600,
           color: "#790B0A",
           mb: 5,
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "Montserrat, sans-serif",
         }}
       >
         More car type you can choose
@@ -70,7 +70,7 @@ export default function Bottom_section() {
                 <Typography
                   variant="body2"
                   sx={{
-                    fontFamily: "Inter, sans-serif",
+                    fontFamily: "Montserrat, sans-serif",
                     fontWeight: 500,
                     color: "#000",
                   }}

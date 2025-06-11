@@ -58,7 +58,12 @@ export default function Middle_section() {
     <Box sx={{ mt: 6, textAlign: "center", px: 2 }}>
       <Typography
         variant="h4"
-        sx={{ fontWeight: 600, color: "#790b0a", mb: 5 }}
+        sx={{
+          fontWeight: 600,
+          color: "#790b0a",
+          mb: 5,
+          fontFamily: "Montserrat",
+        }}
       >
         Join Course
       </Typography>

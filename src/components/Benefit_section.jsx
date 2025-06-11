@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import benefitImage from "../assets/benefit.png"; // Ensure Webpack/CRA can resolve this
+import benefitImage from "../assets/benefit.png";
 
 const BenefitSectionWrapper = styled(Box)({
   display: "flex",
