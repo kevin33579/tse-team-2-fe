@@ -1,14 +1,31 @@
 import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import "@fontsource/montserrat";
 
 const ResetPasswordCreatePassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleTogglePassword = () => setShowPassword((prev) => !prev);
+  const handleToggleConfirm = () => setShowConfirm((prev) => !prev);
+
+  const passwordsMatch = password === confirmPassword;
+  const showError = password && confirmPassword && !passwordsMatch;
+
+  const isButtonDisabled =
+    !password || !confirmPassword || !passwordsMatch || password.length < 8;
 
   return (
     <>
@@ -39,24 +56,53 @@ const ResetPasswordCreatePassword = () => {
             Create Password
           </Typography>
 
-          <TextField
-            label="New Password"
-            type="password"
+          <FormControl
             fullWidth
             variant="outlined"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            error={password.length > 0 && password.length < 8}
+          >
+            <InputLabel htmlFor="new-password">New Password</InputLabel>
+            <OutlinedInput
+              id="new-password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              label="New Password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton onClick={handleTogglePassword} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {password.length > 0 && password.length < 8 && (
+              <FormHelperText>
+                Password must be at least 8 characters
+              </FormHelperText>
+            )}
+          </FormControl>
 
-          <TextField
-            label="Confirm New Password"
-            type="password"
-            fullWidth
-            variant="outlined"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-
+          <FormControl fullWidth variant="outlined" error={showError}>
+            <InputLabel htmlFor="confirm-password">Confirm Password</InputLabel>
+            <OutlinedInput
+              id="confirm-password"
+              type={showConfirm ? "text" : "password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              label="Confirm Password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton onClick={handleToggleConfirm} edge="end">
+                    {showConfirm ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {showError && (
+              <FormHelperText>Passwords do not match</FormHelperText>
+            )}
+          </FormControl>
           <Stack
             direction="row"
             spacing={2}
@@ -65,11 +111,7 @@ const ResetPasswordCreatePassword = () => {
             <Button
               variant="outlined"
               size="large"
-              sx={{
-                textTransform: "none",
-                width: "140px",
-                height: "38px",
-              }}
+              sx={{ textTransform: "none", width: "140px", height: "38px" }}
               onClick={() => alert("Cancel clicked")}
             >
               Cancel
@@ -84,6 +126,7 @@ const ResetPasswordCreatePassword = () => {
                 height: "38px",
               }}
               onClick={() => alert("Confirm clicked")}
+              disabled={isButtonDisabled}
             >
               Confirm
             </Button>
