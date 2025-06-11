@@ -1,11 +1,10 @@
-import Footer from "./components/Footer"
-import Navbar from "./components/navbar"
 import Landing from "./pages/Landing"
+import ResetPasswordCreatePassword from "./pages/ResetPasswordCreatePassword";
 
 function App() {
   return (
     <>
-    <Landing/>
+    <ResetPasswordCreatePassword/>
     </>
   );
 }
