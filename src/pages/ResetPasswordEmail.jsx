@@ -78,6 +78,7 @@ const ResetPasswordEmail = () => {
                 height: "38px",
               }}
               onClick={() => alert("Confirm clicked")}
+              disabled= {!email.trim()}
             >
               Confirm
             </Button>

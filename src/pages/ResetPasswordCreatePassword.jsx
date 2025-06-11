@@ -84,6 +84,7 @@ const ResetPasswordCreatePassword = () => {
                 height: "38px",
               }}
               onClick={() => alert("Confirm clicked")}
+              disabled={!password || !confirmPassword || password !== confirmPassword}
             >
               Confirm
             </Button>
