@@ -17,7 +17,7 @@ const ResetPasswordEmail = () => {
           minHeight: "100vh",
           alignItems: "center",
           fontFamily: "Montserrat",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "white",
         }}
       >
         <Stack
@@ -78,7 +78,7 @@ const ResetPasswordEmail = () => {
                 height: "38px",
               }}
               onClick={() => alert("Confirm clicked")}
-              disabled= {!email.trim()}
+              disabled={!email.trim()}
             >
               Confirm
             </Button>

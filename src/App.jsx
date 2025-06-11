@@ -1,9 +1,10 @@
-import Landing from "./pages/Landing"
-
+import Landing from "./pages/Landing";
+import ListMenuKelas from "./pages/ListMenuKelas";
+import Login from "./pages/Login";
 function App() {
   return (
     <>
-    <Landing/>
+      <Login></Login>
     </>
   );
 }

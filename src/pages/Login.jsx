@@ -18,7 +18,7 @@ const Login = () => {
           minHeight: "100vh",
           alignItems: "center",
           fontFamily: "Montserrat",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "white",
           paddingTop: "70px",
         }}
       >
