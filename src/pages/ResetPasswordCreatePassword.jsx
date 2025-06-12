@@ -23,7 +23,6 @@ const ResetPasswordCreatePassword = () => {
 
   const passwordsMatch = password === confirmPassword;
   const showError = password && confirmPassword && !passwordsMatch;
-
   const isButtonDisabled =
     !password || !confirmPassword || !passwordsMatch || password.length < 8;
 
@@ -36,22 +35,26 @@ const ResetPasswordCreatePassword = () => {
           alignItems: "center",
           fontFamily: "Montserrat",
           backgroundColor: "white",
-          paddingTop: "70px",
+          pt: { xs: "4rem", sm: "5rem" },
         }}
       >
         <Stack
           spacing={2}
           sx={{
-            maxWidth: "600px",
-            width: "100%",
+            maxWidth: "38rem",
+            width: "90%",
             alignItems: "flex-start",
             textAlign: "left",
-            marginTop: "60px",
+            mt: { xs: "2rem", sm: "3rem" },
           }}
         >
           <Typography
             variant="h5"
-            sx={{ width: "100%", paddingBottom: "40px" }}
+            sx={{
+              width: "100%",
+              fontSize: { xs: "1.25rem", sm: "1.5rem" },
+              pb: "2rem",
+            }}
           >
             Create Password
           </Typography>
@@ -103,15 +106,21 @@ const ResetPasswordCreatePassword = () => {
               <FormHelperText>Passwords do not match</FormHelperText>
             )}
           </FormControl>
+
           <Stack
             direction="row"
             spacing={2}
-            sx={{ width: "100%", justifyContent: "flex-end" }}
+            sx={{ width: "100%", justifyContent: "flex-end", mt: "1rem" }}
           >
             <Button
               variant="outlined"
               size="large"
-              sx={{ textTransform: "none", width: "140px", height: "38px" }}
+              sx={{
+                textTransform: "none",
+                width: { xs: "35%", sm: "8rem" },
+                height: "2.4rem",
+                fontSize: { xs: "0.8rem", sm: "1rem" },
+              }}
               onClick={() => alert("Cancel clicked")}
             >
               Cancel
@@ -122,8 +131,9 @@ const ResetPasswordCreatePassword = () => {
               sx={{
                 color: "#fff",
                 textTransform: "none",
-                width: "140px",
-                height: "38px",
+                width: { xs: "35%", sm: "8rem" },
+                height: "2.4rem",
+                fontSize: { xs: "0.8rem", sm: "1rem" },
               }}
               onClick={() => alert("Confirm clicked")}
               disabled={isButtonDisabled}
