@@ -10,6 +10,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const minChar = password.length > 0;
+  const checkCharac = password.length > 5;
   return (
     <>
       <Navbar />
@@ -68,6 +70,10 @@ const Login = () => {
 
           <TextField
             size="small"
+            error={!checkCharac && minChar}
+            helperText={
+              !checkCharac && minChar ? "password minimal 6 karakter" : ""
+            }
             label="Password"
             fullWidth
             type="password"

@@ -7,7 +7,8 @@ import Login from "./pages/Login";
 function App() {
   return (
     <>
-      <DetailKelas></DetailKelas>
+      {/* <DetailKelas></DetailKelas> */}
+      <Login></Login>
     </>
   );
 }
