@@ -1,92 +1,115 @@
 import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
 import Navbar from "../components/Navbar";
 import "@fontsource/montserrat";
 
 const ResetPasswordEmail = () => {
-  const [email, setEmail] = useState("");
-
-  return (
-    <>
-      <Navbar />
-      <Stack
-        sx={{
-          minHeight: "100vh",
-          alignItems: "center",
-          fontFamily: "Montserrat",
-          backgroundColor: "white",
-        }}
-      >
+    const [email, setEmail] = useState("");
+  
+    return (
+      <>
+        <Navbar />
         <Stack
-          spacing={2}
           sx={{
-            padding: "40px",
-            maxWidth: "600px",
-            width: "100%",
-            alignItems: "flex-start",
-            textAlign: "left",
-            marginTop: "60px",
+            minHeight: "100vh",
+            alignItems: "center",
+            fontFamily: "Montserrat",
+            backgroundColor: "white",
+            pt: { xs: "4rem", sm: "5rem" },
           }}
         >
-          <Typography variant="h5" sx={{ width: "100%" }}>
-            Reset Password
-          </Typography>
-
-          <Typography
-            variant="body1"
-            sx={{ color: "#666", width: "100%", paddingBottom: "40px" }}
-          >
-            Send OTP code to your email address
-          </Typography>
-
-          <TextField
-            label="Email"
-            name="email"
-            fullWidth
-            variant="outlined"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
           <Stack
-            direction="row"
             spacing={2}
-            sx={{ width: "100%", justifyContent: "flex-end" }}
+            sx={{
+              maxWidth: "38rem",
+              width: "90%",
+              alignItems: "flex-start",
+              textAlign: "left",
+              mt: { xs: "2rem", sm: "3rem" },
+            }}
           >
-            <Button
-              variant="outlined"
-              size="large"
+            <Typography
+              variant="h5"
               sx={{
-                textTransform: "none",
-                width: "140px",
-                height: "38px",
+                width: "100%",
+                fontSize: { xs: "1.25rem", sm: "1.5rem" },
+                fontWeight: 600,
               }}
-              onClick={() => alert("Cancel clicked")}
             >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              size="medium"
+              Reset Password
+            </Typography>
+  
+            <Typography
+              variant="body1"
               sx={{
-                color: "#fff",
-                textTransform: "none",
-                width: "140px",
-                height: "38px",
+                color: "#666",
+                width: "100%",
+                fontSize: { xs: "0.875rem", sm: "1rem" },
+                pb: { xs: "1.5rem", sm: "2.5rem" },
               }}
-              onClick={() => alert("Confirm clicked")}
-              disabled={!email.trim()}
             >
-              Confirm
-            </Button>
+              Send OTP code to your email address
+            </Typography>
+  
+            <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="email">Email</InputLabel>
+              <OutlinedInput
+                id="email"
+                name="email"
+                type="email"
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormControl>
+  
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                width: "100%",
+                justifyContent: "flex-end",
+                flexWrap: "wrap",
+                pt: "1rem",
+              }}
+            >
+              <Button
+                variant="outlined"
+                size="medium"
+                sx={{
+                  textTransform: "none",
+                  width: { xs: "35%", sm: "8rem" },
+                  height: "2.4rem",
+                  fontSize: { xs: "0.8rem", sm: "1rem" },
+                }}
+                onClick={() => alert("Cancel clicked")}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  color: "#fff",
+                  textTransform: "none",
+                  width: { xs: "35%", sm: "8rem" },
+                  height: "2.4rem",
+                  fontSize: { xs: "0.8rem", sm: "1rem" },
+                }}
+                onClick={() => alert("Confirm clicked")}
+                disabled={!email.trim()}
+              >
+                Confirm
+              </Button>
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
-    </>
-  );
-};
-
-export default ResetPasswordEmail;
+      </>
+    );
+  };
+  
+  export default ResetPasswordEmail;
