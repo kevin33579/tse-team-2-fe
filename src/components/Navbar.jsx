@@ -40,6 +40,7 @@ export default function Navbar() {
         <Stack
           direction="row"
           spacing={1}
+          minWidth = "fit-content"
           sx={{
             flexShrink: 1,
           }}
