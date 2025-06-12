@@ -43,11 +43,11 @@ const Register = () => {
           <Grid container spacing={2} direction="column" sx={{ pt: 10 }}>
             <Grid item>
               <Typography
-                variant="h4"
                 sx={{
                   color: "#800000",
                   fontWeight: "bold",
                   textAlign: "left",
+                  fontSize: "24px",
                 }}
               >
                 Let’s Join Our Course!
@@ -56,7 +56,7 @@ const Register = () => {
             <Grid item>
               <Typography
                 variant="subtitle1"
-                sx={{ color: "#777", textAlign: "left" }}
+                sx={{ color: "#777", textAlign: "left", fontSize: "16px" }}
               >
                 Please register first
               </Typography>
@@ -113,7 +113,7 @@ const Register = () => {
               </Button>
             </Grid>
             <Grid item textAlign="center">
-              <Typography variant="body2">
+              <Typography sx={{ fontSize: "16px" }}>
                 Have an account?{" "}
                 <Link href="#" underline="hover">
                   Login here
