@@ -153,11 +153,18 @@ export default function DetailKelas() {
                       bgcolor: "#f0f0f0",
                     },
                   }}
+                  onClick={() => alert(" success add to cart")}
                 >
                   Add to Cart
                 </Button>
 
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    navigate("/checkout");
+                  }}
+                >
                   Buy Now
                 </Button>
               </Box>
