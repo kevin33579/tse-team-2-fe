@@ -81,7 +81,8 @@ export default function Middle_section() {
           <Grid item key={course.id} xs={12} sm={6} md={4}>
             <Card
               sx={{
-                height: "100%",
+                height: "390px",
+                width: "350px",
                 borderRadius: 3,
                 overflow: "hidden",
                 boxShadow: "none",
