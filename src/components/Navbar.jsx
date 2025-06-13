@@ -39,7 +39,7 @@ export default function Navbar() {
 
         <Stack
           direction="row"
-          spacing={1}
+          spacing={2}
           sx={{
             flexShrink: 1,
           }}
