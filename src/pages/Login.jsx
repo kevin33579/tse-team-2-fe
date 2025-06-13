@@ -23,17 +23,16 @@ const Login = () => {
           alignItems: "center",
           fontFamily: "Montserrat",
           backgroundColor: "white",
-          paddingTop: "70px",
+          pt: 7.5,
         }}
       >
         <Stack
-          spacing={2}
+          spacing={3}
           sx={{
-            maxWidth: "40vw",
+            maxWidth: "38rem",
             width: "100%",
             alignItems: "flex-start",
             textAlign: "left",
-            marginTop: "60px",
           }}
         >
           <Typography
@@ -42,10 +41,10 @@ const Login = () => {
             Welcome Back!
           </Typography>
 
-          <Typography color="#4f4f4f" sx={{ width: "100%", fontSize: "16px" }}>
+          <Typography color="#4f4f4f" sx={{ width: "100%", fontSize: "16px",pb:2}}>
             Please login first
           </Typography>
-
+            
           <TextField
             size="small"
             label="Email"
@@ -95,13 +94,12 @@ const Login = () => {
             }}
           />
 
-          <Typography color="#4f4f4f" sx={{ width: "100%", fontSize: "16px" }}>
+          <Typography color="#4f4f4f" sx={{ width: "100%", fontSize: "16px",pb:2 }}>
             Forgot Password?<Link to="/forgot-password">Click Here</Link>
           </Typography>
 
           <Stack
             direction="row"
-            spacing={2}
             sx={{ width: "100%", justifyContent: "flex-end" }}
           >
             <Button
@@ -123,7 +121,7 @@ const Login = () => {
           <Stack
             direction="row"
             spacing={2}
-            sx={{ width: "100%", justifyContent: "center", padding: "40px 0" }}
+            sx={{ width: "100%", justifyContent: "center", padding: "36px 0" }}
           >
             <Typography color="#4f4f4f" x={{ width: "100%", fontSize: "16px" }}>
               Don’t have an account? <Link to={"/register"}>Sign Up here</Link>
