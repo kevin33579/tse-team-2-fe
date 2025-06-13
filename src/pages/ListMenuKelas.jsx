@@ -42,7 +42,6 @@ const ListMenuKelas = () => {
       <Navbar />
       <Stack
         sx={{
-          pt: { xs: 4, sm: 6 },
           pb: { xs: 4, sm: 6 },
           fontFamily: "Montserrat",
           backgroundColor: "white",

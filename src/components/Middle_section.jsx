@@ -7,6 +7,7 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const courses = [
   {
@@ -54,6 +55,7 @@ const courses = [
 ];
 
 export default function Middle_section() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ mt: 6, textAlign: "center", px: 2 }}>
       <Typography
@@ -75,7 +77,7 @@ export default function Middle_section() {
         sx={{ maxWidth: 1400, margin: "0 auto" }}
       >
         {courses.map((course, index) => (
-          <Grid item key={`${course.id}-${index}`} xs={12} sm={6} md={4}>
+          <Grid item key={`${course.id}`} xs={12} sm={6} md={4}>
             <Card
               sx={{
                 height: 400,
@@ -88,6 +90,7 @@ export default function Middle_section() {
                   boxShadow: 6,
                 },
               }}
+              onClick={() => navigate(`/list-menu-kelas/${course.id}`)}
             >
               <CardMedia
                 component="img"
