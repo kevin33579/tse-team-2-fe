@@ -7,7 +7,7 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const courses = [
   {
@@ -57,7 +57,7 @@ const courses = [
 export default function Middle_section() {
   const navigate = useNavigate();
   return (
-    <Box sx={{ mt: 6, textAlign: "center", px: 2 }}>
+    <Box sx={{ mt: 6, textAlign: "center", px: { xs: 2, sm: 3 } }}>
       <Typography
         variant="h4"
         sx={{
@@ -65,6 +65,7 @@ export default function Middle_section() {
           color: "#790b0a",
           mb: 5,
           fontFamily: "Montserrat",
+          fontSize: { xs: "24px", sm: "32px" },
         }}
       >
         Join Course
@@ -76,15 +77,16 @@ export default function Middle_section() {
         justifyContent="center"
         sx={{ maxWidth: 1400, margin: "0 auto" }}
       >
-        {courses.map((course, index) => (
-          <Grid item key={`${course.id}`} xs={12} sm={6} md={4}>
+        {courses.map((course) => (
+          <Grid item key={course.id} xs={12} sm={6} md={4}>
             <Card
               sx={{
-                height: 400,
+                height: "100%",
                 borderRadius: 3,
                 overflow: "hidden",
                 boxShadow: "none",
                 transition: "0.3s",
+                cursor: "pointer",
                 "&:hover": {
                   transform: "scale(1.05)",
                   boxShadow: 6,
@@ -97,26 +99,42 @@ export default function Middle_section() {
                 image={course.image}
                 alt={course.title}
                 sx={{
-                  height: 233,
+                  height: { xs: 180, sm: 233 },
                   objectFit: "cover",
                   borderRadius: "10px",
                   border: "1px solid #ccc",
-                  m: 2,
+                  m: { xs: 1.5, sm: 2 },
                 }}
               />
-              <CardContent sx={{ textAlign: "left", px: 2 }}>
-                <Typography variant="body2" sx={{ color: "#828282" }}>
+              <CardContent sx={{ textAlign: "left", px: { xs: 1.5, sm: 2 } }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#828282",
+                    fontSize: { xs: "12px", sm: "14px" },
+                  }}
+                >
                   {course.type}
                 </Typography>
                 <Typography
                   variant="subtitle1"
-                  sx={{ fontWeight: 500, mt: 1, color: "#333" }}
+                  sx={{
+                    fontWeight: 500,
+                    mt: 1,
+                    color: "#333",
+                    fontSize: { xs: "14px", sm: "16px" },
+                  }}
                 >
                   {course.title}
                 </Typography>
                 <Typography
                   variant="subtitle1"
-                  sx={{ fontWeight: 600, mt: 1, color: "#790b0a" }}
+                  sx={{
+                    fontWeight: 600,
+                    mt: 1,
+                    color: "#790b0a",
+                    fontSize: { xs: "14px", sm: "16px" },
+                  }}
                 >
                   {course.price}
                 </Typography>
