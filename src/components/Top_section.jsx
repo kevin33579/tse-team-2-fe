@@ -48,6 +48,7 @@ export default function Top_section() {
             color: "#fff",
             mb: 2,
             fontSize: { xs: "20px", sm: "32px" },
+            fontFamily: "Montserrat",
           }}
         >
           We provide driving lessons for various types of cars
@@ -58,6 +59,7 @@ export default function Top_section() {
           sx={{
             color: "#fff",
             fontSize: { xs: "14px", sm: "18px" },
+            fontFamily: "Montserrat",
           }}
         >
           Professional staff who are ready to help you to become a much-needed
@@ -75,6 +77,7 @@ export default function Top_section() {
             textAlign: "center",
             width: "100%",
             px: { xs: 1, sm: 0 },
+            fontFamily: "Montserrat",
           }}
         >
           {[
