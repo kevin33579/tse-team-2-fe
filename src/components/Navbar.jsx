@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Stack, Typography, Button, Box } from "@mui/material";
 import { styled } from "@mui/system";
 import "@fontsource/montserrat";
+import { useNavigate } from "react-router-dom";
 
 const Logo = styled("img")({
   height: 30,
@@ -8,6 +9,7 @@ const Logo = styled("img")({
 });
 
 export default function Navbar() {
+  const navigate = useNavigate();
   return (
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar
@@ -19,6 +21,7 @@ export default function Navbar() {
           flexDirection: "row",
           alignItems: "center",
           gap: 1,
+          ":hover": "",
         }}
       >
         <Stack direction="row" alignItems="center">
@@ -32,6 +35,9 @@ export default function Navbar() {
               fontSize: { xs: "18px", sm: "22px", md: "24px" },
               whiteSpace: "nowrap",
             }}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             Otomobil
           </Typography>
@@ -40,14 +46,14 @@ export default function Navbar() {
         <Stack
           direction="row"
           spacing={1}
-          minWidth = "fit-content"
+          minWidth="fit-content"
           sx={{
             flexShrink: 1,
           }}
         >
           <Button
             variant="text"
-            onClick={() => alert("Sign Up clicked")}
+            onClick={() => navigate("/register")}
             sx={{
               minWidth: "auto",
               px: 1,
@@ -58,7 +64,7 @@ export default function Navbar() {
           </Button>
           <Button
             variant="contained"
-            onClick={() => alert("Login clicked")}
+            onClick={() => navigate("/login")}
             sx={{
               minWidth: "auto",
               px: 2,
