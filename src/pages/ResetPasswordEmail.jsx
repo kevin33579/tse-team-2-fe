@@ -28,7 +28,7 @@ const ResetPasswordEmail = () => {
               width: "90%",
               alignItems: "flex-start",
               textAlign: "left",
-              mt: { xs: "2rem", sm: "3rem" },
+              mt: { xs: "2rem", sm: 2 },
             }}
           >
             <Typography
@@ -48,7 +48,7 @@ const ResetPasswordEmail = () => {
                 color: "#666",
                 width: "100%",
                 fontSize: { xs: "0.875rem", sm: "1rem" },
-                pb: { xs: "1.5rem", sm: "2.5rem" },
+                pb: { xs: "1.5rem", sm: 5.5 },
               }}
             >
               Send OTP code to your email address
@@ -73,7 +73,7 @@ const ResetPasswordEmail = () => {
                 width: "100%",
                 justifyContent: "flex-end",
                 flexWrap: "wrap",
-                pt: "1rem",
+                pt: 3,
               }}
             >
               <Button
