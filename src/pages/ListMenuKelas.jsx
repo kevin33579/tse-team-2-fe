@@ -18,25 +18,73 @@ import mazdaCx5 from "../assets/Rectangle 12-11.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "@fontsource/montserrat";
+import { useNavigate } from "react-router-dom";
 
 const courses = [
-  { title: "Course SUV Kijang Innova", price: "IDR 700.000", image: suvInova },
   {
+    id: 1,
+    image: "/inova.png",
+    type: "SUV",
+    title: "Course SUV Kijang Innova",
+    price: "IDR 700.000",
+  },
+  {
+    id: 2,
+    image: "/brio.png",
+    type: "LCGC",
+    title: "Course LCGC Honda Brio",
+    price: "IDR 500.000",
+  },
+  {
+    id: 3,
+    image: "/palisade.png",
+    type: "SUV",
     title: "Hyundai Palisade 2021",
     price: "IDR 800.000",
-    image: hyundaiPalisade,
   },
-  { title: "Course Suzuki XL7", price: "IDR 600.000", image: suzukiXl7 },
-  { title: "Course Mitsubishi Pajero", price: "IDR 800.000", image: pajero },
-  { title: "SUV Toyota Fortunner", price: "IDR 850.000", image: fortunner },
   {
+    id: 4,
+    image: "/pajero.png",
+    type: "SUV",
+    title: "Course Mitsubishi Pajero",
+    price: "IDR 800.000",
+  },
+  {
+    id: 5,
+    image: "/dump.png",
+    type: "Truck",
+    title: "Dump Truck for Mining Constructor",
+    price: "IDR 1.200.000",
+  },
+  {
+    id: 6,
+    image: "/civic.png",
+    type: "Sedan",
+    title: "Sedan Honda Civic",
+    price: "IDR 400.000",
+  },
+  {
+    id: 7,
+    title: "SUV Toyota Fortunner",
+    price: "IDR 850.000",
+    image: "/Fortuner.png",
+  },
+  {
+    id: 8,
     title: "Premium Mazda CX-5 Course",
     price: "IDR 1.000.000",
-    image: mazdaCx5,
+    image: "/mazda.png",
+  },
+  {
+    id: 9,
+    title: "Course Suzuki XL7",
+    price: "IDR 600.000",
+    image: "/suzuki.png",
   },
 ];
 
 const ListMenuKelas = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Navbar />
@@ -140,7 +188,7 @@ const ListMenuKelas = () => {
                   }}
                 >
                   <CardActionArea
-                    onClick={() => alert(`Kamu memilih: ${course.title}`)}
+                    onClick={() => navigate(`/list-menu-kelas/${course.id}`)}
                     sx={{ height: "100%" }}
                   >
                     <CardMedia
