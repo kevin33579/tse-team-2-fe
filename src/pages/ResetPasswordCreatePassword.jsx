@@ -10,7 +10,6 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
-import "@fontsource/montserrat";
 
 const ResetPasswordCreatePassword = () => {
   const [password, setPassword] = useState("");
@@ -33,7 +32,6 @@ const ResetPasswordCreatePassword = () => {
         sx={{
           minHeight: "100vh",
           alignItems: "center",
-          fontFamily: "Montserrat",
           backgroundColor: "white",
           pt: { xs: 6, sm: 12 },
         }}

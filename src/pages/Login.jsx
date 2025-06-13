@@ -5,10 +5,12 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "@fontsource/montserrat";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const minChar = password.length > 0;
   const checkCharac = password.length > 5;
@@ -94,7 +96,7 @@ const Login = () => {
           />
 
           <Typography color="#4f4f4f" sx={{ width: "100%", fontSize: "16px" }}>
-            Forgot Password? <a href="#">Click Here</a>
+            Forgot Password?<Link to="/forgot-password">Click Here</Link>
           </Typography>
 
           <Stack
@@ -124,7 +126,7 @@ const Login = () => {
             sx={{ width: "100%", justifyContent: "center", padding: "40px 0" }}
           >
             <Typography color="#4f4f4f" x={{ width: "100%", fontSize: "16px" }}>
-              Don’t have an account? <a href="#"> Sign Up here</a>
+              Don’t have an account? <Link to={"/register"}>Sign Up here</Link>
             </Typography>
           </Stack>
         </Stack>

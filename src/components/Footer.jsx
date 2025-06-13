@@ -10,89 +10,155 @@ export default function Footer() {
   return (
     <Box
       sx={{
-        p: 5,
+        px: { xs: 2, sm: 5 },
+        py: { xs: 4, sm: 6 },
         color: "#333",
         fontFamily: "Poppins, sans-serif",
-        marginLeft: "100px",
       }}
     >
-      <Grid container spacing={5}>
+      <Grid
+        container
+        spacing={4}
+        justifyContent={"space-between"}
+        alignItems={"flex-start"}
+      >
         {/* About Us */}
         <Grid item xs={12} md={4}>
-          <Box sx={{ width: 350, height: 105 }}>
-            <Typography variant="h6" sx={{ color: "#790B0A", mb: 1 }}>
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "#790B0A",
+                mb: 1,
+                fontSize: { xs: "1rem", sm: "1.25rem" },
+              }}
+            >
               About us
             </Typography>
-            <Typography variant="body2" textAlign="justify">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo.
-            </Typography>
+            <Box>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                  textAlign: "justify",
+                  mb: 1.5,
+                }}
+              >
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                accusantium doloremque laudantium,
+              </Typography>
+
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                  textAlign: "justify",
+                  mb: 1.5,
+                }}
+              >
+                totam rem aperiam, eaque ipsa quae ab illo inventore veritatis
+                et quasi architecto beatae vitae dicta sunt explicabo.
+              </Typography>
+            </Box>
           </Box>
         </Grid>
 
         {/* Product */}
-        <Grid item xs={12} sm={6} md={4} ml={20}>
-          <Typography variant="h6" sx={{ color: "#790B0A", mb: 1 }}>
-            Product
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Stack component="ul" spacing={1} sx={{ pl: 2 }}>
-                {["Electric", "LCGC", "Offroad", "SUV"].map((item, index) => (
-                  <Typography
-                    component="li"
-                    variant="body2"
-                    key={index}
-                    sx={{ listStyleType: "disc" }}
-                  >
-                    {item}
-                  </Typography>
-                ))}
-              </Stack>
+        <Grid item xs={12} md={4}>
+          <Box sx={{ textAlign: { xs: "left", md: "center" } }}>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "#790B0A",
+                mb: 1,
+                fontSize: { xs: "1rem", sm: "1.25rem" },
+              }}
+            >
+              Product
+            </Typography>
+            <Grid container spacing={2} justifyContent="center">
+              <Grid item xs={6}>
+                <Stack component="ul" spacing={0.5} sx={{ pl: 2 }}>
+                  {["Electric", "LCGC", "Offroad", "SUV"].map((item, index) => (
+                    <Typography
+                      component="li"
+                      variant="body2"
+                      key={index}
+                      sx={{
+                        fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                        listStyleType: "disc",
+                      }}
+                    >
+                      {item}
+                    </Typography>
+                  ))}
+                </Stack>
+              </Grid>
+              <Grid item xs={6}>
+                <Stack component="ul" spacing={0.5} sx={{ pl: 2 }}>
+                  {["Hatchback", "MPV", "Sedan", "Truck"].map((item, index) => (
+                    <Typography
+                      component="li"
+                      variant="body2"
+                      key={index}
+                      sx={{
+                        fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                        listStyleType: "disc",
+                      }}
+                    >
+                      {item}
+                    </Typography>
+                  ))}
+                </Stack>
+              </Grid>
             </Grid>
-            <Grid item xs={6} ml={10}>
-              <Stack component="ul" spacing={1} sx={{ pl: 2 }}>
-                {["Hatchback", "MPV", "Sedan", "Truck"].map((item, index) => (
-                  <Typography
-                    component="li"
-                    variant="body2"
-                    key={index}
-                    sx={{ listStyleType: "disc" }}
-                  >
-                    {item}
-                  </Typography>
-                ))}
-              </Stack>
-            </Grid>
-          </Grid>
+          </Box>
         </Grid>
 
         {/* Address & Contact */}
-        <Grid item xs={12} sm={6} md={4} ml={30}>
+        <Grid item xs={12} md={4}>
           <Box sx={{ mb: 3 }}>
-            <Typography variant="h6" sx={{ color: "#790B0A", mb: 1 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "#790B0A",
+                mb: 1,
+                fontSize: { xs: "1rem", sm: "1.25rem" },
+              }}
+            >
               Address
             </Typography>
-            <Typography variant="body2" textAlign="justify">
+            <Typography
+              variant="body2"
+              sx={{
+                fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                textAlign: "justify",
+              }}
+            >
               Sed ut perspiciatis unde omnis iste natus error sit
               <br />
               voluptatem accusantium doloremque.
             </Typography>
           </Box>
           <Box>
-            <Typography variant="h6" sx={{ color: "#790B0A", mb: 1 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "#790B0A",
+                mb: 1,
+                fontSize: { xs: "1rem", sm: "1.25rem" },
+              }}
+            >
               Contact Us
             </Typography>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={1}>
               {[tele, ig, yt, send, message].map((icon, index) => (
                 <Box
                   component="img"
                   src={icon}
                   alt={`icon-${index}`}
                   key={index}
-                  sx={{ width: 48, height: 48, cursor: "pointer" }}
+                  sx={{ width: 32, height: 32, cursor: "pointer" }}
                 />
               ))}
             </Stack>

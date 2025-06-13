@@ -6,7 +6,6 @@ import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
 import Navbar from "../components/Navbar";
-import "@fontsource/montserrat";
 
 const ResetPasswordEmail = () => {
     const [email, setEmail] = useState("");
@@ -18,7 +17,6 @@ const ResetPasswordEmail = () => {
           sx={{
             minHeight: "100vh",
             alignItems: "center",
-            fontFamily: "Montserrat",
             backgroundColor: "white",
             pt: { xs: "4rem", sm: "5rem" },
           }}
