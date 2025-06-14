@@ -23,7 +23,13 @@ const carTypes = [
 export default function Bottom_section() {
   const navigate = useNavigate();
   return (
-    <Box sx={{ padding: "60px 80px", textAlign: "center", marginTop: "100px" }}>
+    <Box
+      sx={{
+        padding: "60px 80px",
+        textAlign: "center",
+        marginTop: { xs: "300px", md: "100px" },
+      }}
+    >
       <Typography
         variant="h4"
         sx={{
