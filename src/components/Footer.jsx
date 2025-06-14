@@ -15,7 +15,7 @@ export default function Footer() {
           px: { xs: 2, sm: 5 },
           py: { xs: 4, sm: 6 },
           color: "#333",
-          fontFamily: "Poppins, sans-serif",
+          fontFamily: "Poppins",
         }}
       >
         <Grid
