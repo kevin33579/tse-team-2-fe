@@ -18,8 +18,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/list-menu-kelas" element={<ListMenuKelas />} />
-          <Route path="/list-menu-kelas/:id" element={<DetailKelas />} />
+          <Route path="/list-menu-kelas/:type" element={<ListMenuKelas />} />
+          <Route path="/detail/:id" element={<DetailKelas />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

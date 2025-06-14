@@ -18,7 +18,9 @@ import mazdaCx5 from "../assets/Rectangle 12-11.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "@fontsource/montserrat";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Another_Course from "../components/Another_course";
+
 const courses = [
   {
     id: 1,
@@ -66,6 +68,7 @@ const courses = [
 
 const ListMenuKelas = () => {
   const navigate = useNavigate();
+  const { type } = useParams();
   return (
     <>
       <Navbar />
@@ -93,7 +96,7 @@ const ListMenuKelas = () => {
                 fontSize: { xs: "1.125rem", sm: "1.5rem" },
               }}
             >
-              SUV
+              {type}
             </Typography>
             <Typography
               variant="body2"
@@ -147,39 +150,14 @@ const ListMenuKelas = () => {
           </Typography>
           <Grid container spacing={{ xs: 2, sm: 4 }}>
             {courses.map((course, idx) => (
-              <Grid item xs={12} sm={6} key={idx}>
-                <Card elevation={0} sx={{ width: "350px", height: "399px" }}>
-                  <CardActionArea
-                    onClick={() => navigate(`/list-menu-kelas/${course.id}`)}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="233px"
-                      width="350px"
-                      image={course.image}
-                      alt={course.title}
-                    />
-                    <CardContent>
-                      <Typography variant="caption" color="text.secondary">
-                        {course.type}
-                      </Typography>
-                      <Typography
-                        fontWeight="bold"
-                        sx={{ pb: { xs: 2, sm: 4 } }}
-                      >
-                        {course.title}
-                      </Typography>
-                      <Typography
-                        color="primary.main"
-                        fontWeight="bold"
-                        sx={{ fontSize: "20px", fontWeight: "600" }}
-                      >
-                        {course.price}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
+              <Another_Course
+                course_id={course.id}
+                course_image={course.image}
+                course_price={course.price}
+                course_title={course.title}
+                course_type={course.type}
+                index={idx}
+              ></Another_Course>
             ))}
           </Grid>
         </Container>

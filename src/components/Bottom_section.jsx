@@ -57,7 +57,7 @@ export default function Bottom_section() {
               }}
               elevation={0}
               onClick={() => {
-                navigate("/list-menu-kelas");
+                navigate("/list-menu-kelas/" + x.title);
               }}
             >
               <CardActionArea>
