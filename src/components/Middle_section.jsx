@@ -92,6 +92,7 @@ export default function Middle_section() {
               onClick={() => {
                 navigate("/list-menu-kelas/" + course.id);
               }}
+              elevation={0}
             >
               <CardActionArea>
                 <CardMedia
