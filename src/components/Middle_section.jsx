@@ -68,7 +68,7 @@ export default function Middle_section() {
           fontSize: { xs: "24px", sm: "32px" },
         }}
       >
-        Join Course
+        Join Us For The Course
       </Typography>
 
       <Grid
