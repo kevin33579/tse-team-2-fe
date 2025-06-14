@@ -10,7 +10,6 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
-import "@fontsource/montserrat";
 
 const ResetPasswordCreatePassword = () => {
   const [password, setPassword] = useState("");
@@ -33,19 +32,17 @@ const ResetPasswordCreatePassword = () => {
         sx={{
           minHeight: "100vh",
           alignItems: "center",
-          fontFamily: "Montserrat",
           backgroundColor: "white",
-          pt: { xs: "4rem", sm: "5rem" },
+          pt: { xs: 6, sm: 12 },
         }}
       >
         <Stack
-          spacing={2}
+          spacing={3}
           sx={{
             maxWidth: "38rem",
             width: "90%",
             alignItems: "flex-start",
             textAlign: "left",
-            mt: { xs: "2rem", sm: "3rem" },
           }}
         >
           <Typography
@@ -53,7 +50,7 @@ const ResetPasswordCreatePassword = () => {
             sx={{
               width: "100%",
               fontSize: { xs: "1.25rem", sm: "1.5rem" },
-              pb: "2rem",
+              pb: 4.5,
             }}
           >
             Create Password
@@ -110,7 +107,7 @@ const ResetPasswordCreatePassword = () => {
           <Stack
             direction="row"
             spacing={2}
-            sx={{ width: "100%", justifyContent: "flex-end", mt: "1rem" }}
+            sx={{ width: "100%", justifyContent: "flex-end", pt: {xs:1, sm:2} }}
           >
             <Button
               variant="outlined"

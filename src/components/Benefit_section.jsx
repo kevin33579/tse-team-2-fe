@@ -1,55 +1,78 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 import benefitImage from "../assets/benefit.png";
 
-const BenefitSectionWrapper = styled(Box)({
+const BenefitSectionWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
+  flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "stretch",
   padding: "60px 80px",
   gap: "40px",
-});
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column-reverse",
+    padding: "24px",
+    gap: "24px",
+  },
+}));
 
-const BenefitLeft = styled(Box)({
+const BenefitLeft = styled(Box)(({ theme }) => ({
   flex: 1,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   marginLeft: "200px",
-});
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: "0",
+  },
+}));
 
-const BenefitTitle = styled(Typography)({
+const BenefitTitle = styled(Typography)(({ theme }) => ({
   fontFamily: "Montserrat, sans-serif",
   fontWeight: 600,
   fontSize: "40px",
   lineHeight: "100%",
   color: "#790B0A",
   marginBottom: "20px",
-});
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "24px",
+    textAlign: "center",
+  },
+}));
 
-const BenefitSubtitle = styled(Typography)({
+const BenefitSubtitle = styled(Typography)(({ theme }) => ({
   fontFamily: "Montserrat, sans-serif",
   fontWeight: 400,
   fontSize: "16px",
   lineHeight: "160%",
   color: "#333",
   textAlign: "justify",
-});
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "14px",
+  },
+}));
 
-const BenefitRight = styled(Box)({
+const BenefitRight = styled(Box)(({ theme }) => ({
   flex: 1,
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
-});
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "center",
+  },
+}));
 
-const BenefitImage = styled("img")({
+const BenefitImage = styled("img")(({ theme }) => ({
   width: "100%",
   maxWidth: "600px",
   objectFit: "cover",
   borderRadius: "16px",
-});
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: "100%",
+    borderRadius: "12px",
+  },
+}));
 
 export default function BenefitSection() {
   return (

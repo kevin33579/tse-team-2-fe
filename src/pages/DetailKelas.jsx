@@ -15,37 +15,77 @@ import {
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useNavigate, useParams } from "react-router-dom";
 
 const courses = [
   {
+    id: 1,
+    image: "/inova.png",
+    type: "SUV",
     title: "Course SUV Kijang Innova",
     price: "IDR 700.000",
-    image: "./inova.png",
   },
   {
+    id: 2,
+    image: "/brio.png",
+    type: "LCGC",
+    title: "Course LCGC Honda Brio",
+    price: "IDR 500.000",
+  },
+  {
+    id: 3,
+    image: "/palisade.png",
+    type: "SUV",
     title: "Hyundai Palisade 2021",
     price: "IDR 800.000",
-    image: "./palisade.png",
   },
-  { title: "Course Suzuki XL7", price: "IDR 600.000", image: "./suzuki.png" },
   {
+    id: 4,
+    image: "/pajero.png",
+    type: "SUV",
     title: "Course Mitsubishi Pajero",
     price: "IDR 800.000",
-    image: "./pajero.png",
   },
   {
+    id: 5,
+    image: "/dump.png",
+    type: "Truck",
+    title: "Dump Truck for Mining Constructor",
+    price: "IDR 1.200.000",
+  },
+  {
+    id: 6,
+    image: "/civic.png",
+    type: "Sedan",
+    title: "Sedan Honda Civic",
+    price: "IDR 400.000",
+  },
+  {
+    id: 7,
     title: "SUV Toyota Fortunner",
     price: "IDR 850.000",
-    image: "./Fortuner.png",
+    image: "/Fortuner.png",
   },
   {
+    id: 8,
     title: "Premium Mazda CX-5 Course",
     price: "IDR 1.000.000",
-    image: "./mazda.png",
+    image: "/mazda.png",
+  },
+  {
+    id: 9,
+    title: "Course Suzuki XL7",
+    price: "IDR 600.000",
+    image: "/suzuki.png",
   },
 ];
 
 export default function DetailKelas() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const course = courses.find((item) => item.id === Number(id));
+
+  if (!course) return <Typography>Course not found</Typography>;
   return (
     <>
       <Navbar />
@@ -62,8 +102,8 @@ export default function DetailKelas() {
         <Box width="1140px" display="flex">
           <Box
             component="img"
-            src="./palisade.png"
-            alt="Kelas"
+            src={course.image}
+            alt={course.title}
             sx={{
               width: "400px",
               height: "266.6666564941406px",
@@ -83,15 +123,15 @@ export default function DetailKelas() {
           >
             <Box>
               <Typography variant="h6" color="text.secondary">
-                SUV
+                {course.type}
               </Typography>
 
               <Typography variant="h5" fontWeight="bold" mt={1}>
-                Hyundai Palisade 2021
+                {course.title}
               </Typography>
 
               <Typography variant="h6" color="primary.main" mt={2}>
-                IDR 800,000
+                {course.price}
               </Typography>
 
               <TextField
@@ -113,11 +153,18 @@ export default function DetailKelas() {
                       bgcolor: "#f0f0f0",
                     },
                   }}
+                  onClick={() => alert(" success add to cart")}
                 >
                   Add to Cart
                 </Button>
 
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    navigate("/checkout");
+                  }}
+                >
                   Buy Now
                 </Button>
               </Box>
@@ -214,7 +261,7 @@ export default function DetailKelas() {
               <Grid item xs={12} sm={6} key={idx}>
                 <Card elevation={0}>
                   <CardActionArea
-                    onClick={() => alert(`Kamu memilih: ${course.title}`)}
+                    onClick={() => navigate(`/list-menu-kelas/${course.id}`)}
                   >
                     <CardMedia
                       component="img"

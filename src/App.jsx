@@ -20,7 +20,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ResetPasswordEmail />} />
-        <Route path="/create-new-password" element={<ResetPasswordCreatePassword />} />
+        <Route
+          path="/create-new-password"
+          element={<ResetPasswordCreatePassword />}
+        />
       </Routes>
     </BrowserRouter>
   );

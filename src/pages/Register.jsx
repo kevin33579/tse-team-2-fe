@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import {
-  Grid,
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Link,
-} from "@mui/material";
+import { Grid, Container, Typography, TextField, Button } from "@mui/material";
 import Navbar from "../components/Navbar";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [payload, setPayload] = useState({
@@ -114,10 +108,7 @@ const Register = () => {
             </Grid>
             <Grid item textAlign="center">
               <Typography sx={{ fontSize: "16px" }}>
-                Have an account?{" "}
-                <Link href="#" underline="hover">
-                  Login here
-                </Link>
+                Have an account? <Link to="/login">Login here</Link>
               </Typography>
             </Grid>
           </Grid>

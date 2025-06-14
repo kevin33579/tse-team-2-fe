@@ -7,6 +7,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const carTypes = [
   { id: 1, image: "./Electric.png", title: "Electric" },
@@ -18,6 +19,7 @@ const carTypes = [
 ];
 
 export default function Bottom_section() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ padding: "60px 80px", textAlign: "center" }}>
       <Typography
@@ -51,6 +53,7 @@ export default function Bottom_section() {
                   boxShadow: "0 6px 18px rgba(0, 0, 0, 0.15)",
                 },
               }}
+              onClick={() => navigate("/list-menu-kelas")}
             >
               <CardMedia
                 component="img"

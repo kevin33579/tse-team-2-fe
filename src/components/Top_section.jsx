@@ -1,13 +1,15 @@
 import React from "react";
-import { Box, Typography, Stack } from "@mui/material";
+import { Box, Typography, Stack, useTheme } from "@mui/material";
 
 export default function Top_section() {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
         position: "relative",
         width: "100vw",
-        height: "496px",
+        height: { xs: "400px", sm: "496px" },
         overflow: "hidden",
       }}
     >
@@ -34,27 +36,49 @@ export default function Top_section() {
           alignItems: "center",
           textAlign: "center",
           width: "100%",
-          gap: 3,
-          px: 2,
+          gap: { xs: 2, sm: 3 },
+          px: { xs: 2, sm: 4 },
           pointerEvents: "none",
         }}
       >
-        <Typography variant="h4" fontWeight={600} sx={{ color: "#fff", mb: 2 }}>
+        <Typography
+          variant="h4"
+          fontWeight={600}
+          sx={{
+            color: "#fff",
+            mb: 2,
+            fontSize: { xs: "20px", sm: "32px" },
+            fontFamily: "Montserrat",
+          }}
+        >
           We provide driving lessons for various types of cars
         </Typography>
 
-        <Typography variant="h6" sx={{ color: "#fff" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            color: "#fff",
+            fontSize: { xs: "14px", sm: "18px" },
+            fontFamily: "Montserrat",
+          }}
+        >
           Professional staff who are ready to help you to become a much-needed
           reliable driver
         </Typography>
 
         <Stack
           direction={{ xs: "column", sm: "row" }}
-          spacing={{ xs: 3, sm: 10 }}
+          spacing={{ xs: 2, sm: 8 }}
           justifyContent="center"
           alignItems="center"
-          mt={4}
-          sx={{ flexWrap: "wrap", textAlign: "center" }}
+          mt={{ xs: 2, sm: 4 }}
+          sx={{
+            flexWrap: "wrap",
+            textAlign: "center",
+            width: "100%",
+            px: { xs: 1, sm: 0 },
+            fontFamily: "Montserrat",
+          }}
         >
           {[
             {
@@ -65,17 +89,27 @@ export default function Top_section() {
               number: "20+",
               text: "Professional workforce with great experience",
             },
-            { number: "10+", text: "Cooperate with driver service partners" },
+            {
+              number: "10+",
+              text: "Cooperate with driver service partners",
+            },
           ].map((item, idx) => (
             <Box key={idx} sx={{ maxWidth: 250 }}>
               <Typography
                 variant="h5"
                 fontWeight={700}
-                sx={{ color: "#fff", mb: 1 }}
+                sx={{
+                  color: "#fff",
+                  mb: 1,
+                  fontSize: { xs: "20px", sm: "28px" },
+                }}
               >
                 {item.number}
               </Typography>
-              <Typography variant="body1" sx={{ color: "#fff" }}>
+              <Typography
+                variant="body1"
+                sx={{ color: "#fff", fontSize: { xs: "13px", sm: "16px" } }}
+              >
                 {item.text}
               </Typography>
             </Box>
