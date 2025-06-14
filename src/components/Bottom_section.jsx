@@ -27,7 +27,7 @@ export default function Bottom_section() {
       sx={{
         padding: "60px 80px",
         textAlign: "center",
-        marginTop: { xs: "300px", md: "100px" },
+        marginTop: { xs: "500px", md: "100px" },
       }}
     >
       <Typography
@@ -56,6 +56,9 @@ export default function Bottom_section() {
                 ":hover": { transform: "scale(1.05)", boxShadow: 3 },
               }}
               elevation={0}
+              onClick={() => {
+                navigate("/list-menu-kelas");
+              }}
             >
               <CardActionArea>
                 <CardMedia
