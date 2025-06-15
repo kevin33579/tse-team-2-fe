@@ -1,4 +1,6 @@
 import { Box, Modal, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const style = {
   position: "absolute",
@@ -13,6 +15,20 @@ const style = {
   p: 4,
 };
 export default function ModalComponent({ paymentMethods, handleClose, open }) {
+  // const url = "https://jsonplaceholder.typicode.com/posts";
+  // const [data, setData] = useState([]);
+
+  // const fetchData = () => {
+  //   axios.get(url).then((data) => {
+  //     setData(data);
+  //   });
+  // };
+
+  // console.log(data);
+  // useEffect(() => {
+  //   fetchData();
+  // });
+
   return (
     <>
       <Modal
