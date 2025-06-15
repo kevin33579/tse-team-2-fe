@@ -15,8 +15,8 @@ const style = {
   p: 4,
 };
 export default function ModalComponent({ paymentMethods, handleClose, open }) {
-  // const url = "https://jsonplaceholder.typicode.com/posts";
-  // const [data, setData] = useState([]);
+  const url = "https://jsonplaceholder.typicode.com/posts";
+  const [data, setData] = useState([]);
 
   // const fetchData = () => {
   //   axios.get(url).then((data) => {
@@ -28,6 +28,15 @@ export default function ModalComponent({ paymentMethods, handleClose, open }) {
   // useEffect(() => {
   //   fetchData();
   // });
+  // const fetchData = () => {
+  //   axios({
+  //     method: "get",
+  //     url: url,
+  //     responseType: "stream",
+  //   }).then(function (response) {
+  //     console.log(response.data);
+  //   });
+  // };
 
   return (
     <>
