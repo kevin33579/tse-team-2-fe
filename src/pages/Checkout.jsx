@@ -19,6 +19,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import Navbar from "../components/Navbar";
 import "@fontsource/poppins";
+import ModalComponent from "../components/ModalComponent";
 
 const carData = [
   {
@@ -44,19 +45,6 @@ const paymentMethods = [
   { id: 2, name: "OVO", image: "./ovo.png" },
   { id: 3, name: "DANA", image: "./dana.png" },
 ];
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
 
 export default function Checkout() {
   const [checked, setChecked] = useState(carData.map(() => false));
@@ -218,60 +206,11 @@ export default function Checkout() {
         </Grid>
       </Grid>
 
-      {/* {"Modal"} */}
-      <Modal
+      <ModalComponent
+        paymentMethods={paymentMethods}
         open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography
-            sx={{ fontFamily: "Poppins", fontSize: "20px", fontWeight: "500" }}
-          >
-            Select Payment Method
-          </Typography>
-          {paymentMethods.map((el) => {
-            return (
-              <>
-                <Box
-                  display={"flex"}
-                  flexDirection={"row"}
-                  alignItems={"center"}
-                  gap={2}
-                  sx={{
-                    width: "326px",
-                    height: "40px",
-                    margin: "20px",
-                    cursor: "pointer",
-                    ":hover": { transform: "scale(1.05)" },
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={el.image}
-                    alt={el.name}
-                    sx={{
-                      width: "40px",
-                      height: "40px",
-                      objectFit: "contain",
-                    }}
-                  />
-                  <Typography
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontSize: "18px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {el.name}
-                  </Typography>
-                </Box>
-              </>
-            );
-          })}
-        </Box>
-      </Modal>
+        handleClose={handleClose}
+      ></ModalComponent>
     </>
   );
 }
