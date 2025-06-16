@@ -11,6 +11,7 @@ import ResetPasswordEmail from "./pages/ResetPasswordEmail";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import SuccessPurchase from "./pages/SuccessPurchase";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             path="/create-new-password"
             element={<ResetPasswordCreatePassword />}
           />
+          <Route path="/success" element={<SuccessPurchase />} />
         </Routes>
       </BrowserRouter>
     </LocalizationProvider>
