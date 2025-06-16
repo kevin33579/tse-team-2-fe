@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -9,6 +9,8 @@ import {
   CardActionArea,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const courses = [
   {
     id: 1,
@@ -56,6 +58,21 @@ const courses = [
 
 export default function Middle_section() {
   const navigate = useNavigate();
+  // const [data, setData] = useState([]);
+  // const url = "https://jsonplaceholder.typicode.com/posts";
+
+  // const fetchData = () => {
+  //   axios.get(url).then((e) => {
+  //     setData(e.data);
+  //   });
+  // };
+
+  // console.log(data);
+
+  // useEffect(() => {
+  //   fetchData();
+  // });
+
   return (
     <Box sx={{ mt: 6, textAlign: "center", px: { xs: 2, sm: 3 } }}>
       <Typography
