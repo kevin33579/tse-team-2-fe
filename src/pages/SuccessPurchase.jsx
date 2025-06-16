@@ -1,8 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 export default function SuccessPurchase() {
+  const navigate = useNavigate();
+
   return (
     <>
       <Navbar></Navbar>
@@ -45,7 +48,13 @@ export default function SuccessPurchase() {
           gap={4}
           marginTop={"20px"}
         >
-          <Button variant="outlined" sx={{ width: "182px", height: "50px" }}>
+          <Button
+            variant="outlined"
+            sx={{ width: "182px", height: "50px" }}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <Box
               component={"img"}
               src="./home.png"
