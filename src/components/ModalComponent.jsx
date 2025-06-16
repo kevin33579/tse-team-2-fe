@@ -1,6 +1,7 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -17,6 +18,7 @@ const style = {
 export default function ModalComponent({ paymentMethods, handleClose, open }) {
   const url = "https://jsonplaceholder.typicode.com/posts";
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   // const fetchData = () => {
   //   axios.get(url).then((data) => {
@@ -91,6 +93,30 @@ export default function ModalComponent({ paymentMethods, handleClose, open }) {
               </>
             );
           })}
+          <Box display={"flex"} flexDirection={"row"} gap={4}>
+            <Button
+              variant="outlined"
+              sx={{ width: "155px", height: "48px" }}
+              onClick={() => {
+                navigate("/checkout");
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              sx={{
+                backgroundColor: "primary.main",
+                color: "white",
+                width: "155px",
+                height: "48px",
+              }}
+              onClick={() => {
+                navigate("/success");
+              }}
+            >
+              Pay Now
+            </Button>
+          </Box>
         </Box>
       </Modal>
     </>
