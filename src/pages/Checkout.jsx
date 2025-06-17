@@ -63,7 +63,9 @@ export default function Checkout() {
   };
 
   const children = (
-    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", ml: { xs: 0, md: 3 } }}
+    >
       <Divider></Divider>
       {carData.map((el, index) => {
         return (
@@ -78,8 +80,8 @@ export default function Checkout() {
                 gap: 2,
                 px: 2,
                 py: 1,
+                margin: { xs: "0", md: "20px" },
               }}
-              margin={"20px"}
             >
               <FormControlLabel
                 control={
@@ -92,7 +94,7 @@ export default function Checkout() {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: { xs: "column", md: "row" },
+                  flexDirection: "row",
                   flexWrap: "wrap",
                 }}
               >
@@ -137,17 +139,17 @@ export default function Checkout() {
                     IDR. {el.price}
                   </Typography>
                 </Box>
+                <Icon
+                  component="img"
+                  sx={{
+                    height: { xs: "20px", md: "30px" },
+                    width: { xs: "13px", md: "23px" },
+                    marginLeft: { xs: "100px", md: "300px" },
+                    cursor: "pointer",
+                  }}
+                  src="./delete.png"
+                />
               </Box>
-              <Icon
-                component="img"
-                sx={{
-                  height: "30px",
-                  width: "23px",
-                  marginLeft: { xs: "100px", md: "300px" },
-                  cursor: "pointer",
-                }}
-                src="./delete.png"
-              />
             </Box>
           </>
         );
