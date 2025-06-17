@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ResetPasswordCreatePassword from "./pages/ResetPasswordCreatePassword";
 import ResetPasswordEmail from "./pages/ResetPasswordEmail";
+import Invoice from "./pages/Invoice";
+import InvoiceDetail from "./pages/InvoiceDetails";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -24,6 +26,8 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/invoice" element={<Invoice />} />
+          <Route path="/invoice/:id" element={<InvoiceDetail />} />
           <Route path="/forgot-password" element={<ResetPasswordEmail />} />
           <Route
             path="/create-new-password"
