@@ -86,9 +86,12 @@ export default function DetailKelas() {
         }}
       >
         <Box
-          width="1140px"
+          width="100%"
+          maxWidth="1140px"
+          mx="auto"
           display="flex"
           flexDirection={{ xs: "column", md: "row" }}
+          px={{xs: 2, sm:3}}
         >
           <Box
             component="img"
@@ -96,7 +99,8 @@ export default function DetailKelas() {
             alt={course.title}
             sx={{
               width: { xs: "100%", md: "400px" },
-              height: "266.6666564941406px",
+              maxWidth:{xs:"100%"},
+              height:  { xs: "250px", sm: "267px" },
               border: "1px solid #000",
               objectFit: "cover",
               marginRight: 3,
@@ -118,14 +122,29 @@ export default function DetailKelas() {
                 {course.type}
               </Typography>
 
-              <Typography variant="h5" fontWeight="bold" mt={1}>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                mt={1}
+                sx={{
+                  fontSize: { xs: "20px", sm: "22px" },
+                }}
+              >
                 {course.title}
               </Typography>
 
-              <Typography variant="h6" color="primary.main" mt={2}>
+              <Typography
+                variant="h6"
+                color="primary.main"
+                mt={2}
+                sx={{
+                  fontSize: { xs: "16px", sm: "18px" },
+                }}
+              >
                 {course.price}
               </Typography>
 
+              <Box sx={{width:"100%", maxWidth:"100%"}}>
               <DatePicker
                 label="Select Schedule"
                 value={selectedDate}
@@ -133,10 +152,11 @@ export default function DetailKelas() {
                 format="dddd, DD MMMM YYYY" // 📅 custom format
                 slotProps={{
                   textField: {
-                    sx: { mt: 3, width: { xs: "100%", sm: "300px" } },
+                    sx: { mt: 3, width: "100%", },
                   },
                 }}
               />
+              </Box>
 
               <Box
                 display="flex"
@@ -157,7 +177,10 @@ export default function DetailKelas() {
                   }}
                   onClick={() => alert(" success add to cart")}
                 >
-                  <Typography fontFamily="Montserrat" fontSize="16px">
+                  <Typography
+                    fontFamily="Montserrat"
+                    fontSize={{ xs: "14px", sm: "16px" }}
+                  >
                     Add to Cart
                   </Typography>
                 </Button>
@@ -165,23 +188,28 @@ export default function DetailKelas() {
                 <Button
                   variant="contained"
                   color="primary"
-                  sx={{ width: "233px" }}
+                  sx={{ width: { xs: "100%", sm: "233px" } }}
                   onClick={() => {
                     navigate("/checkout");
                   }}
                 >
-                  Buy Now
+                  <Typography
+                    fontFamily="Montserrat"
+                    fontSize={{ xs: "14px", sm: "16px" }}
+                  >
+                    Buy Now
+                  </Typography>
                 </Button>
               </Box>
             </Box>
           </Box>
         </Box>
 
-        <Box width="100%" maxWidth="1140px" px={2} mt={4}>
+        <Container sx={{mt:4}}>
           <Typography
             sx={{
               fontWeight: 600,
-              fontSize: "24px",
+              fontSize: { xs: "20px", sm: "24px" },
               lineHeight: "100%",
               letterSpacing: "0%",
               fontFamily: "Montserrat",
@@ -193,7 +221,7 @@ export default function DetailKelas() {
           <Typography
             sx={{
               fontWeight: 400,
-              fontSize: "16px",
+              fontSize: { xs: "14px", sm: "16px" },
               lineHeight: "100%",
               letterSpacing: "0%",
               fontFamily: "Montserrat",
@@ -228,7 +256,7 @@ export default function DetailKelas() {
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum.
           </Typography>
-        </Box>
+        </Container>
       </Box>
       <Divider
         orientation="horizontal"
@@ -250,12 +278,13 @@ export default function DetailKelas() {
               color: "primary.main",
               mb: { xs: 2, sm: 3 },
               textAlign: "center",
+              fontSize: { xs: "16px", sm: "20px" },
             }}
           >
             Another favorite course
           </Typography>
 
-          <Grid container spacing={{ xs: 2, sm: 4 }}>
+          <Grid container spacing={{ xs: 2, sm: 4 }} width="100%">
             {courses.map((course, idx) => (
               <Another_Course
                 course_id={course.id}
