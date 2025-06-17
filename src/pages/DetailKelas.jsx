@@ -12,11 +12,14 @@ import {
   CardMedia,
   CardContent,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import "dayjs/locale/en";
+import Another_Course from "../components/Another_course";
 const courses = [
   {
     id: 1,
@@ -34,10 +37,10 @@ const courses = [
   },
   {
     id: 3,
-    image: "/palisade.png",
+    title: "Course Suzuki XL7",
     type: "SUV",
-    title: "Hyundai Palisade 2021",
-    price: "IDR 800.000",
+    price: "IDR 600.000",
+    image: "/suzuki.png",
   },
   {
     id: 4,
@@ -48,42 +51,25 @@ const courses = [
   },
   {
     id: 5,
-    image: "/dump.png",
-    type: "Truck",
-    title: "Dump Truck for Mining Constructor",
-    price: "IDR 1.200.000",
-  },
-  {
-    id: 6,
-    image: "/civic.png",
-    type: "Sedan",
-    title: "Sedan Honda Civic",
-    price: "IDR 400.000",
-  },
-  {
-    id: 7,
     title: "SUV Toyota Fortunner",
+    type: "SUV",
     price: "IDR 850.000",
     image: "/Fortuner.png",
   },
   {
-    id: 8,
+    id: 6,
     title: "Premium Mazda CX-5 Course",
+    type: "SUV",
     price: "IDR 1.000.000",
     image: "/mazda.png",
   },
-  {
-    id: 9,
-    title: "Course Suzuki XL7",
-    price: "IDR 600.000",
-    image: "/suzuki.png",
-  },
 ];
-
 export default function DetailKelas() {
   const navigate = useNavigate();
   const { id } = useParams();
   const course = courses.find((item) => item.id === Number(id));
+
+  const [selectedDate, setSelectedDate] = useState(dayjs());
 
   if (!course) return <Typography>Course not found</Typography>;
   return (
@@ -134,12 +120,16 @@ export default function DetailKelas() {
                 {course.price}
               </Typography>
 
-              <TextField
-                type="date"
-                label="Select Date"
-                InputLabelProps={{ shrink: true }}
-                fullWidth
-                sx={{ mt: 3 }}
+              <DatePicker
+                label="Select Schedule"
+                value={selectedDate}
+                onChange={(newValue) => setSelectedDate(newValue)}
+                format="dddd, DD MMMM YYYY" // 📅 custom format
+                slotProps={{
+                  textField: {
+                    sx: { mt: 3, width: "300px" },
+                  },
+                }}
               />
 
               <Box display="flex" gap={2} mt={3}>
@@ -148,19 +138,23 @@ export default function DetailKelas() {
                   sx={{
                     bgcolor: "white",
                     color: "black",
-                    border: "1px solid #ccc",
+                    borderColor: "primary.main",
                     "&:hover": {
                       bgcolor: "#f0f0f0",
                     },
+                    width: "233px",
                   }}
                   onClick={() => alert(" success add to cart")}
                 >
-                  Add to Cart
+                  <Typography fontFamily="Montserrat" fontSize="16px">
+                    Add to Cart
+                  </Typography>
                 </Button>
 
                 <Button
                   variant="contained"
                   color="primary"
+                  sx={{ width: "233px" }}
                   onClick={() => {
                     navigate("/checkout");
                   }}
@@ -258,38 +252,19 @@ export default function DetailKelas() {
 
           <Grid container spacing={{ xs: 2, sm: 4 }}>
             {courses.map((course, idx) => (
-              <Grid item xs={12} sm={6} key={idx}>
-                <Card elevation={0}>
-                  <CardActionArea
-                    onClick={() => navigate(`/list-menu-kelas/${course.id}`)}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="160"
-                      image={course.image}
-                      alt={course.title}
-                    />
-                    <CardContent>
-                      <Typography variant="caption" color="text.secondary">
-                        SUV
-                      </Typography>
-                      <Typography
-                        fontWeight="bold"
-                        sx={{ pb: { xs: 2, sm: 4 } }}
-                      >
-                        {course.title}
-                      </Typography>
-                      <Typography color="primary.main" fontWeight="bold">
-                        {course.price}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
+              <Another_Course
+                course_id={course.id}
+                course_title={course.title}
+                course_image={course.image}
+                course_price={course.price}
+                course_type={course.type}
+                index={idx}
+              ></Another_Course>
             ))}
           </Grid>
         </Container>
       </Stack>
+
       <Footer />
     </>
   );

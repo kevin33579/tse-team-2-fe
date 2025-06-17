@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -6,8 +6,10 @@ import {
   Card,
   CardContent,
   CardMedia,
+  CardActionArea,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const courses = [
   {
@@ -56,6 +58,21 @@ const courses = [
 
 export default function Middle_section() {
   const navigate = useNavigate();
+  // const [data, setData] = useState([]);
+  // const url = "https://jsonplaceholder.typicode.com/posts";
+
+  // const fetchData = () => {
+  //   axios.get(url).then((e) => {
+  //     setData(e.data);
+  //   });
+  // };
+
+  // console.log(data);
+
+  // useEffect(() => {
+  //   fetchData();
+  // });
+
   return (
     <Box sx={{ mt: 6, textAlign: "center", px: { xs: 2, sm: 3 } }}>
       <Typography
@@ -68,78 +85,71 @@ export default function Middle_section() {
           fontSize: { xs: "24px", sm: "32px" },
         }}
       >
-        Join Course
+        Join Us For The Course
       </Typography>
 
       <Grid
         container
         spacing={3}
-        justifyContent="center"
+        justifyContent={"center"}
+        textAlign={"left"}
         sx={{ maxWidth: 1400, margin: "0 auto" }}
       >
         {courses.map((course) => (
           <Grid item key={course.id} xs={12} sm={6} md={4}>
             <Card
               sx={{
-                height: "390px",
+                height: "399px",
                 width: "350px",
-                borderRadius: 3,
-                overflow: "hidden",
-                boxShadow: "none",
-                transition: "0.3s",
-                cursor: "pointer",
-                "&:hover": {
-                  transform: "scale(1.05)",
+                ":hover": {
+                  transform: "scale(1.03)",
                   boxShadow: 6,
                 },
               }}
-              onClick={() => navigate(`/list-menu-kelas/${course.id}`)}
+              onClick={() => {
+                navigate("/detail/" + course.id);
+              }}
+              elevation={0}
             >
-              <CardMedia
-                component="img"
-                image={course.image}
-                alt={course.title}
-                sx={{
-                  height: { xs: 180, sm: 233 },
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  border: "1px solid #ccc",
-                  m: { xs: 1.5, sm: 2 },
-                }}
-              />
-              <CardContent sx={{ textAlign: "left", px: { xs: 1.5, sm: 2 } }}>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "#828282",
-                    fontSize: { xs: "12px", sm: "14px" },
-                  }}
-                >
-                  {course.type}
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    fontWeight: 500,
-                    mt: 1,
-                    color: "#333",
-                    fontSize: { xs: "14px", sm: "16px" },
-                  }}
-                >
-                  {course.title}
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    fontWeight: 600,
-                    mt: 1,
-                    color: "#790b0a",
-                    fontSize: { xs: "14px", sm: "16px" },
-                  }}
-                >
-                  {course.price}
-                </Typography>
-              </CardContent>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="233px"
+                  image={course.image}
+                  alt={course.title}
+                />
+                <CardContent>
+                  <Typography
+                    sx={{
+                      fontFamily: "Montserrat",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                      color: "#828282",
+                    }}
+                  >
+                    {course.type}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: "Montserrat",
+                      fontSize: "18px",
+                      fontWeight: "600",
+                      color: "#333333",
+                    }}
+                  >
+                    {course.title}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#790B0A",
+                      fontSize: "20px",
+                      marginTop: "20px",
+                    }}
+                  >
+                    {course.price}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
           </Grid>
         ))}

@@ -11,10 +11,15 @@ import {
   Avatar,
   Button,
   Modal,
+  Grid,
+  FormControlLabel,
+  ImageList,
+  Icon,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Navbar from "../components/Navbar";
 import "@fontsource/poppins";
+import ModalComponent from "../components/ModalComponent";
 
 const carData = [
   {
@@ -42,248 +47,170 @@ const paymentMethods = [
 ];
 
 export default function Checkout() {
-  const [checkedItems, setCheckedItems] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [checked, setChecked] = useState(carData.map(() => false));
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const allChecked = checkedItems.length === carData.length;
-
-  const handleToggle = (id) => {
-    setCheckedItems((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
+  const handleSelectAll = (event) => {
+    setChecked(checked.map(() => event.target.checked));
   };
 
-  const handleToggleAll = () => {
-    setCheckedItems(allChecked ? [] : carData.map((car) => car.id));
+  const handleCheckboxChange = (index) => (event) => {
+    const updated = [...checked];
+    updated[index] = event.target.checked;
+    setChecked(updated);
   };
 
-  const handleDelete = (id) => {
-    alert(`Delete item with id ${id}`);
-  };
-
-  const totalPrice = checkedItems.reduce((sum, id) => {
-    const car = carData.find((c) => c.id === id);
-    return car ? sum + car.price : sum;
-  }, 0);
-
+  const children = (
+    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+      <Divider></Divider>
+      {carData.map((el, index) => {
+        return (
+          <>
+            <Divider></Divider>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+              margin={"20px"}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checked[index]}
+                    onChange={handleCheckboxChange(index)}
+                  />
+                }
+              />
+              <Box display={"flex"} flexDirection={"row"}>
+                <img src={el.image} width={"200px"} height={"133px"}></img>
+                <Box display={"flex"} flexDirection={"column"} margin={"20px"}>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "16px" },
+                      color: "#4F4F4F",
+                    }}
+                  >
+                    {el.type}
+                  </Typography>
+                  <Typography sx={{ fontSize: { xs: "16px", md: "24px" } }}>
+                    {el.name}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "14px", md: "16px" },
+                      color: "#4F4F4F",
+                    }}
+                  >
+                    {el.schedule}
+                  </Typography>
+                  <Typography sx={{ fontSize: "20px", color: "primary.main" }}>
+                    IDR. {el.price}
+                  </Typography>
+                </Box>
+              </Box>
+              <Icon
+                component="img"
+                sx={{
+                  height: "30px",
+                  width: "23px",
+                  marginLeft: "500px",
+                  cursor: "pointer",
+                }}
+                src="./delete.png"
+              />
+            </Box>
+          </>
+        );
+      })}
+    </Box>
+  );
+  const totalPrice = carData.reduce(
+    (sum, item, i) => (checked[i] ? sum + item.price : sum),
+    0
+  );
   return (
     <>
       <Navbar />
-      <Box
-        sx={{
-          width: "100vw",
-          minHeight: "100vh",
-          fontFamily: "Montserrat, sans-serif",
-        }}
+      <Grid
+        container
+        spacing={2}
+        direction={"column"}
+        display={"flex"}
+        width={{ xs: "100%", md: "1137px" }}
+        margin={"auto"}
       >
-        <List sx={{ width: "100%", p: 0 }}>
-          <ListItem divider>
-            <Checkbox
-              checked={allChecked}
-              onChange={handleToggleAll}
-              edge="start"
-            />
-            <ListItemText
-              primary="Pilih Semua"
-              primaryTypographyProps={{ fontFamily: "Montserrat" }}
-            />
-          </ListItem>
-
-          {carData.map((car) => (
-            <ListItem
-              key={car.id}
-              divider
-              sx={{
-                alignItems: "flex-start",
-                gap: 2,
-                fontFamily: "Montserrat",
-              }}
-            >
+        <Grid item xs={12}>
+          <FormControlLabel
+            label="Pilih Semua"
+            control={
               <Checkbox
-                edge="start"
-                checked={checkedItems.includes(car.id)}
-                onChange={() => handleToggle(car.id)}
+                checked={checked.every(Boolean)}
+                indeterminate={checked.some(Boolean) && !checked.every(Boolean)}
+                onChange={handleSelectAll}
               />
-              <Avatar
-                variant="square"
-                src={car.image}
-                alt={car.name}
-                sx={{
-                  width: "200px",
-                  height: "133.33px",
-                  border: "1px solid #ccc",
-                }}
-              />
-              <Box sx={{ flexGrow: 1 }}>
-                <Typography
-                  variant="body2"
-                  sx={{ fontWeight: 400, fontSize: "16px" }}
-                >
-                  Type Car: {car.type}
-                </Typography>
-                <Typography sx={{ fontWeight: 600, fontSize: "24px" }}>
-                  {car.name}
-                </Typography>
-                <Typography sx={{ fontWeight: 400, fontSize: "16px" }}>
-                  Schedule: {car.schedule}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: "20px",
-                    color: "primary.main",
-                  }}
-                >
-                  IDR {car.price.toLocaleString()}
-                </Typography>
-              </Box>
-              <IconButton onClick={() => handleDelete(car.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-
-      <Divider sx={{ my: 2 }} />
-
-      <Box
+            }
+          />
+          {children}
+        </Grid>
+      </Grid>
+      <Divider sx={{ marginTop: "350px" }}></Divider>
+      <Grid
+        container
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          px: 2,
         }}
       >
-        <Typography
-          sx={{
-            fontFamily: "Montserrat",
-            fontWeight: 400,
-            fontSize: "18px",
-          }}
+        <Grid
+          item
+          size={8}
+          display={"flex"}
+          justifyContent={"center"}
+          textAlign={"center"}
+          xs={12}
         >
-          Total Price
-        </Typography>
-
-        <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+          <Typography
+            sx={{ fontSize: "18px", fontWeight: "400", margin: "20px" }}
+          >
+            Total Price
+          </Typography>
           <Typography
             sx={{
-              fontFamily: "Montserrat",
-              fontWeight: 600,
               fontSize: "24px",
+              fontWeight: "600",
               color: "primary.main",
+              margin: "20px",
             }}
           >
-            IDR {totalPrice.toLocaleString()}
+            IDR {totalPrice}
           </Typography>
-
+        </Grid>
+        <Grid item size={4} xs={12}>
           <Button
             variant="contained"
+            onClick={handleOpen}
             sx={{
-              width: 233,
-              height: 40,
-              padding: "10px 20px",
-              borderRadius: "8px",
-              textTransform: "none",
-              fontFamily: "Montserrat",
-              fontWeight: 600,
-              fontSize: "16px",
+              px: 2,
+              fontSize: { xs: "0.75rem", sm: "0.875rem" },
+              backgroundColor: "primary.main",
+              width: "233px",
+              height: "40px",
+              margin: "20px",
             }}
-            onClick={() => setIsModalOpen(true)}
           >
-            Pay Now
+            Pay now
           </Button>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
 
-      {/* MODAL */}
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Box
-          sx={{
-            width: 400,
-            bgcolor: "background.paper",
-            borderRadius: 2,
-            p: 3,
-            mx: "auto",
-            mt: "10%",
-            fontFamily: "Poppins",
-          }}
-        >
-          <Typography
-            align="center"
-            sx={{
-              fontFamily: "Poppins",
-              fontWeight: 500,
-              fontSize: "20px",
-              mb: 3,
-            }}
-          >
-            Select Payment Method
-          </Typography>
-
-          {paymentMethods.map((method) => (
-            <Box
-              key={method.id}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                mb: 2,
-              }}
-            >
-              <Avatar
-                src={method.image}
-                alt={method.name}
-                sx={{ width: 40, height: 40, borderRadius: "8px" }}
-              />
-              <Typography
-                sx={{
-                  fontFamily: "Poppins",
-                  fontWeight: 500,
-                  fontSize: "18px",
-                }}
-              >
-                {method.name}
-              </Typography>
-            </Box>
-          ))}
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              mt: 4,
-            }}
-          >
-            <Button
-              variant="outlined"
-              onClick={() => setIsModalOpen(false)}
-              sx={{
-                width: 155,
-                height: 48,
-                p: "12px 16px",
-                borderRadius: "8px",
-                fontFamily: "Poppins",
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                width: 155,
-                height: 48,
-                p: "12px 16px",
-                borderRadius: "8px",
-                fontFamily: "Poppins",
-                backgroundColor: "primary.main",
-              }}
-            >
-              Pay Now
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
+      <ModalComponent
+        paymentMethods={paymentMethods}
+        open={open}
+        handleClose={handleClose}
+      ></ModalComponent>
     </>
   );
 }

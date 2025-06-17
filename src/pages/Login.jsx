@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -8,12 +8,23 @@ import "@fontsource/montserrat";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [payload, setPayload] = useState({
+    Email: "",
+    Password: "",
+  });
   const navigate = useNavigate();
 
-  const minChar = password.length > 0;
-  const checkCharac = password.length > 5;
+  const minChar = payload.Password.length > 0;
+  const checkCharac = payload.Password.length > 5;
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setPayload({ ...payload, [name]: value });
+  };
+
+  console.log(payload);
   return (
     <>
       <Navbar />
@@ -41,18 +52,21 @@ const Login = () => {
             Welcome Back!
           </Typography>
 
-          <Typography color="#4f4f4f" sx={{ width: "100%", fontSize: "16px",pb:2}}>
+          <Typography
+            color="#4f4f4f"
+            sx={{ width: "100%", fontSize: "16px", pb: 2 }}
+          >
             Please login first
           </Typography>
-            
+
           <TextField
+            name="Email"
             size="small"
             label="Email"
             type="email"
             fullWidth
             variant="outlined"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleChange}
             InputProps={{
               sx: {
                 fontFamily: "Montserrat",
@@ -68,6 +82,7 @@ const Login = () => {
           />
 
           <TextField
+            name="Password"
             size="small"
             error={!checkCharac && minChar}
             helperText={
@@ -78,8 +93,7 @@ const Login = () => {
             type="password"
             width="30vw"
             variant="outlined"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
             InputProps={{
               sx: {
                 fontFamily: "Montserrat",
@@ -94,7 +108,10 @@ const Login = () => {
             }}
           />
 
-          <Typography color="#4f4f4f" sx={{ width: "100%", fontSize: "16px",pb:2 }}>
+          <Typography
+            color="#4f4f4f"
+            sx={{ width: "100%", fontSize: "16px", pb: 2 }}
+          >
             Forgot Password?<Link to="/forgot-password">Click Here</Link>
           </Typography>
 

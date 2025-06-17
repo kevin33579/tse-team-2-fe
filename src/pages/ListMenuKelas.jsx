@@ -18,7 +18,8 @@ import mazdaCx5 from "../assets/Rectangle 12-11.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "@fontsource/montserrat";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Another_Course from "../components/Another_course";
 
 const courses = [
   {
@@ -37,10 +38,10 @@ const courses = [
   },
   {
     id: 3,
-    image: "/palisade.png",
+    title: "Course Suzuki XL7",
     type: "SUV",
-    title: "Hyundai Palisade 2021",
-    price: "IDR 800.000",
+    price: "IDR 600.000",
+    image: "/suzuki.png",
   },
   {
     id: 4,
@@ -51,40 +52,23 @@ const courses = [
   },
   {
     id: 5,
-    image: "/dump.png",
-    type: "Truck",
-    title: "Dump Truck for Mining Constructor",
-    price: "IDR 1.200.000",
-  },
-  {
-    id: 6,
-    image: "/civic.png",
-    type: "Sedan",
-    title: "Sedan Honda Civic",
-    price: "IDR 400.000",
-  },
-  {
-    id: 7,
     title: "SUV Toyota Fortunner",
+    type: "SUV",
     price: "IDR 850.000",
     image: "/Fortuner.png",
   },
   {
-    id: 8,
+    id: 6,
     title: "Premium Mazda CX-5 Course",
+    type: "SUV",
     price: "IDR 1.000.000",
     image: "/mazda.png",
-  },
-  {
-    id: 9,
-    title: "Course Suzuki XL7",
-    price: "IDR 600.000",
-    image: "/suzuki.png",
   },
 ];
 
 const ListMenuKelas = () => {
   const navigate = useNavigate();
+  const { type } = useParams();
   return (
     <>
       <Navbar />
@@ -112,7 +96,7 @@ const ListMenuKelas = () => {
                 fontSize: { xs: "1.125rem", sm: "1.5rem" },
               }}
             >
-              SUV
+              {type}
             </Typography>
             <Typography
               variant="body2"
@@ -164,71 +148,16 @@ const ListMenuKelas = () => {
           >
             Another favorite course
           </Typography>
-
-          <Grid container spacing={{ xs: "2rem", sm: "3rem" }}>
+          <Grid container spacing={{ xs: 2, sm: 4 }}>
             {courses.map((course, idx) => (
-              <Grid
-                item
-                xs={4}
-                sm={4}
-                key={idx}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <Card
-                  elevation={1}
-                  sx={{
-                    width: "100%",
-                    maxWidth: "100%",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardActionArea
-                    onClick={() => navigate(`/list-menu-kelas/${course.id}`)}
-                    sx={{ height: "100%" }}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={course.image}
-                      alt={course.title}
-                      sx={{
-                        width: "100%",
-                        aspectRatio: "16 / 9",
-                        objectFit: "cover",
-                      }}
-                    />
-                    <CardContent>
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        sx={{ fontSize: { xs: "0.75rem", sm: "0.875rem" } }}
-                      >
-                        SUV
-                      </Typography>
-                      <Typography
-                        fontWeight="bold"
-                        sx={{
-                          pb: { xs: 1, sm: 2 },
-                          fontSize: { xs: "0.95rem", sm: "1.1rem" },
-                        }}
-                      >
-                        {course.title}
-                      </Typography>
-                      <Typography
-                        color="primary.main"
-                        fontWeight="bold"
-                        sx={{ fontSize: { xs: "0.9rem", sm: "1rem" } }}
-                      >
-                        {course.price}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
+              <Another_Course
+                course_id={course.id}
+                course_image={course.image}
+                course_price={course.price}
+                course_title={course.title}
+                course_type={course.type}
+                index={idx}
+              ></Another_Course>
             ))}
           </Grid>
         </Container>

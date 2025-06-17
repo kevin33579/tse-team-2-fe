@@ -6,22 +6,30 @@ import {
   CardContent,
   Typography,
   Box,
+  CardActionArea,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
 const carTypes = [
   { id: 1, image: "./Electric.png", title: "Electric" },
-  { id: 2, image: "./pajero.png", title: "SUV" },
-  { id: 3, image: "./civic.png", title: "Sedan" },
-  { id: 4, image: "./dump.png", title: "Truck" },
-  { id: 5, image: "./brio.png", title: "Hatchback" },
-  { id: 6, image: "./palisade.png", title: "Wagon" },
+  { id: 2, image: "./hatchback.png", title: "Hatchback" },
+  { id: 3, image: "./brio.png", title: "LCGC" },
+  { id: 4, image: "./mpv.png", title: "MPV" },
+  { id: 5, image: "./offroad.png", title: "Offroad" },
+  { id: 6, image: "./sedan.png", title: "Sedan" },
+  { id: 7, image: "./suv.png", title: "SUV" },
+  { id: 8, image: "./truck.png", title: "Truck" },
 ];
 
 export default function Bottom_section() {
   const navigate = useNavigate();
   return (
-    <Box sx={{ padding: "60px 80px", textAlign: "center" }}>
+    <Box
+      sx={{
+        padding: "60px 80px",
+        textAlign: "center",
+        marginTop: { xs: "500px", md: "100px" },
+      }}
+    >
       <Typography
         variant="h4"
         sx={{
@@ -33,54 +41,45 @@ export default function Bottom_section() {
       >
         More car type you can choose
       </Typography>
-      <Grid container spacing={3} justifyContent="center">
-        {carTypes.map((type) => (
-          <Grid item xs={12} sm={6} md={3} lg={2} key={type.id}>
+      <Grid
+        container
+        spacing={6}
+        justifyContent="center"
+        sx={{ maxWidth: "1108px", margin: "auto" }}
+      >
+        {carTypes.map((x) => (
+          <Grid item xs={12} sm={6} md={3} lg={2} key={x.id}>
             <Card
-              elevation={0}
               sx={{
-                width: 200,
-                height: 120,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 2,
-                borderRadius: 2,
-                transition: "transform 0.3s, box-shadow 0.3s",
-                "&:hover img": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 6px 18px rgba(0, 0, 0, 0.15)",
-                },
+                width: "200px",
+                height: "119px",
+                ":hover": { transform: "scale(1.05)", boxShadow: 3 },
               }}
-              onClick={() => navigate("/list-menu-kelas")}
+              elevation={0}
+              onClick={() => {
+                navigate("/list-menu-kelas/" + x.title);
+              }}
             >
-              <CardMedia
-                component="img"
-                image={type.image}
-                alt={type.title}
-                sx={{
-                  width: 100,
-                  height: 66,
-                  objectFit: "cover",
-                  borderRadius: 1,
-                  border: "1px solid #ccc",
-                  mb: 1,
-                  transition: "transform 0.3s, box-shadow 0.3s",
-                }}
-              />
-              <CardContent sx={{ padding: 0 }}>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontWeight: 500,
-                    color: "#000",
-                  }}
-                >
-                  {type.title}
-                </Typography>
-              </CardContent>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="66px"
+                  width="100px"
+                  image={x.image}
+                  sx={{ objectFit: "contain" }}
+                />
+                <CardContent>
+                  <Typography
+                    sx={{
+                      fontFamily: "Inter",
+                      fontWeight: "400",
+                      fontSize: "24px",
+                    }}
+                  >
+                    {x.title}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
           </Grid>
         ))}
