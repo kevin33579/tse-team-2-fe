@@ -6,6 +6,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "@fontsource/montserrat";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Email, Password } from "@mui/icons-material";
 
 const Login = () => {
   const [payload, setPayload] = useState({
@@ -22,6 +24,21 @@ const Login = () => {
     const value = e.target.value;
 
     setPayload({ ...payload, [name]: value });
+  };
+
+  const handleSubmit = () => {
+    const submit = axios
+      .post("/user", {
+        Email: Email,
+        Password: Password,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log("submitted", submit);
   };
 
   console.log(payload);
@@ -130,7 +147,7 @@ const Login = () => {
                 width: "140px",
                 height: "38px",
               }}
-              onClick={() => alert("Confirm clicked")}
+              onClick={handleSubmit}
             >
               Login
             </Button>
