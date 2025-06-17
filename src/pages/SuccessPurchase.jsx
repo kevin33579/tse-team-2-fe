@@ -71,6 +71,9 @@ export default function SuccessPurchase() {
               width: "182px",
               height: "50px",
             }}
+            onClick={() => {
+              navigate("/invoice");
+            }}
           >
             <Box
               component={"img"}
