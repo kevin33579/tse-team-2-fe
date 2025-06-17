@@ -9,7 +9,7 @@ import message from "../assets/message.svg";
 export default function Footer() {
   return (
     <>
-      <Divider sx={{ margin: "20px", width: "100vw" }}></Divider>
+      <Divider sx={{ my: "20px", width: "100%" }}></Divider>
       <Box
         sx={{
           px: { xs: 2, sm: 5 },
@@ -20,7 +20,7 @@ export default function Footer() {
       >
         <Grid
           container
-          spacing={{ md: 32, xs: 4 }}
+          spacing={{ md: 10, xs: 4 }}
           justifyContent={"center"}
           alignItems={"flex-start"}
         >
@@ -130,7 +130,8 @@ export default function Footer() {
                 sx={{
                   fontSize: { xs: "0.75rem", sm: "0.875rem" },
                   textAlign: "justify",
-                  width: "350px",
+                  maxWidth: "350px",
+                  width:"100%"
                 }}
               >
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem

@@ -14,6 +14,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import SuccessPurchase from "./pages/SuccessPurchase";
+import MyClass from "./pages/MyClass";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             element={<ResetPasswordCreatePassword />}
           />
           <Route path="/success" element={<SuccessPurchase />} />
+          <Route path="/my-class" element={<MyClass />} />
         </Routes>
       </BrowserRouter>
     </LocalizationProvider>
