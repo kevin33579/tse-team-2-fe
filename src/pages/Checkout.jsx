@@ -143,7 +143,7 @@ export default function Checkout() {
                 sx={{
                   height: "30px",
                   width: "23px",
-                  marginLeft: { xs: "250px", md: "500px" },
+                  marginLeft: { xs: "100px", md: "300px" },
                   cursor: "pointer",
                 }}
                 src="./delete.png"
