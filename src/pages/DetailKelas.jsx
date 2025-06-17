@@ -85,17 +85,23 @@ export default function DetailKelas() {
           mb: 4,
         }}
       >
-        <Box width="1140px" display="flex">
+        <Box
+          width="1140px"
+          display="flex"
+          flexDirection={{ xs: "column", md: "row" }}
+        >
           <Box
             component="img"
             src={course.image}
             alt={course.title}
             sx={{
-              width: "400px",
+              width: { xs: "100%", md: "400px" },
               height: "266.6666564941406px",
               border: "1px solid #000",
               objectFit: "cover",
               marginRight: 3,
+              mb: { xs: 0, md: 0 },
+              mr: { md: 3 },
             }}
           />
 
@@ -127,12 +133,17 @@ export default function DetailKelas() {
                 format="dddd, DD MMMM YYYY" // 📅 custom format
                 slotProps={{
                   textField: {
-                    sx: { mt: 3, width: "300px" },
+                    sx: { mt: 3, width: { xs: "100%", sm: "300px" } },
                   },
                 }}
               />
 
-              <Box display="flex" gap={2} mt={3}>
+              <Box
+                display="flex"
+                gap={2}
+                mt={3}
+                flexDirection={{ xs: "column", sm: "row" }}
+              >
                 <Button
                   variant="contained"
                   sx={{
@@ -142,7 +153,7 @@ export default function DetailKelas() {
                     "&:hover": {
                       bgcolor: "#f0f0f0",
                     },
-                    width: "233px",
+                    width: { xs: "100%", sm: "233px" },
                   }}
                   onClick={() => alert(" success add to cart")}
                 >
@@ -166,13 +177,7 @@ export default function DetailKelas() {
           </Box>
         </Box>
 
-        <Box
-          width="1140px"
-          mt={4}
-          sx={{
-            fontFamily: "Montserrat",
-          }}
-        >
+        <Box width="100%" maxWidth="1140px" px={2} mt={4}>
           <Typography
             sx={{
               fontWeight: 600,
