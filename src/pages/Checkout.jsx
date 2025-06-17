@@ -74,6 +74,10 @@ export default function Checkout() {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
+                flexWrap: "wrap",
+                gap: 2,
+                px: 2,
+                py: 1,
               }}
               margin={"20px"}
             >
@@ -85,9 +89,31 @@ export default function Checkout() {
                   />
                 }
               />
-              <Box display={"flex"} flexDirection={"row"}>
-                <img src={el.image} width={"200px"} height={"133px"}></img>
-                <Box display={"flex"} flexDirection={"column"} margin={"20px"}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  flexWrap: "wrap",
+                }}
+              >
+                <Box
+                  component="img"
+                  src={el.image}
+                  sx={{
+                    width: { xs: "100px", sm: "200px" },
+                    height: "auto",
+                    objectFit: "contain",
+                  }}
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginLeft: 2,
+                    flex: 1,
+                    mt: { xs: 1, sm: 0 },
+                  }}
+                >
                   <Typography
                     sx={{
                       fontSize: { xs: "14px", md: "16px" },
@@ -117,7 +143,7 @@ export default function Checkout() {
                 sx={{
                   height: "30px",
                   width: "23px",
-                  marginLeft: "500px",
+                  marginLeft: { xs: "250px", md: "500px" },
                   cursor: "pointer",
                 }}
                 src="./delete.png"
@@ -143,7 +169,7 @@ export default function Checkout() {
         width={{ xs: "100%", md: "1137px" }}
         margin={"auto"}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{ marginLeft: { xs: "20px" } }}>
           <FormControlLabel
             label="Pilih Semua"
             control={
@@ -173,13 +199,13 @@ export default function Checkout() {
           xs={12}
         >
           <Typography
-            sx={{ fontSize: "18px", fontWeight: "400", margin: "20px" }}
+            sx={{ fontSize: "14px", fontWeight: "400", margin: "20px" }}
           >
             Total Price
           </Typography>
           <Typography
             sx={{
-              fontSize: "24px",
+              fontSize: { xs: "14px", md: "24px" },
               fontWeight: "600",
               color: "primary.main",
               margin: "20px",
@@ -196,7 +222,7 @@ export default function Checkout() {
               px: 2,
               fontSize: { xs: "0.75rem", sm: "0.875rem" },
               backgroundColor: "primary.main",
-              width: "233px",
+              width: { xs: "50px", md: "233px" },
               height: "40px",
               margin: "20px",
             }}
