@@ -11,13 +11,13 @@ export default function MyClass() {
         container
         spacing={2}
         display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        width={"1137px"}
+        alignItems="center"
+        sx={{mx:2}}
+        maxWidth="1137px"
         marginTop={"50px"}
       >
-        <Grid size={{ xs: 6, md: 8 }} display={"flex"} flexDirection={"row"}>
-          <Box component="img" src="./palisade.png"></Box>
+        <Grid item xs= {6} md= {8} display={"flex"} flexDirection={{xs:"column",sm:"row"}}>
+          <Box component="img" width="100%" src="./palisade.png"></Box>
           <Stack
             display={"flex"}
             flexDirection={"column"}
