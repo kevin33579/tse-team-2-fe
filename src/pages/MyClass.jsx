@@ -12,17 +12,30 @@ export default function MyClass() {
         spacing={2}
         display={"flex"}
         alignItems="center"
-        sx={{mx:2}}
+        sx={{ mx: 2 }}
         maxWidth="1137px"
         marginTop={"50px"}
       >
-        <Grid item xs= {6} md= {8} display={"flex"} flexDirection={{xs:"column",sm:"row"}}>
-          <Box component="img" width="100%" src="./palisade.png"></Box>
+        <Grid
+          item
+          xs={6}
+          md={8}
+          display={"flex"}
+          flexDirection={{ xs: "column", sm: "row" }}
+          width={"100%"}
+          marginLeft={"50px"}
+        >
+          <Box
+            component="img"
+            width={{ xs: "100%", md: "200px" }}
+            height={{ xs: "100%", md: "133px" }}
+            src="./palisade.png"
+          ></Box>
           <Stack
             display={"flex"}
             flexDirection={"column"}
             margin={"20px"}
-            gap={2}
+            width={"100%"}
           >
             <Typography
               fontFamily={"Poppins"}
