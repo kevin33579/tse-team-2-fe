@@ -190,6 +190,7 @@ export default function Checkout() {
         container
         sx={{
           display: "flex",
+          marginRight: "200px",
         }}
       >
         <Grid
