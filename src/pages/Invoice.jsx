@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Table,
@@ -53,17 +53,27 @@ const Invoice = () => {
         <Typography variant="h5" mb={2}>
           Menu Invoice
         </Typography>
-        
+
         <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
           <Table>
             <TableHead>
               <TableRow sx={{ backgroundColor: "primary.main" }}>
                 <TableCell sx={{ color: "white", minWidth: 50 }}>No</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 120 }}>No. Invoice</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 100 }}>Date</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 120 }}>Total Course</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 120 }}>Total Price</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 100 }}>Action</TableCell>
+                <TableCell sx={{ color: "white", minWidth: 120 }}>
+                  No. Invoice
+                </TableCell>
+                <TableCell sx={{ color: "white", minWidth: 100 }}>
+                  Date
+                </TableCell>
+                <TableCell sx={{ color: "white", minWidth: 120 }}>
+                  Total Course
+                </TableCell>
+                <TableCell sx={{ color: "white", minWidth: 120 }}>
+                  Total Price
+                </TableCell>
+                <TableCell sx={{ color: "white", minWidth: 100 }}>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -73,7 +83,9 @@ const Invoice = () => {
                   <TableCell>{invoice.invoiceNumber}</TableCell>
                   <TableCell>{invoice.date}</TableCell>
                   <TableCell>{invoice.totalCourse}</TableCell>
-                  <TableCell>IDR {invoice.totalPrice.toLocaleString()}</TableCell>
+                  <TableCell>
+                    IDR {invoice.totalPrice.toLocaleString()}
+                  </TableCell>
                   <TableCell>
                     <Button
                       variant="outlined"

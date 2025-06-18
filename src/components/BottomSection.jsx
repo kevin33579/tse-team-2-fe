@@ -20,7 +20,7 @@ const carTypes = [
   { id: 8, image: "./truck.png", title: "Truck" },
 ];
 
-export default function Bottom_section() {
+export default function BottomSection() {
   const navigate = useNavigate();
   return (
     <Box

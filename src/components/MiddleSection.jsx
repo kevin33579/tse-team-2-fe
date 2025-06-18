@@ -56,7 +56,7 @@ const courses = [
   },
 ];
 
-export default function Middle_section() {
+export default function MiddleSection() {
   const navigate = useNavigate();
   // const [data, setData] = useState([]);
   // const url = "https://jsonplaceholder.typicode.com/posts";

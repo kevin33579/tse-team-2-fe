@@ -2,24 +2,20 @@ import {
   Box,
   Typography,
   Button,
-  TextField,
   Divider,
   Stack,
   Container,
   Grid,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
 } from "@mui/material";
-import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
-import Another_Course from "../components/Another_course";
+import AnotherCourse from "../components/AnotherCourse";
+import { useState } from "react";
+
 const courses = [
   {
     id: 1,
@@ -91,7 +87,7 @@ export default function DetailKelas() {
           mx="auto"
           display="flex"
           flexDirection={{ xs: "column", md: "row" }}
-          px={{xs: 2, sm:3}}
+          px={{ xs: 2, sm: 3 }}
         >
           <Box
             component="img"
@@ -99,8 +95,8 @@ export default function DetailKelas() {
             alt={course.title}
             sx={{
               width: { xs: "100%", md: "400px" },
-              maxWidth:{xs:"100%"},
-              height:  { xs: "250px", sm: "267px" },
+              maxWidth: { xs: "100%" },
+              height: { xs: "250px", sm: "267px" },
               border: "1px solid #000",
               objectFit: "cover",
               marginRight: 3,
@@ -144,18 +140,18 @@ export default function DetailKelas() {
                 {course.price}
               </Typography>
 
-              <Box sx={{width:"100%", maxWidth:"100%"}}>
-              <DatePicker
-                label="Select Schedule"
-                value={selectedDate}
-                onChange={(newValue) => setSelectedDate(newValue)}
-                format="dddd, DD MMMM YYYY" // 📅 custom format
-                slotProps={{
-                  textField: {
-                    sx: { mt: 3, width: "100%", },
-                  },
-                }}
-              />
+              <Box sx={{ width: "100%", maxWidth: "100%" }}>
+                <DatePicker
+                  label="Select Schedule"
+                  value={selectedDate}
+                  onChange={(newValue) => setSelectedDate(newValue)}
+                  format="dddd, DD MMMM YYYY" // 📅 custom format
+                  slotProps={{
+                    textField: {
+                      sx: { mt: 3, width: "100%" },
+                    },
+                  }}
+                />
               </Box>
 
               <Box
@@ -205,7 +201,7 @@ export default function DetailKelas() {
           </Box>
         </Box>
 
-        <Container sx={{mt:4}}>
+        <Container sx={{ mt: 4 }}>
           <Typography
             sx={{
               fontWeight: 600,
@@ -286,14 +282,14 @@ export default function DetailKelas() {
 
           <Grid container spacing={{ xs: 2, sm: 4 }} width="100%">
             {courses.map((course, idx) => (
-              <Another_Course
+              <AnotherCourse
                 course_id={course.id}
                 course_title={course.title}
                 course_image={course.image}
                 course_price={course.price}
                 course_type={course.type}
                 index={idx}
-              ></Another_Course>
+              ></AnotherCourse>
             ))}
           </Grid>
         </Container>

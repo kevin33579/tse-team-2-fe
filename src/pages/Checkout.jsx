@@ -3,20 +3,12 @@ import {
   Box,
   Checkbox,
   Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
   Typography,
-  Avatar,
   Button,
-  Modal,
   Grid,
   FormControlLabel,
-  ImageList,
   Icon,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Navbar from "../components/Navbar";
 import "@fontsource/poppins";
 import ModalComponent from "../components/ModalComponent";

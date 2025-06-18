@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-export default function Another_Course({
+export default function AnotherCourse({
   course_id,
   course_type,
   course_image,

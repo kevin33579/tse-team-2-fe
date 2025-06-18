@@ -1,4 +1,3 @@
-import React from "react";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -7,19 +6,11 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import CardActionArea from "@mui/material/CardActionArea";
 import palisadeImg from "../assets/image3-1.png";
-import suvInova from "../assets/Rectangle 12-6.png";
-import hyundaiPalisade from "../assets/Rectangle 12-7.png";
-import suzukiXl7 from "../assets/Rectangle 12-8.png";
-import pajero from "../assets/Rectangle 12-9.png";
-import fortunner from "../assets/Rectangle 12-10.png";
-import mazdaCx5 from "../assets/Rectangle 12-11.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import "@fontsource/montserrat";
 import { useNavigate, useParams } from "react-router-dom";
-import Another_Course from "../components/Another_course";
+import AnotherCourse from "../components/AnotherCourse";
 
 const courses = [
   {
@@ -150,14 +141,14 @@ const ListMenuKelas = () => {
           </Typography>
           <Grid container spacing={{ xs: 2, sm: 4 }}>
             {courses.map((course, idx) => (
-              <Another_Course
+              <AnotherCourse
                 course_id={course.id}
                 course_image={course.image}
                 course_price={course.price}
                 course_title={course.title}
                 course_type={course.type}
                 index={idx}
-              ></Another_Course>
+              ></AnotherCourse>
             ))}
           </Grid>
         </Container>
