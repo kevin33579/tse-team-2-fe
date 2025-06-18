@@ -7,8 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import palisadeImg from "../assets/image3-1.png";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import { useNavigate, useParams } from "react-router-dom";
 import AnotherCourse from "../components/AnotherCourse";
 
@@ -62,7 +61,6 @@ const ListMenuKelas = () => {
   const { type } = useParams();
   return (
     <>
-      <Navbar />
       <Stack
         sx={{
           pb: { xs: 4, sm: 6 },
@@ -153,8 +151,6 @@ const ListMenuKelas = () => {
           </Grid>
         </Container>
       </Stack>
-
-      <Footer />
     </>
   );
 };

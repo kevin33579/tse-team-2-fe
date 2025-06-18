@@ -11,8 +11,7 @@ import {
   TableContainer,
   Paper,
 } from "@mui/material";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import { useNavigate } from "react-router-dom";
 
 const Invoice = () => {
@@ -48,7 +47,6 @@ const Invoice = () => {
 
   return (
     <>
-      <Navbar />
       <Box px={{ xs: 1, sm: 2, md: 4 }} py={4}>
         <Typography variant="h5" mb={2}>
           Menu Invoice
@@ -101,7 +99,6 @@ const Invoice = () => {
           </Table>
         </TableContainer>
       </Box>
-      <Footer />
     </>
   );
 };

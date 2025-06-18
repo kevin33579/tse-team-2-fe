@@ -7,8 +7,7 @@ import {
   Container,
   Grid,
 } from "@mui/material";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
@@ -70,7 +69,6 @@ export default function DetailKelas() {
   if (!course) return <Typography>Course not found</Typography>;
   return (
     <>
-      <Navbar />
       <Box
         sx={{
           display: "flex",
@@ -294,8 +292,6 @@ export default function DetailKelas() {
           </Grid>
         </Container>
       </Stack>
-
-      <Footer />
     </>
   );
 }

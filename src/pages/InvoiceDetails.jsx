@@ -12,8 +12,6 @@ import {
   Paper,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 const InvoiceDetail = () => {
   const { id } = useParams();
@@ -27,8 +25,20 @@ const InvoiceDetail = () => {
       date: "2025-06-10",
       totalPrice: 300000,
       courses: [
-        { id: 1, name: "Hyundai Palisade", type: "SUV", schedule: "2025-06-15", price: 150000 },
-        { id: 2, name: "Hyundai Palisade", type: "SUV", schedule: "2025-06-16", price: 150000 },
+        {
+          id: 1,
+          name: "Hyundai Palisade",
+          type: "SUV",
+          schedule: "2025-06-15",
+          price: 150000,
+        },
+        {
+          id: 2,
+          name: "Hyundai Palisade",
+          type: "SUV",
+          schedule: "2025-06-16",
+          price: 150000,
+        },
       ],
     },
     {
@@ -37,7 +47,13 @@ const InvoiceDetail = () => {
       date: "2025-06-11",
       totalPrice: 150000,
       courses: [
-        { id: 3, name: "Hyundai Palisade", type: "SUV", schedule: "2025-06-18", price: 150000 },
+        {
+          id: 3,
+          name: "Hyundai Palisade",
+          type: "SUV",
+          schedule: "2025-06-18",
+          price: 150000,
+        },
       ],
     },
     {
@@ -46,9 +62,27 @@ const InvoiceDetail = () => {
       date: "2025-06-12",
       totalPrice: 450000,
       courses: [
-        { id: 4, name: "Hyundai Palisade", type: "SUV", schedule: "2025-06-19", price: 200000 },
-        { id: 5, name: "Hyundai Palisade", type: "SUV", schedule: "2025-06-20", price: 150000 },
-        { id: 6, name: "Hyundai Palisade", type: "SUV", schedule: "2025-06-21", price: 100000 },
+        {
+          id: 4,
+          name: "Hyundai Palisade",
+          type: "SUV",
+          schedule: "2025-06-19",
+          price: 200000,
+        },
+        {
+          id: 5,
+          name: "Hyundai Palisade",
+          type: "SUV",
+          schedule: "2025-06-20",
+          price: 150000,
+        },
+        {
+          id: 6,
+          name: "Hyundai Palisade",
+          type: "SUV",
+          schedule: "2025-06-21",
+          price: 100000,
+        },
       ],
     },
   ];
@@ -71,7 +105,6 @@ const InvoiceDetail = () => {
 
   return (
     <>
-      <Navbar />
       <Box px={{ xs: 1, sm: 2, md: 4 }} py={4}>
         <Typography variant="h5" mb={2}>
           Details Invoice
@@ -90,10 +123,18 @@ const InvoiceDetail = () => {
             <TableHead>
               <TableRow sx={{ backgroundColor: "primary.main" }}>
                 <TableCell sx={{ color: "white", minWidth: 50 }}>No</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 150 }}>Course Name</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 100 }}>Type</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 120 }}>Schedule</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 120 }}>Price</TableCell>
+                <TableCell sx={{ color: "white", minWidth: 150 }}>
+                  Course Name
+                </TableCell>
+                <TableCell sx={{ color: "white", minWidth: 100 }}>
+                  Type
+                </TableCell>
+                <TableCell sx={{ color: "white", minWidth: 120 }}>
+                  Schedule
+                </TableCell>
+                <TableCell sx={{ color: "white", minWidth: 120 }}>
+                  Price
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -110,7 +151,6 @@ const InvoiceDetail = () => {
           </Table>
         </TableContainer>
       </Box>
-      <Footer />
     </>
   );
 };

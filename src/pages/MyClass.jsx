@@ -1,11 +1,8 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 
 export default function MyClass() {
   return (
     <>
-      <Navbar></Navbar>
       <Grid
         container
         spacing={2}
@@ -62,7 +59,6 @@ export default function MyClass() {
           </Stack>
         </Grid>
       </Grid>
-      <Footer></Footer>
     </>
   );
 }
