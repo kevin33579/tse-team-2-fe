@@ -10,68 +10,33 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-const courses = [
-  {
-    id: 1,
-    image: "./inova.png",
-    type: "SUV",
-    title: "Course SUV Kijang Innova",
-    price: "IDR 700.000",
-  },
-  {
-    id: 2,
-    image: "./brio.png",
-    type: "LCGC",
-    title: "Course LCGC Honda Brio",
-    price: "IDR 500.000",
-  },
-  {
-    id: 3,
-    image: "./palisade.png",
-    type: "SUV",
-    title: "Hyundai Palisade 2021",
-    price: "IDR 800.000",
-  },
-  {
-    id: 4,
-    image: "./pajero.png",
-    type: "SUV",
-    title: "Course Mitsubishi Pajero",
-    price: "IDR 800.000",
-  },
-  {
-    id: 5,
-    image: "./dump.png",
-    type: "Truck",
-    title: "Dump Truck for Mining Constructor",
-    price: "IDR 1.200.000",
-  },
-  {
-    id: 6,
-    image: "./civic.png",
-    type: "Sedan",
-    title: "Sedan Honda Civic",
-    price: "IDR 400.000",
-  },
-];
+import { productApi } from "../apiService.js";
 
 export default function MiddleSection() {
   const navigate = useNavigate();
-  // const [data, setData] = useState([]);
-  // const url = "https://jsonplaceholder.typicode.com/posts";
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // const fetchData = () => {
-  //   axios.get(url).then((e) => {
-  //     setData(e.data);
-  //   });
-  // };
+  const toRupiah = (n) =>
+    n?.toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0,
+    });
 
-  // console.log(data);
-
-  // useEffect(() => {
-  //   fetchData();
-  // });
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await productApi.getAllProducts(); // { success, data, … }
+        setCourses(res.data ?? []); // keep only the list
+        console.log(res);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   return (
     <Box sx={{ mt: 6, textAlign: "center", px: { xs: 2, sm: 3 } }}>
@@ -115,8 +80,8 @@ export default function MiddleSection() {
                 <CardMedia
                   component="img"
                   height="233px"
-                  image={course.image}
-                  alt={course.title}
+                  image={course.imageUrl || "/no-image.png"}
+                  alt={course.name}
                 />
                 <CardContent>
                   <Typography
@@ -127,7 +92,7 @@ export default function MiddleSection() {
                       color: "#828282",
                     }}
                   >
-                    {course.type}
+                    {`Type #${course.productTypeId}`}
                   </Typography>
                   <Typography
                     sx={{
@@ -137,7 +102,7 @@ export default function MiddleSection() {
                       color: "#333333",
                     }}
                   >
-                    {course.title}
+                    {course.description || course.name}
                   </Typography>
                   <Typography
                     sx={{
@@ -146,7 +111,7 @@ export default function MiddleSection() {
                       marginTop: "20px",
                     }}
                   >
-                    {course.price}
+                    {toRupiah(course.price)}
                   </Typography>
                 </CardContent>
               </CardActionArea>
