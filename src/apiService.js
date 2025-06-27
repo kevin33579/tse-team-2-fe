@@ -25,3 +25,16 @@ export const productApi = {
     }
   },
 };
+
+export const productTypeApi = {
+  // Get all products
+  getAllProducts: async () => {
+    try {
+      const response = await apiClient.get("/ProductTypes");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+};

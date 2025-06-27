@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Grid,
   Card,
@@ -9,6 +8,9 @@ import {
   CardActionArea,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { productTypeApi } from "../apiService.js";
+import React, { useEffect, useState } from "react";
+
 const carTypes = [
   { id: 1, image: "./Electric.png", title: "Electric" },
   { id: 2, image: "./hatchback.png", title: "Hatchback" },
@@ -22,6 +24,23 @@ const carTypes = [
 
 export default function BottomSection() {
   const navigate = useNavigate();
+
+  const [carTypes, setCarTypes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await productTypeApi.getAllProducts(); // { success, data, … }
+        setCarTypes(res);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
   return (
     <Box
       sx={{
@@ -47,42 +66,43 @@ export default function BottomSection() {
         justifyContent="center"
         sx={{ maxWidth: "1108px", margin: "auto" }}
       >
-        {carTypes.map((x) => (
-          <Grid item xs={12} sm={6} md={3} lg={2} key={x.id}>
-            <Card
-              sx={{
-                width: "200px",
-                height: "119px",
-                ":hover": { transform: "scale(1.05)", boxShadow: 3 },
-              }}
-              elevation={0}
-              onClick={() => {
-                navigate("/list-menu-kelas/" + x.title);
-              }}
-            >
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="66px"
-                  width="100px"
-                  image={x.image}
-                  sx={{ objectFit: "contain" }}
-                />
-                <CardContent>
-                  <Typography
-                    sx={{
-                      fontFamily: "Inter",
-                      fontWeight: "400",
-                      fontSize: "24px",
-                    }}
-                  >
-                    {x.title}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
+        {!loading &&
+          carTypes.map((x) => (
+            <Grid item xs={12} sm={6} md={3} lg={2} key={x.id}>
+              <Card
+                sx={{
+                  width: "200px",
+                  height: "119px",
+                  ":hover": { transform: "scale(1.05)", boxShadow: 3 },
+                }}
+                elevation={0}
+                onClick={() => {
+                  navigate("/list-menu-kelas/" + x.name);
+                }}
+              >
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="66px"
+                    width="100px"
+                    image={x.imageUrl || "/no-image.png"}
+                    sx={{ objectFit: "contain" }}
+                  />
+                  <CardContent>
+                    <Typography
+                      sx={{
+                        fontFamily: "Inter",
+                        fontWeight: "400",
+                        fontSize: "24px",
+                      }}
+                    >
+                      {x.name}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
       </Grid>
     </Box>
   );
