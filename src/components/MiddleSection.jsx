@@ -92,7 +92,7 @@ export default function MiddleSection() {
                       color: "#828282",
                     }}
                   >
-                    {`Type #${course.productTypeId}`}
+                    {` ${course.productTypeName}`}
                   </Typography>
                   <Typography
                     sx={{
@@ -102,7 +102,7 @@ export default function MiddleSection() {
                       color: "#333333",
                     }}
                   >
-                    {course.description || course.name}
+                    {course.name}
                   </Typography>
                   <Typography
                     sx={{
