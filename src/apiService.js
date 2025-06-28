@@ -24,6 +24,15 @@ export const productApi = {
       throw error;
     }
   },
+  getProductById: async (id) => {
+    try {
+      const response = await apiClient.get(`/products/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetch product ${id}`, error);
+      throw error;
+    }
+  },
 };
 
 export const productTypeApi = {
@@ -31,6 +40,19 @@ export const productTypeApi = {
   getAllProducts: async () => {
     try {
       const response = await apiClient.get("/ProductTypes");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+};
+
+export const scheduleApi = {
+  // Get all products
+  getAllSchedule: async () => {
+    try {
+      const response = await apiClient.get("/Schedule");
       return response.data;
     } catch (error) {
       console.error("Error fetching products:", error);

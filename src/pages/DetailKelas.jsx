@@ -6,6 +6,8 @@ import {
   Stack,
   Container,
   Grid,
+  TextField,
+  MenuItem,
 } from "@mui/material";
 
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,58 +15,45 @@ import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import AnotherCourse from "../components/AnotherCourse";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { productApi, scheduleApi } from "../apiService";
 
-const courses = [
-  {
-    id: 1,
-    image: "/inova.png",
-    type: "SUV",
-    title: "Course SUV Kijang Innova",
-    price: "IDR 700.000",
-  },
-  {
-    id: 2,
-    image: "/brio.png",
-    type: "LCGC",
-    title: "Course LCGC Honda Brio",
-    price: "IDR 500.000",
-  },
-  {
-    id: 3,
-    title: "Course Suzuki XL7",
-    type: "SUV",
-    price: "IDR 600.000",
-    image: "/suzuki.png",
-  },
-  {
-    id: 4,
-    image: "/pajero.png",
-    type: "SUV",
-    title: "Course Mitsubishi Pajero",
-    price: "IDR 800.000",
-  },
-  {
-    id: 5,
-    title: "SUV Toyota Fortunner",
-    type: "SUV",
-    price: "IDR 850.000",
-    image: "/Fortuner.png",
-  },
-  {
-    id: 6,
-    title: "Premium Mazda CX-5 Course",
-    type: "SUV",
-    price: "IDR 1.000.000",
-    image: "/mazda.png",
-  },
-];
 export default function DetailKelas() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const course = courses.find((item) => item.id === Number(id));
+  // const course = courses.find((item) => item.id === Number(id));
+  const [course, setCourse] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [schedules, setSchedules] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
 
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const toRupiah = (n) =>
+    n?.toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0,
+    });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data: ProductId } = await productApi.getProductById(id); // { success, data, … }
+        const { data: ProductList } = await productApi.getAllProducts(); // { success, data, … }
+        const res = await scheduleApi.getAllSchedule();
+        setCourse(ProductId ?? []); // keep only the list
+        setSchedules(res ?? []);
+        setSelectedDate(res?.[0]?.time || "");
+        setCourses(ProductList ?? []);
+
+        console.log(ProductList);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
   if (!course) return <Typography>Course not found</Typography>;
   return (
@@ -89,7 +78,7 @@ export default function DetailKelas() {
         >
           <Box
             component="img"
-            src={course.image}
+            src={course.imageUrl}
             alt={course.title}
             sx={{
               width: { xs: "100%", md: "400px" },
@@ -113,7 +102,7 @@ export default function DetailKelas() {
           >
             <Box>
               <Typography variant="h6" color="text.secondary">
-                {course.type}
+                {course.productTypeName}
               </Typography>
 
               <Typography
@@ -124,7 +113,7 @@ export default function DetailKelas() {
                   fontSize: { xs: "20px", sm: "22px" },
                 }}
               >
-                {course.title}
+                {course.name}
               </Typography>
 
               <Typography
@@ -135,21 +124,24 @@ export default function DetailKelas() {
                   fontSize: { xs: "16px", sm: "18px" },
                 }}
               >
-                {course.price}
+                {toRupiah(course.price)}
               </Typography>
 
               <Box sx={{ width: "100%", maxWidth: "100%" }}>
-                <DatePicker
+                <TextField
+                  select
+                  fullWidth
                   label="Select Schedule"
                   value={selectedDate}
-                  onChange={(newValue) => setSelectedDate(newValue)}
-                  format="dddd, DD MMMM YYYY" // 📅 custom format
-                  slotProps={{
-                    textField: {
-                      sx: { mt: 3, width: "100%" },
-                    },
-                  }}
-                />
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  sx={{ mt: 3 }}
+                >
+                  {schedules.map((sch) => (
+                    <MenuItem key={sch.id} value={sch.time}>
+                      {dayjs(sch.time).format("dddd, DD MMMM YYYY")}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Box>
 
               <Box
@@ -223,32 +215,7 @@ export default function DetailKelas() {
               mt: "20px",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "100%",
-              letterSpacing: "0%",
-              fontFamily: "Montserrat",
-              color: "#333333",
-              mt: "20px",
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            {course.description}
           </Typography>
         </Container>
       </Box>
@@ -282,10 +249,10 @@ export default function DetailKelas() {
             {courses.map((course, idx) => (
               <AnotherCourse
                 course_id={course.id}
-                course_title={course.title}
-                course_image={course.image}
+                course_title={course.name}
+                course_image={course.imageUrl}
                 course_price={course.price}
-                course_type={course.type}
+                course_type={course.productTypeNameName}
                 index={idx}
               ></AnotherCourse>
             ))}
