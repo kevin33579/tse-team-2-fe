@@ -33,13 +33,31 @@ export const productApi = {
       throw error;
     }
   },
+  getProductByTypeId: async (id) => {
+    try {
+      const response = await apiClient.get(`/products/type/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetch product ${id}`, error);
+      throw error;
+    }
+  },
 };
 
 export const productTypeApi = {
   // Get all products
-  getAllProducts: async () => {
+  getAllProductsType: async () => {
     try {
       const response = await apiClient.get("/ProductTypes");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+  getProductTypeById: async (id) => {
+    try {
+      const response = await apiClient.get(`/ProductTypes/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching products:", error);

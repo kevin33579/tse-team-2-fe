@@ -10,55 +10,33 @@ import palisadeImg from "../assets/image3-1.png";
 
 import { useNavigate, useParams } from "react-router-dom";
 import AnotherCourse from "../components/AnotherCourse";
-
-const courses = [
-  {
-    id: 1,
-    image: "/inova.png",
-    type: "SUV",
-    title: "Course SUV Kijang Innova",
-    price: "IDR 700.000",
-  },
-  {
-    id: 2,
-    image: "/brio.png",
-    type: "LCGC",
-    title: "Course LCGC Honda Brio",
-    price: "IDR 500.000",
-  },
-  {
-    id: 3,
-    title: "Course Suzuki XL7",
-    type: "SUV",
-    price: "IDR 600.000",
-    image: "/suzuki.png",
-  },
-  {
-    id: 4,
-    image: "/pajero.png",
-    type: "SUV",
-    title: "Course Mitsubishi Pajero",
-    price: "IDR 800.000",
-  },
-  {
-    id: 5,
-    title: "SUV Toyota Fortunner",
-    type: "SUV",
-    price: "IDR 850.000",
-    image: "/Fortuner.png",
-  },
-  {
-    id: 6,
-    title: "Premium Mazda CX-5 Course",
-    type: "SUV",
-    price: "IDR 1.000.000",
-    image: "/mazda.png",
-  },
-];
+import { useEffect, useState } from "react";
+import { productApi, productTypeApi } from "../apiService";
 
 const ListMenuKelas = () => {
+  const [productType, setProductType] = useState([]);
   const navigate = useNavigate();
   const { type } = useParams();
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await productTypeApi.getProductTypeById(type); // { success, data, … }
+        const { data: ProductByType } = await productApi.getProductByTypeId(
+          type
+        );
+        setCourses(ProductByType);
+
+        setProductType(res ?? []); // keep only the list
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <Stack
@@ -71,10 +49,9 @@ const ListMenuKelas = () => {
         <Card elevation={0}>
           <CardMedia
             component="img"
-            image={palisadeImg}
-            height="10%"
+            image={productType.imageUrl}
             alt="SUV"
-            sx={{ objectFit: "cover" }}
+            sx={{ objectFit: "cover", width: "100vw", height: "294px" }}
           />
           <CardContent>
             <Typography
@@ -85,7 +62,7 @@ const ListMenuKelas = () => {
                 fontSize: { xs: "1.125rem", sm: "1.5rem" },
               }}
             >
-              {type}
+              {productType.name}
             </Typography>
             <Typography
               variant="body2"
@@ -94,13 +71,7 @@ const ListMenuKelas = () => {
                 fontSize: { xs: "0.875rem", sm: "1rem" },
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              {productType.description}
             </Typography>
           </CardContent>
         </Card>
@@ -141,10 +112,10 @@ const ListMenuKelas = () => {
             {courses.map((course, idx) => (
               <AnotherCourse
                 course_id={course.id}
-                course_image={course.image}
+                course_image={course.imageUrl}
                 course_price={course.price}
-                course_title={course.title}
-                course_type={course.type}
+                course_title={course.name}
+                course_type={course.description}
                 index={idx}
               ></AnotherCourse>
             ))}

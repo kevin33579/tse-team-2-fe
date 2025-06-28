@@ -45,8 +45,6 @@ export default function DetailKelas() {
         setSchedules(res ?? []);
         setSelectedDate(res?.[0]?.time || "");
         setCourses(ProductList ?? []);
-
-        console.log(ProductList);
       } catch (err) {
         console.error(err);
       } finally {

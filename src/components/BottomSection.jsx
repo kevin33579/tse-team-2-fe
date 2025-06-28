@@ -11,17 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { productTypeApi } from "../apiService.js";
 import React, { useEffect, useState } from "react";
 
-const carTypes = [
-  { id: 1, image: "./Electric.png", title: "Electric" },
-  { id: 2, image: "./hatchback.png", title: "Hatchback" },
-  { id: 3, image: "./brio.png", title: "LCGC" },
-  { id: 4, image: "./mpv.png", title: "MPV" },
-  { id: 5, image: "./offroad.png", title: "Offroad" },
-  { id: 6, image: "./sedan.png", title: "Sedan" },
-  { id: 7, image: "./suv.png", title: "SUV" },
-  { id: 8, image: "./truck.png", title: "Truck" },
-];
-
 export default function BottomSection() {
   const navigate = useNavigate();
 
@@ -31,7 +20,7 @@ export default function BottomSection() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await productTypeApi.getAllProducts(); // { success, data, … }
+        const res = await productTypeApi.getAllProductsType(); // { success, data, … }
         setCarTypes(res);
       } catch (err) {
         console.error(err);
@@ -77,7 +66,7 @@ export default function BottomSection() {
                 }}
                 elevation={0}
                 onClick={() => {
-                  navigate("/list-menu-kelas/" + x.name);
+                  navigate("/list-menu-kelas/" + x.id);
                 }}
               >
                 <CardActionArea>

@@ -29,7 +29,6 @@ export default function MiddleSection() {
       try {
         const res = await productApi.getAllProducts(); // { success, data, … }
         setCourses(res.data ?? []); // keep only the list
-        console.log(res);
       } catch (err) {
         console.error(err);
       } finally {
