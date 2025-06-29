@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Email, Password } from "@mui/icons-material";
 
-axios.defaults.baseURL = "http://localhost:5234";
+axios.defaults.baseURL = "https://localhost:7071";
 const Login = () => {
   const [payload, setPayload] = useState({
     Email: "",
