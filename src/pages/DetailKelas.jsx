@@ -51,7 +51,7 @@ export default function DetailKelas() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [id]);
 
   if (!course) return <Typography>Course not found</Typography>;
   return (
