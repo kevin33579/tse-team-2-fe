@@ -16,6 +16,7 @@ import { cartApi } from "../apiService";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import { toRupiah } from "../helper";
+import Swal from "sweetalert2";
 
 const paymentMethods = [
   { id: 1, name: "Gopay", image: "./gopay.png" },
@@ -29,14 +30,14 @@ export default function Checkout() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [cart, setCart] = useState([]);
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
 
   const handleSelectAll = (event) => {
     setChecked(checked.map(() => event.target.checked));
   };
 
   async function fetchData() {
-    const id = localStorage.getItem("id");
-    const token = localStorage.getItem("token");
     const response = await cartApi.getUserCart(id, token);
     setCart(response);
     setChecked(Array(response.length).fill(false));
@@ -49,6 +50,27 @@ export default function Checkout() {
     const updated = [...checked];
     updated[index] = event.target.checked;
     setChecked(updated);
+  };
+  const handleDelete = async (cartId) => {
+    try {
+      await cartApi.deleteCartById(cartId, token);
+
+      // remove the deleted item from state so React re‑renders
+      setCart((prev) => prev.filter((item) => item.id !== cartId));
+      setChecked((prev) => prev.filter((_, i) => cart[i].id !== cartId));
+
+      Swal.fire({
+        title: "Item removed",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Failed to delete",
+      });
+    }
   };
 
   const children = (
@@ -137,6 +159,7 @@ export default function Checkout() {
                     cursor: "pointer",
                   }}
                   src="./delete.png"
+                  onClick={() => handleDelete(el.id)}
                 />
               </Box>
             </Box>
@@ -203,7 +226,7 @@ export default function Checkout() {
               margin: "20px",
             }}
           >
-            IDR {totalPrice}
+            {toRupiah(totalPrice)}
           </Typography>
         </Grid>
         <Grid item size={4} xs={12}>

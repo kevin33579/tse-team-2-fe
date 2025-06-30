@@ -102,4 +102,15 @@ export const cartApi = {
       throw error;
     }
   },
+  deleteCartById: async (id, token) => {
+    try {
+      const response = await apiClient.delete(`Cart/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
 };
