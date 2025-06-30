@@ -78,3 +78,17 @@ export const scheduleApi = {
     }
   },
 };
+
+export const cartApi = {
+  createCart: async (CartData, token) => {
+    try {
+      const response = await apiClient.post("Cart", CartData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+};

@@ -16,7 +16,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/en";
 import AnotherCourse from "../components/AnotherCourse";
 import { useEffect, useState } from "react";
-import { productApi, scheduleApi } from "../apiService";
+import { cartApi, productApi, scheduleApi } from "../apiService";
 
 export default function DetailKelas() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function DetailKelas() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [schedules, setSchedules] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
 
   const toRupiah = (n) =>
     n?.toLocaleString("id-ID", {
@@ -35,16 +35,37 @@ export default function DetailKelas() {
       maximumFractionDigits: 0,
     });
 
+  const handleAddCart = async () => {
+    try {
+      const userId = Number(localStorage.getItem("id")); // PENTING: panggil fungsinya, cast ke number
+      const token = localStorage.getItem("token");
+      console.log(userId);
+      const res = await cartApi.createCart(
+        {
+          userId, // atau hilangkan kalau backend ambil dari token
+          productId: Number(id), // pastikan number
+          scheduleId: selectedSchedule?.id,
+          quantity: 1,
+        },
+        token
+      );
+    } catch (err) {
+      console.error(err);
+      // tambahkan penanganan error (toast/snackbar) di sini
+    }
+  };
+
   useEffect(() => {
     (async () => {
       try {
         const { data: ProductId } = await productApi.getProductById(id); // { success, data, … }
         const { data: ProductList } = await productApi.getAllProducts(); // { success, data, … }
         const res = await scheduleApi.getAllSchedule();
+        console.log(res);
         setCourse(ProductId ?? []); // keep only the list
         setSchedules(res ?? []);
-        setSelectedDate(res?.[0]?.time || "");
         setCourses(ProductList ?? []);
+        setSelectedSchedule(res[0] || null);
       } catch (err) {
         console.error(err);
       } finally {
@@ -130,13 +151,19 @@ export default function DetailKelas() {
                   select
                   fullWidth
                   label="Select Schedule"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
+                  value={selectedSchedule?.id ?? ""} // pakai id sebagai value
+                  onChange={(e) => {
+                    const sch = schedules.find(
+                      (s) => s.id === Number(e.target.value) // temukan objeknya
+                    );
+                    setSelectedSchedule(sch);
+                  }}
                   sx={{ mt: 3 }}
                 >
-                  {schedules.map((sch) => (
-                    <MenuItem key={sch.id} value={sch.time}>
-                      {dayjs(sch.time).format("dddd, DD MMMM YYYY")}
+                  {schedules.map(({ id, time }) => (
+                    <MenuItem key={id} value={id}>
+                      {dayjs(time).format("dddd, DD MMMM YYYY")}{" "}
+                      {/* label tetap tanggal */}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -159,7 +186,7 @@ export default function DetailKelas() {
                     },
                     width: { xs: "100%", sm: "233px" },
                   }}
-                  onClick={() => alert(" success add to cart")}
+                  onClick={handleAddCart}
                 >
                   <Typography
                     fontFamily="Montserrat"

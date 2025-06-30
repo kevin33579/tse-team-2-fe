@@ -34,11 +34,10 @@ const Login = () => {
         password: payload.Password,
       })
       .then(function (response) {
-        console.log("response dari backend", response);
-
         if (response.data.success) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("username", response.data.user.username);
+          localStorage.setItem("id", response.data.user.userID);
           alert("Login sukses!");
           navigate("/");
         } else {
