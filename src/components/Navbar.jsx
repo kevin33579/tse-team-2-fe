@@ -66,7 +66,7 @@ export default function Navbar() {
         {token ? (
           // NAVBAR SESUDAH LOGIN
           <Stack direction="row" spacing={2} alignItems="center">
-            <IconButton onClick={() => navigate("/my-class")}>
+            <IconButton onClick={() => navigate("/checkout")}>
               <ShoppingCartIcon sx={{ color: "primary.main" }} />
             </IconButton>
 
@@ -76,7 +76,12 @@ export default function Navbar() {
               sx={{ color: "primary.main", fontSize: "0.875rem" }}
             >
               <Typography
-                sx={{ ml: 0.5, color: "primari.main", fontSize: "0.875rem", textTransform: "none" }}
+                sx={{
+                  ml: 0.5,
+                  color: "primari.main",
+                  fontSize: "0.875rem",
+                  textTransform: "none",
+                }}
               >
                 My Class
               </Typography>
@@ -84,7 +89,11 @@ export default function Navbar() {
             <Button
               variant="text"
               onClick={() => navigate("/invoice")}
-              sx={{ color: "#790b0a", fontSize: "0.875rem", textTransform: "none" }}
+              sx={{
+                color: "#790b0a",
+                fontSize: "0.875rem",
+                textTransform: "none",
+              }}
             >
               <Typography
                 sx={{ ml: 0.5, color: "primary.main", fontSize: "0.875rem" }}

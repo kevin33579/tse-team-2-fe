@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Checkbox,
@@ -12,6 +12,10 @@ import {
 import Navbar from "../components/Navbar";
 import "@fontsource/poppins";
 import ModalComponent from "../components/ModalComponent";
+import { cartApi } from "../apiService";
+import dayjs from "dayjs";
+import "dayjs/locale/en";
+import { toRupiah } from "../helper";
 
 const carData = [
   {
@@ -43,10 +47,22 @@ export default function Checkout() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [cart, setCart] = useState([]);
 
   const handleSelectAll = (event) => {
     setChecked(checked.map(() => event.target.checked));
   };
+
+  async function fetchData() {
+    const id = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
+    const response = await cartApi.getUserCart(id, token);
+    console.log(response);
+    setCart(response);
+  }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleCheckboxChange = (index) => (event) => {
     const updated = [...checked];
@@ -59,7 +75,7 @@ export default function Checkout() {
       sx={{ display: "flex", flexDirection: "column", ml: { xs: 0, md: 3 } }}
     >
       <Divider></Divider>
-      {carData.map((el, index) => {
+      {cart.map((el, index) => {
         return (
           <>
             <Divider></Divider>
@@ -92,7 +108,7 @@ export default function Checkout() {
               >
                 <Box
                   component="img"
-                  src={el.image}
+                  src={el.productImageUrl}
                   sx={{
                     width: { xs: "100px", sm: "200px" },
                     height: "auto",
@@ -114,10 +130,10 @@ export default function Checkout() {
                       color: "#4F4F4F",
                     }}
                   >
-                    {el.type}
+                    {el.productTypeName}
                   </Typography>
                   <Typography sx={{ fontSize: { xs: "16px", md: "24px" } }}>
-                    {el.name}
+                    {el.productName}
                   </Typography>
                   <Typography
                     sx={{
@@ -125,10 +141,10 @@ export default function Checkout() {
                       color: "#4F4F4F",
                     }}
                   >
-                    {el.schedule}
+                    {dayjs(el.scheduleTime).format("dddd, DD MMMM YYYY")}{" "}
                   </Typography>
                   <Typography sx={{ fontSize: "20px", color: "primary.main" }}>
-                    IDR. {el.price}
+                    {toRupiah(el.productPrice)}
                   </Typography>
                 </Box>
                 <Icon

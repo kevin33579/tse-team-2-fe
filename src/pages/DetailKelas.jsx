@@ -17,6 +17,7 @@ import "dayjs/locale/en";
 import AnotherCourse from "../components/AnotherCourse";
 import { useEffect, useState } from "react";
 import { cartApi, productApi, scheduleApi } from "../apiService";
+import { toRupiah } from "../helper";
 
 export default function DetailKelas() {
   const navigate = useNavigate();
@@ -27,13 +28,6 @@ export default function DetailKelas() {
   const [loading, setLoading] = useState(true);
   const [schedules, setSchedules] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
-
-  const toRupiah = (n) =>
-    n?.toLocaleString("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      maximumFractionDigits: 0,
-    });
 
   const handleAddCart = async () => {
     try {
