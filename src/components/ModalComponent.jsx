@@ -2,6 +2,7 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { paymentMethodApi } from "../apiService";
 
 const style = {
   position: "absolute",
@@ -15,30 +16,22 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export default function ModalComponent({ paymentMethods, handleClose, open }) {
-  const url = "https://jsonplaceholder.typicode.com/posts";
+export default function ModalComponent({ handleClose, open }) {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  // const fetchData = () => {
-  //   axios.get(url).then((data) => {
-  //     setData(data);
-  //   });
-  // };
-
-  // console.log(data);
-  // useEffect(() => {
-  //   fetchData();
-  // });
-  // const fetchData = () => {
-  //   axios({
-  //     method: "get",
-  //     url: url,
-  //     responseType: "stream",
-  //   }).then(function (response) {
-  //     console.log(response.data);
-  //   });
-  // };
+  const fetchData = async () => {
+    try {
+      const res = await paymentMethodApi.getPaymentMethod(); // <- await promise
+      setData(res.data ?? []); // <- assume { data: [...] }
+    } catch (e) {
+      console.error(e);
+      setData([]); // fallback
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -54,7 +47,7 @@ export default function ModalComponent({ paymentMethods, handleClose, open }) {
           >
             Select Payment Method
           </Typography>
-          {paymentMethods.map((el) => {
+          {data.map((el) => {
             return (
               <>
                 <Box
@@ -72,7 +65,7 @@ export default function ModalComponent({ paymentMethods, handleClose, open }) {
                 >
                   <Box
                     component="img"
-                    src={el.image}
+                    src={el.imageUrl}
                     alt={el.name}
                     sx={{
                       width: "40px",
@@ -98,7 +91,7 @@ export default function ModalComponent({ paymentMethods, handleClose, open }) {
               variant="outlined"
               sx={{ width: "155px", height: "48px" }}
               onClick={() => {
-                navigate("/checkout");
+                handleClose();
               }}
             >
               Cancel

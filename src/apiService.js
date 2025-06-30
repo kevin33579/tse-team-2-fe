@@ -114,3 +114,15 @@ export const cartApi = {
     }
   },
 };
+
+export const paymentMethodApi = {
+  getPaymentMethod: async () => {
+    try {
+      const response = await apiClient.get("PaymentMethod");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+};

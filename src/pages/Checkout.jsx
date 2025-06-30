@@ -18,12 +18,6 @@ import "dayjs/locale/en";
 import { toRupiah } from "../helper";
 import Swal from "sweetalert2";
 
-const paymentMethods = [
-  { id: 1, name: "Gopay", image: "./gopay.png" },
-  { id: 2, name: "OVO", image: "./ovo.png" },
-  { id: 3, name: "DANA", image: "./dana.png" },
-];
-
 export default function Checkout() {
   const [checked, setChecked] = useState([]);
   const [open, setOpen] = useState(false);
@@ -245,11 +239,7 @@ export default function Checkout() {
         </Grid>
       </Grid>
 
-      <ModalComponent
-        paymentMethods={paymentMethods}
-        open={open}
-        handleClose={handleClose}
-      ></ModalComponent>
+      <ModalComponent open={open} handleClose={handleClose}></ModalComponent>
     </>
   );
 }
