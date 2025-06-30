@@ -17,25 +17,6 @@ import dayjs from "dayjs";
 import "dayjs/locale/en";
 import { toRupiah } from "../helper";
 
-const carData = [
-  {
-    id: 1,
-    image: "./palisade.png",
-    type: "SUV",
-    name: "Hyundai Palisade",
-    schedule: "Wednesday, 27 July 2022",
-    price: 800000,
-  },
-  {
-    id: 2,
-    image: "./Fortuner.png",
-    type: "SUV",
-    name: "Toyota Fortuner",
-    schedule: "Wednesday, 27 July 2022",
-    price: 850000,
-  },
-];
-
 const paymentMethods = [
   { id: 1, name: "Gopay", image: "./gopay.png" },
   { id: 2, name: "OVO", image: "./ovo.png" },
@@ -43,7 +24,7 @@ const paymentMethods = [
 ];
 
 export default function Checkout() {
-  const [checked, setChecked] = useState(carData.map(() => false));
+  const [checked, setChecked] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -57,8 +38,8 @@ export default function Checkout() {
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
     const response = await cartApi.getUserCart(id, token);
-    console.log(response);
     setCart(response);
+    setChecked(Array(response.length).fill(false));
   }
   useEffect(() => {
     fetchData();
@@ -164,8 +145,8 @@ export default function Checkout() {
       })}
     </Box>
   );
-  const totalPrice = carData.reduce(
-    (sum, item, i) => (checked[i] ? sum + item.price : sum),
+  const totalPrice = cart.reduce(
+    (sum, item, i) => (checked[i] ? sum + item.productPrice : sum),
     0
   );
   return (
