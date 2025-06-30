@@ -18,6 +18,7 @@ import AnotherCourse from "../components/AnotherCourse";
 import { useEffect, useState } from "react";
 import { cartApi, productApi, scheduleApi } from "../apiService";
 import { toRupiah } from "../helper";
+import Swal from "sweetalert2";
 
 export default function DetailKelas() {
   const navigate = useNavigate();
@@ -43,6 +44,10 @@ export default function DetailKelas() {
         },
         token
       );
+      Swal.fire({
+        title: "Success add to cart",
+        icon: "success",
+      });
     } catch (err) {
       console.error(err);
       // tambahkan penanganan error (toast/snackbar) di sini
