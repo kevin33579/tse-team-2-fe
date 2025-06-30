@@ -85,13 +85,10 @@ export default function Checkout() {
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
                 alignItems: "center",
-                flexWrap: "wrap",
-                gap: 2,
-                px: 2,
-                py: 1,
-                margin: { xs: "0", md: "20px" },
+                width: "100%",
+                flexWrap: { xs: "wrap", md: "nowrap" },
+                margin: "10px",
               }}
             >
               <FormControlLabel
@@ -105,8 +102,9 @@ export default function Checkout() {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
+                  alignItems: "center",
                   flexWrap: "wrap",
+                  width: "100%", // let items use full row
                 }}
               >
                 <Box
@@ -197,7 +195,7 @@ export default function Checkout() {
           {children}
         </Grid>
       </Grid>
-      <Divider sx={{ marginTop: "350px" }}></Divider>
+      <Divider sx={{ marginTop: "200px" }}></Divider>
       <Grid
         container
         sx={{
