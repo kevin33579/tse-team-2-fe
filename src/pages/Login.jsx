@@ -8,6 +8,7 @@ import "@fontsource/montserrat";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Email, Password } from "@mui/icons-material";
+import Swal from "sweetalert2";
 
 axios.defaults.baseURL = "https://localhost:7071";
 const Login = () => {
@@ -38,7 +39,10 @@ const Login = () => {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("username", response.data.user.username);
           localStorage.setItem("id", response.data.user.userID);
-          alert("Login sukses!");
+          Swal.fire({
+            title: "Login Sukses",
+            icon: "success",
+          });
           navigate("/");
         } else {
           alert("Login gagal: " + response.data.message);
