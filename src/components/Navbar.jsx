@@ -4,7 +4,6 @@ import {
   Stack,
   Typography,
   Button,
-  Box,
   IconButton,
   Divider,
 } from "@mui/material";
@@ -13,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
-import ReceiptIcon from "@mui/icons-material/Receipt";
 
 const Logo = styled("img")({
   height: 30,
