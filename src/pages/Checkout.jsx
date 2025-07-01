@@ -24,6 +24,10 @@ export default function Checkout() {
   const [cart, setCart] = useState([]);
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
+  const selectedCartIds = cart
+    .filter((_, idx) => checked[idx])
+    .map((item) => item.id);
+
   const totalCourse = checked.filter(Boolean).length;
 
   const handleSelectAll = (event) => {
@@ -243,6 +247,7 @@ export default function Checkout() {
         handleClose={handleClose}
         totalPrice={totalPrice}
         totalCourse={totalCourse}
+        selectedCartIds={selectedCartIds}
       ></ModalComponent>
     </>
   );

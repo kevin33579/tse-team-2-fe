@@ -159,3 +159,24 @@ export const user = {
     }
   },
 };
+
+export const invoiceDetailApi = {
+  createDetail: async (data) => {
+    try {
+      const response = await apiClient.post("InvoiceDetail", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+  getInvoiceById: async (id) => {
+    try {
+      const response = await apiClient.get(`InvoiceDetail/invoice/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+};

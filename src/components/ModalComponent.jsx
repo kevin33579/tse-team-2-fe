@@ -2,7 +2,7 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { invoiceApi, paymentMethodApi } from "../apiService";
+import { invoiceApi, invoiceDetailApi, paymentMethodApi } from "../apiService";
 import Swal from "sweetalert2";
 
 const style = {
@@ -22,9 +22,11 @@ export default function ModalComponent({
   open,
   totalPrice,
   totalCourse,
+  selectedCartIds,
 }) {
   const [data, setData] = useState([]);
   const [selectedMethodId, setSelectedMethodId] = useState(null);
+  console.log(selectedCartIds);
 
   const navigate = useNavigate();
 
@@ -42,12 +44,25 @@ export default function ModalComponent({
 
   const postInvoice = async () => {
     try {
-      await invoiceApi.createInvoice({
+      // 1. create invoice and get its new ID
+      const invRes = await invoiceApi.createInvoice({
         totalPrice,
         totalCourse,
         paymentMethodId: selectedMethodId,
         userId,
       });
+      const invoiceId = invRes.data; // adjust if your wrapper differs
+
+      // 2. build detail rows for each selected cartId
+      const detailRows = selectedCartIds.map((cartId) => ({
+        invoiceId,
+        cartId,
+      }));
+
+      // 3. insert them (bulk)
+      await invoiceDetailApi.createDetail(detailRows);
+
+      // 4. success feedback
       await Swal.fire({
         icon: "success",
         title: "Payment successful",
