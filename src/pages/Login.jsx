@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -6,16 +6,28 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "@fontsource/montserrat";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
-
-axios.defaults.baseURL = "https://localhost:7071";
+import { AppContext } from "../context/AppContext";
+import { usePost } from "../hooks/UseApi";
 const Login = () => {
+  // Using useContext to get values from AppContext
+  const { user, theme, login, logout } = useContext(AppContext);
+  // Using custom hook for POST requests
+  const { post, loading, error } = usePost();
   const [payload, setPayload] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const storedData = localStorage.getItem("data");
+    console.log("Stored Data:", JSON.parse(storedData));
+  }, []);
+  useEffect(() => {
+    if (user.token) navigate("/");
+  }, [user.token, navigate]);
 
   const minChar = payload.password.length > 0;
   const checkCharac = payload.password.length > 5;
@@ -27,30 +39,31 @@ const Login = () => {
     setPayload({ ...payload, [name]: value });
   };
 
-  const handleSubmit = () => {
-    axios
-      .post("/api/Auth/login", {
+  const handleSubmit = async () => {
+    try {
+      // Login API call using custom hook
+      const response = await post("/api/Auth/login", payload);
+
+      // Store token in localStorage
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("data", JSON.stringify(response));
+
+      // Using context login function
+      login({
+        name: response.user.username,
         email: payload.email,
-        password: payload.password,
-      })
-      .then(function (response) {
-        if (response.data.success) {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("username", response.data.user.username);
-          localStorage.setItem("id", response.data.user.userID);
-          Swal.fire({
-            title: "Login Sukses",
-            icon: "success",
-          });
-          navigate("/");
-        } else {
-          alert("Login gagal: " + response.data.message);
-        }
-      })
-      .catch(function (error) {
-        console.error(error);
-        alert("Terjadi kesalahan server");
+        token: response.token,
       });
+      Swal.fire({
+        title: "Login Sukses",
+        icon: "success",
+      });
+      // Navigate to home page
+      navigate("/");
+    } catch (err) {
+      console.error("Login error:", err);
+      alert(err.message || "Login failed");
+    }
   };
 
   console.log(payload);

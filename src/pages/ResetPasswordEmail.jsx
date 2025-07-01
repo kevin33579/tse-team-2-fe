@@ -7,42 +7,32 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import axios from "axios";
+import { usePost } from "../hooks/UseApi";
+
 
 const ResetPasswordEmail = () => {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const { post, loading } = usePost();
+
   const handleSendForgotPassword = async () => {
-    setLoading(true);
     setErrorMessage("");
     setSuccessMessage("");
     try {
-      const response = await axios.post(
-        "https://localhost:7071/api/auth/forgot-password",
-        { email }
-      );
+      const payload = { email };
 
-      if (response.status === 200) {
+      const response = await post("/api/auth/forgot-password", payload);
+
+      if (response?.success) {
         setSuccessMessage("Password reset link has been sent to your email.");
       } else {
-        setErrorMessage(response.data.message || "Failed to send reset email.");
+        setErrorMessage(response?.message || "Failed to send reset email.");
       }
     } catch (err) {
       console.error(err);
-      if (err.response) {
-        // error dari server
-        setErrorMessage(
-          err.response.data.message || "Failed to send reset email."
-        );
-      } else {
-        // error jaringan
-        setErrorMessage("An error occurred. Please try again.");
-      }
-    } finally {
-      setLoading(false);
+      setErrorMessage("An error occurred. Please try again.");
     }
   };
 
