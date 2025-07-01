@@ -38,7 +38,7 @@ export const productApi = {
       const response = await apiClient.get(`/products/type/${id}`);
       return response.data;
     } catch (error) {
-      console.error(`Error fetch product ${id}`, error);
+      console.error(`Error fetch product type ${id}`, error);
       throw error;
     }
   },
@@ -73,7 +73,7 @@ export const scheduleApi = {
       const response = await apiClient.get("/Schedule");
       return response.data;
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching schedule:", error);
       throw error;
     }
   },
@@ -87,7 +87,7 @@ export const cartApi = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error create cart", error);
       throw error;
     }
   },
@@ -98,7 +98,7 @@ export const cartApi = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching cart:", error);
       throw error;
     }
   },
@@ -109,7 +109,7 @@ export const cartApi = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error delete", error);
       throw error;
     }
   },
@@ -121,7 +121,40 @@ export const paymentMethodApi = {
       const response = await apiClient.get("PaymentMethod");
       return response.data;
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+};
+
+export const invoiceApi = {
+  createInvoice: async (data) => {
+    try {
+      const response = await apiClient.post("Invoice", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error create invoice:", error);
+      throw error;
+    }
+  },
+  getInvoiceByUser: async (id) => {
+    try {
+      const response = await apiClient.get(`Invoice/user/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching invoice:", error);
+      throw error;
+    }
+  },
+};
+
+export const user = {
+  registerApi: async (data) => {
+    try {
+      const response = await apiClient.post("Auth/register", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
       throw error;
     }
   },

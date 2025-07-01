@@ -13,9 +13,7 @@ import Navbar from "../components/Navbar";
 import "@fontsource/poppins";
 import ModalComponent from "../components/ModalComponent";
 import { cartApi } from "../apiService";
-import dayjs from "dayjs";
-import "dayjs/locale/en";
-import { toRupiah } from "../helper";
+import { formatLongDate, toRupiah } from "../helper";
 import Swal from "sweetalert2";
 
 export default function Checkout() {
@@ -26,6 +24,7 @@ export default function Checkout() {
   const [cart, setCart] = useState([]);
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
+  const totalCourse = checked.filter(Boolean).length;
 
   const handleSelectAll = (event) => {
     setChecked(checked.map(() => event.target.checked));
@@ -136,7 +135,7 @@ export default function Checkout() {
                       color: "#4F4F4F",
                     }}
                   >
-                    {dayjs(el.scheduleTime).format("dddd, DD MMMM YYYY")}{" "}
+                    {formatLongDate(el.scheduleTime)}
                   </Typography>
                   <Typography sx={{ fontSize: "20px", color: "primary.main" }}>
                     {toRupiah(el.productPrice)}
@@ -239,7 +238,12 @@ export default function Checkout() {
         </Grid>
       </Grid>
 
-      <ModalComponent open={open} handleClose={handleClose}></ModalComponent>
+      <ModalComponent
+        open={open}
+        handleClose={handleClose}
+        totalPrice={totalPrice}
+        totalCourse={totalCourse}
+      ></ModalComponent>
     </>
   );
 }

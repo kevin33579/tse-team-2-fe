@@ -13,37 +13,26 @@ import {
 } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
+import { invoiceApi } from "../apiService";
+import { formatLongDate } from "../helper";
 
 const Invoice = () => {
   const [invoices, setInvoices] = useState([]);
   const navigate = useNavigate();
+  const userId = localStorage.getItem("id");
 
   useEffect(() => {
-    const dummyData = [
-      {
-        id: 1,
-        invoiceNumber: "INV-001",
-        date: "2025-06-10",
-        totalCourse: 2,
-        totalPrice: 300000,
-      },
-      {
-        id: 2,
-        invoiceNumber: "INV-002",
-        date: "2025-06-11",
-        totalCourse: 1,
-        totalPrice: 150000,
-      },
-      {
-        id: 3,
-        invoiceNumber: "INV-003",
-        date: "2025-06-12",
-        totalCourse: 3,
-        totalPrice: 450000,
-      },
-    ];
-    setInvoices(dummyData);
-  }, []);
+    const fetchInvoices = async () => {
+      try {
+        const res = await invoiceApi.getInvoiceByUser(userId); // { success, data }
+        setInvoices(res.data ?? []); // keep only list
+      } catch (err) {
+        console.error(err);
+        setInvoices([]);
+      }
+    };
+    fetchInvoices();
+  }, [userId]);
 
   return (
     <>
@@ -78,11 +67,11 @@ const Invoice = () => {
               {invoices.map((invoice, index) => (
                 <TableRow key={invoice.id}>
                   <TableCell>{index + 1}</TableCell>
-                  <TableCell>{invoice.invoiceNumber}</TableCell>
-                  <TableCell>{invoice.date}</TableCell>
+                  <TableCell>{invoice.invoiceCode}</TableCell>
+                  <TableCell>{formatLongDate(invoice.date)}</TableCell>
                   <TableCell>{invoice.totalCourse}</TableCell>
                   <TableCell>
-                    IDR {invoice.totalPrice.toLocaleString()}
+                    IDR {invoice.totalPrice?.toLocaleString()}
                   </TableCell>
                   <TableCell>
                     <Button
