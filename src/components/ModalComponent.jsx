@@ -22,11 +22,10 @@ export default function ModalComponent({
   open,
   totalPrice,
   totalCourse,
-  selectedCartIds,
+  selectedDetails,
 }) {
   const [data, setData] = useState([]);
   const [selectedMethodId, setSelectedMethodId] = useState(null);
-  console.log(selectedCartIds);
 
   const navigate = useNavigate();
 
@@ -54,9 +53,10 @@ export default function ModalComponent({
       const invoiceId = invRes.data; // adjust if your wrapper differs
 
       // 2. build detail rows for each selected cartId
-      const detailRows = selectedCartIds.map((cartId) => ({
+      const detailRows = selectedDetails.map(({ productId, scheduleId }) => ({
         invoiceId,
-        cartId,
+        productId,
+        scheduleId,
       }));
 
       // 3. insert them (bulk)

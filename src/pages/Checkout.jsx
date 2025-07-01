@@ -24,9 +24,13 @@ export default function Checkout() {
   const [cart, setCart] = useState([]);
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
-  const selectedCartIds = cart
-    .filter((_, idx) => checked[idx])
-    .map((item) => item.id);
+  const selectedDetails = cart
+    .filter((_, idx) => checked[idx]) // only checked rows
+    .map(({ productId, scheduleId }) => ({
+      // keep just these two fields
+      productId,
+      scheduleId,
+    }));
 
   const totalCourse = checked.filter(Boolean).length;
 
@@ -247,7 +251,7 @@ export default function Checkout() {
         handleClose={handleClose}
         totalPrice={totalPrice}
         totalCourse={totalCourse}
-        selectedCartIds={selectedCartIds}
+        selectedDetails={selectedDetails}
       ></ModalComponent>
     </>
   );
