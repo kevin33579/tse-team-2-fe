@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, Stack, useTheme } from "@mui/material";
 
-export default function Top_section() {
+export default function TopSection() {
   const theme = useTheme();
 
   return (

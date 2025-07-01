@@ -1,65 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Checkbox,
   Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
   Typography,
-  Avatar,
   Button,
-  Modal,
   Grid,
   FormControlLabel,
-  ImageList,
   Icon,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Navbar from "../components/Navbar";
 import "@fontsource/poppins";
 import ModalComponent from "../components/ModalComponent";
-
-const carData = [
-  {
-    id: 1,
-    image: "./palisade.png",
-    type: "SUV",
-    name: "Hyundai Palisade",
-    schedule: "Wednesday, 27 July 2022",
-    price: 800000,
-  },
-  {
-    id: 2,
-    image: "./Fortuner.png",
-    type: "SUV",
-    name: "Toyota Fortuner",
-    schedule: "Wednesday, 27 July 2022",
-    price: 850000,
-  },
-];
-
-const paymentMethods = [
-  { id: 1, name: "Gopay", image: "./gopay.png" },
-  { id: 2, name: "OVO", image: "./ovo.png" },
-  { id: 3, name: "DANA", image: "./dana.png" },
-];
+import { cartApi } from "../apiService";
+import { formatLongDate, toRupiah } from "../helper";
+import Swal from "sweetalert2";
 
 export default function Checkout() {
-  const [checked, setChecked] = useState(carData.map(() => false));
+  const [checked, setChecked] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [cart, setCart] = useState([]);
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
+  const selectedDetails = cart
+    .filter((_, idx) => checked[idx]) // only checked rows
+    .map(({ productId, scheduleId }) => ({
+      // keep just these two fields
+      productId,
+      scheduleId,
+    }));
+
+  const totalCourse = checked.filter(Boolean).length;
 
   const handleSelectAll = (event) => {
     setChecked(checked.map(() => event.target.checked));
   };
 
+  async function fetchData() {
+    const response = await cartApi.getUserCart(id, token);
+    setCart(response);
+    setChecked(Array(response.length).fill(false));
+  }
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleCheckboxChange = (index) => (event) => {
     const updated = [...checked];
     updated[index] = event.target.checked;
     setChecked(updated);
+  };
+  const handleDelete = async (cartId) => {
+    try {
+      await cartApi.deleteCartById(cartId, token);
+
+      // remove the deleted item from state so React re‑renders
+      setCart((prev) => prev.filter((item) => item.id !== cartId));
+      setChecked((prev) => prev.filter((_, i) => cart[i].id !== cartId));
+
+      Swal.fire({
+        title: "Item removed",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Failed to delete",
+      });
+    }
   };
 
   const children = (
@@ -67,20 +79,17 @@ export default function Checkout() {
       sx={{ display: "flex", flexDirection: "column", ml: { xs: 0, md: 3 } }}
     >
       <Divider></Divider>
-      {carData.map((el, index) => {
+      {cart.map((el, index) => {
         return (
           <>
             <Divider></Divider>
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
                 alignItems: "center",
-                flexWrap: "wrap",
-                gap: 2,
-                px: 2,
-                py: 1,
-                margin: { xs: "0", md: "20px" },
+                width: "100%",
+                flexWrap: { xs: "wrap", md: "nowrap" },
+                margin: "10px",
               }}
             >
               <FormControlLabel
@@ -94,13 +103,14 @@ export default function Checkout() {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
+                  alignItems: "center",
                   flexWrap: "wrap",
+                  width: "100%", // let items use full row
                 }}
               >
                 <Box
                   component="img"
-                  src={el.image}
+                  src={el.productImageUrl}
                   sx={{
                     width: { xs: "100px", sm: "200px" },
                     height: "auto",
@@ -122,10 +132,10 @@ export default function Checkout() {
                       color: "#4F4F4F",
                     }}
                   >
-                    {el.type}
+                    {el.productTypeName}
                   </Typography>
                   <Typography sx={{ fontSize: { xs: "16px", md: "24px" } }}>
-                    {el.name}
+                    {el.productName}
                   </Typography>
                   <Typography
                     sx={{
@@ -133,10 +143,10 @@ export default function Checkout() {
                       color: "#4F4F4F",
                     }}
                   >
-                    {el.schedule}
+                    {formatLongDate(el.scheduleTime)}
                   </Typography>
                   <Typography sx={{ fontSize: "20px", color: "primary.main" }}>
-                    IDR. {el.price}
+                    {toRupiah(el.productPrice)}
                   </Typography>
                 </Box>
                 <Icon
@@ -148,6 +158,7 @@ export default function Checkout() {
                     cursor: "pointer",
                   }}
                   src="./delete.png"
+                  onClick={() => handleDelete(el.id)}
                 />
               </Box>
             </Box>
@@ -156,8 +167,8 @@ export default function Checkout() {
       })}
     </Box>
   );
-  const totalPrice = carData.reduce(
-    (sum, item, i) => (checked[i] ? sum + item.price : sum),
+  const totalPrice = cart.reduce(
+    (sum, item, i) => (checked[i] ? sum + item.productPrice : sum),
     0
   );
   return (
@@ -185,11 +196,12 @@ export default function Checkout() {
           {children}
         </Grid>
       </Grid>
-      <Divider sx={{ marginTop: "350px" }}></Divider>
+      <Divider sx={{ marginTop: "200px" }}></Divider>
       <Grid
         container
         sx={{
           display: "flex",
+          marginRight: "200px",
         }}
       >
         <Grid
@@ -213,7 +225,7 @@ export default function Checkout() {
               margin: "20px",
             }}
           >
-            IDR {totalPrice}
+            {toRupiah(totalPrice)}
           </Typography>
         </Grid>
         <Grid item size={4} xs={12}>
@@ -235,9 +247,11 @@ export default function Checkout() {
       </Grid>
 
       <ModalComponent
-        paymentMethods={paymentMethods}
         open={open}
         handleClose={handleClose}
+        totalPrice={totalPrice}
+        totalCourse={totalCourse}
+        selectedDetails={selectedDetails}
       ></ModalComponent>
     </>
   );

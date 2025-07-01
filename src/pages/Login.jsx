@@ -8,7 +8,9 @@ import "@fontsource/montserrat";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Email, Password } from "@mui/icons-material";
+import Swal from "sweetalert2";
 
+axios.defaults.baseURL = "https://localhost:7071";
 const Login = () => {
   const [payload, setPayload] = useState({
     Email: "",
@@ -27,18 +29,29 @@ const Login = () => {
   };
 
   const handleSubmit = () => {
-    const submit = axios
-      .post("/user", {
-        Email: Email,
-        Password: Password,
+    axios
+      .post("/api/Auth/login", {
+        email: payload.Email,
+        password: payload.Password,
       })
       .then(function (response) {
-        console.log(response);
+        if (response.data.success) {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("username", response.data.user.username);
+          localStorage.setItem("id", response.data.user.userID);
+          Swal.fire({
+            title: "Login Sukses",
+            icon: "success",
+          });
+          navigate("/");
+        } else {
+          alert("Login gagal: " + response.data.message);
+        }
       })
       .catch(function (error) {
-        console.log(error);
+        console.error(error);
+        alert("Terjadi kesalahan server");
       });
-    console.log("submitted", submit);
   };
 
   console.log(payload);

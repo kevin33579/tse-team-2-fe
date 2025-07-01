@@ -2,79 +2,80 @@ import {
   Box,
   Typography,
   Button,
-  TextField,
   Divider,
   Stack,
   Container,
   Grid,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
+  TextField,
+  MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
-import Another_Course from "../components/Another_course";
-const courses = [
-  {
-    id: 1,
-    image: "/inova.png",
-    type: "SUV",
-    title: "Course SUV Kijang Innova",
-    price: "IDR 700.000",
-  },
-  {
-    id: 2,
-    image: "/brio.png",
-    type: "LCGC",
-    title: "Course LCGC Honda Brio",
-    price: "IDR 500.000",
-  },
-  {
-    id: 3,
-    title: "Course Suzuki XL7",
-    type: "SUV",
-    price: "IDR 600.000",
-    image: "/suzuki.png",
-  },
-  {
-    id: 4,
-    image: "/pajero.png",
-    type: "SUV",
-    title: "Course Mitsubishi Pajero",
-    price: "IDR 800.000",
-  },
-  {
-    id: 5,
-    title: "SUV Toyota Fortunner",
-    type: "SUV",
-    price: "IDR 850.000",
-    image: "/Fortuner.png",
-  },
-  {
-    id: 6,
-    title: "Premium Mazda CX-5 Course",
-    type: "SUV",
-    price: "IDR 1.000.000",
-    image: "/mazda.png",
-  },
-];
+import AnotherCourse from "../components/AnotherCourse";
+import { useEffect, useState } from "react";
+import { cartApi, productApi, scheduleApi } from "../apiService";
+import { toRupiah } from "../helper";
+import Swal from "sweetalert2";
+
 export default function DetailKelas() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const course = courses.find((item) => item.id === Number(id));
+  // const course = courses.find((item) => item.id === Number(id));
+  const [course, setCourse] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [schedules, setSchedules] = useState([]);
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
 
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const handleAddCart = async () => {
+    try {
+      const userId = Number(localStorage.getItem("id")); // PENTING: panggil fungsinya, cast ke number
+      const token = localStorage.getItem("token");
+      console.log(userId);
+      const res = await cartApi.createCart(
+        {
+          userId, // atau hilangkan kalau backend ambil dari token
+          productId: Number(id), // pastikan number
+          scheduleId: selectedSchedule?.id,
+          quantity: 1,
+        },
+        token
+      );
+      Swal.fire({
+        title: "Success add to cart",
+        icon: "success",
+      });
+    } catch (err) {
+      console.error(err);
+      // tambahkan penanganan error (toast/snackbar) di sini
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data: ProductId } = await productApi.getProductById(id); // { success, data, … }
+        const { data: ProductList } = await productApi.getAllProducts(); // { success, data, … }
+        const res = await scheduleApi.getAllSchedule();
+        console.log(res);
+        setCourse(ProductId ?? []); // keep only the list
+        setSchedules(res ?? []);
+        setCourses(ProductList ?? []);
+        setSelectedSchedule(res[0] || null);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [id]);
 
   if (!course) return <Typography>Course not found</Typography>;
   return (
     <>
-      <Navbar />
       <Box
         sx={{
           display: "flex",
@@ -91,16 +92,16 @@ export default function DetailKelas() {
           mx="auto"
           display="flex"
           flexDirection={{ xs: "column", md: "row" }}
-          px={{xs: 2, sm:3}}
+          px={{ xs: 2, sm: 3 }}
         >
           <Box
             component="img"
-            src={course.image}
+            src={course.imageUrl}
             alt={course.title}
             sx={{
               width: { xs: "100%", md: "400px" },
-              maxWidth:{xs:"100%"},
-              height:  { xs: "250px", sm: "267px" },
+              maxWidth: { xs: "100%" },
+              height: { xs: "250px", sm: "267px" },
               border: "1px solid #000",
               objectFit: "cover",
               marginRight: 3,
@@ -119,7 +120,7 @@ export default function DetailKelas() {
           >
             <Box>
               <Typography variant="h6" color="text.secondary">
-                {course.type}
+                {course.productTypeName}
               </Typography>
 
               <Typography
@@ -130,7 +131,7 @@ export default function DetailKelas() {
                   fontSize: { xs: "20px", sm: "22px" },
                 }}
               >
-                {course.title}
+                {course.name}
               </Typography>
 
               <Typography
@@ -141,21 +142,30 @@ export default function DetailKelas() {
                   fontSize: { xs: "16px", sm: "18px" },
                 }}
               >
-                {course.price}
+                {toRupiah(course.price)}
               </Typography>
 
-              <Box sx={{width:"100%", maxWidth:"100%"}}>
-              <DatePicker
-                label="Select Schedule"
-                value={selectedDate}
-                onChange={(newValue) => setSelectedDate(newValue)}
-                format="dddd, DD MMMM YYYY" // 📅 custom format
-                slotProps={{
-                  textField: {
-                    sx: { mt: 3, width: "100%", },
-                  },
-                }}
-              />
+              <Box sx={{ width: "100%", maxWidth: "100%" }}>
+                <TextField
+                  select
+                  fullWidth
+                  label="Select Schedule"
+                  value={selectedSchedule?.id ?? ""} // pakai id sebagai value
+                  onChange={(e) => {
+                    const sch = schedules.find(
+                      (s) => s.id === Number(e.target.value) // temukan objeknya
+                    );
+                    setSelectedSchedule(sch);
+                  }}
+                  sx={{ mt: 3 }}
+                >
+                  {schedules.map(({ id, time }) => (
+                    <MenuItem key={id} value={id}>
+                      {dayjs(time).format("dddd, DD MMMM YYYY")}{" "}
+                      {/* label tetap tanggal */}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Box>
 
               <Box
@@ -175,7 +185,7 @@ export default function DetailKelas() {
                     },
                     width: { xs: "100%", sm: "233px" },
                   }}
-                  onClick={() => alert(" success add to cart")}
+                  onClick={handleAddCart}
                 >
                   <Typography
                     fontFamily="Montserrat"
@@ -205,7 +215,7 @@ export default function DetailKelas() {
           </Box>
         </Box>
 
-        <Container sx={{mt:4}}>
+        <Container sx={{ mt: 4 }}>
           <Typography
             sx={{
               fontWeight: 600,
@@ -229,32 +239,7 @@ export default function DetailKelas() {
               mt: "20px",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "100%",
-              letterSpacing: "0%",
-              fontFamily: "Montserrat",
-              color: "#333333",
-              mt: "20px",
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            {course.description}
           </Typography>
         </Container>
       </Box>
@@ -286,20 +271,18 @@ export default function DetailKelas() {
 
           <Grid container spacing={{ xs: 2, sm: 4 }} width="100%">
             {courses.map((course, idx) => (
-              <Another_Course
+              <AnotherCourse
                 course_id={course.id}
-                course_title={course.title}
-                course_image={course.image}
+                course_title={course.name}
+                course_image={course.imageUrl}
                 course_price={course.price}
-                course_type={course.type}
+                course_type={course.productTypeNameName}
                 index={idx}
-              ></Another_Course>
+              ></AnotherCourse>
             ))}
           </Grid>
         </Container>
       </Stack>
-
-      <Footer />
     </>
   );
 }

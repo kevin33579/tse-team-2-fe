@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-export default function Another_Course({
+export default function AnotherCourse({
   course_id,
   course_type,
   course_image,
@@ -19,7 +19,10 @@ export default function Another_Course({
   return (
     <>
       <Grid item xs={12} sm={6} key={index}>
-        <Card elevation={0} sx={{ width: "100%", height: "100%" }}>
+        <Card
+          elevation={0}
+          sx={{ width: { xs: "100%", md: "350px" }, height: "100%" }}
+        >
           <CardActionArea onClick={() => navigate(`/detail/${course_id}`)}>
             <CardMedia
               component="img"

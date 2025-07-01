@@ -9,13 +9,17 @@ import InputLabel from "@mui/material/InputLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import Navbar from "../components/Navbar";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 const ResetPasswordCreatePassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const navigate = useNavigate();
 
   const handleTogglePassword = () => setShowPassword((prev) => !prev);
   const handleToggleConfirm = () => setShowConfirm((prev) => !prev);
@@ -25,9 +29,34 @@ const ResetPasswordCreatePassword = () => {
   const isButtonDisabled =
     !password || !confirmPassword || !passwordsMatch || password.length < 8;
 
+  const handleResetPassword = async () => {
+    try {
+      const response = await axios.post(
+        "https://localhost:7071/api/auth/reset-password",
+        {
+          token,
+          newPassword: password,
+          confirmPassword: password,
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Password successfully reset, please login.");
+        navigate("/login");
+      } else {
+        alert("Failed to reset password. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.message ||
+          "An error occurred while resetting password"
+      );
+    }
+  };
+
   return (
     <>
-      <Navbar />
       <Stack
         sx={{
           minHeight: "100vh",
@@ -107,7 +136,11 @@ const ResetPasswordCreatePassword = () => {
           <Stack
             direction="row"
             spacing={2}
-            sx={{ width: "100%", justifyContent: "flex-end", pt: {xs:1, sm:2} }}
+            sx={{
+              width: "100%",
+              justifyContent: "flex-end",
+              pt: { xs: 1, sm: 2 },
+            }}
           >
             <Button
               variant="outlined"
@@ -132,7 +165,7 @@ const ResetPasswordCreatePassword = () => {
                 height: "2.4rem",
                 fontSize: { xs: "0.8rem", sm: "1rem" },
               }}
-              onClick={() => alert("Confirm clicked")}
+              onClick={() => handleResetPassword()}
               disabled={isButtonDisabled}
             >
               Confirm

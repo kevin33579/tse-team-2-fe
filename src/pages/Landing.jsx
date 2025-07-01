@@ -1,20 +1,15 @@
-import React from "react";
-import Top_section from "../components/Top_section";
-import Middle_section from "../components/Middle_section";
-import Benefit_section from "../components/Benefit_section";
-import Bottom_section from "../components/Bottom_section";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import TopSection from "../components/TopSection";
+import MiddleSection from "../components/MiddleSection";
+import BenefitSection from "../components/BenefitSection";
+import BottomSection from "../components/BottomSection";
 
 export default function Landing() {
   return (
     <>
-      <Navbar></Navbar>
-      <Top_section></Top_section>
-      <Middle_section></Middle_section>
-      <Benefit_section></Benefit_section>
-      <Bottom_section></Bottom_section>
-      <Footer></Footer>
+      <TopSection />
+      <MiddleSection />
+      <BenefitSection />
+      <BottomSection />
     </>
   );
 }
