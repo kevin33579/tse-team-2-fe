@@ -7,19 +7,18 @@ import Button from "@mui/material/Button";
 import "@fontsource/montserrat";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Email, Password } from "@mui/icons-material";
 import Swal from "sweetalert2";
 
 axios.defaults.baseURL = "https://localhost:7071";
 const Login = () => {
   const [payload, setPayload] = useState({
-    Email: "",
-    Password: "",
+    email: "",
+    password: "",
   });
   const navigate = useNavigate();
 
-  const minChar = payload.Password.length > 0;
-  const checkCharac = payload.Password.length > 5;
+  const minChar = payload.password.length > 0;
+  const checkCharac = payload.password.length > 5;
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -31,8 +30,8 @@ const Login = () => {
   const handleSubmit = () => {
     axios
       .post("/api/Auth/login", {
-        email: payload.Email,
-        password: payload.Password,
+        email: payload.email,
+        password: payload.password,
       })
       .then(function (response) {
         if (response.data.success) {
@@ -90,7 +89,7 @@ const Login = () => {
           </Typography>
 
           <TextField
-            name="Email"
+            name="email"
             size="small"
             label="Email"
             type="email"
@@ -112,7 +111,7 @@ const Login = () => {
           />
 
           <TextField
-            name="Password"
+            name="password"
             size="small"
             error={!checkCharac && minChar}
             helperText={
