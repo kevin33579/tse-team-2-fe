@@ -179,4 +179,13 @@ export const invoiceDetailApi = {
       throw error;
     }
   },
+  getIncomingClassByUser: async (id) => {
+    try {
+      const response = await apiClient.get(`InvoiceDetail/user/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
 };

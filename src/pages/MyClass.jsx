@@ -1,64 +1,80 @@
+import React, { useEffect, useState } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
+import { formatLongDate } from "../helper";
+import { invoiceDetailApi } from "../apiService";
 
 export default function MyClass() {
+  const [classes, setClasses] = useState([]);
+  const userId = localStorage.getItem("id");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await invoiceDetailApi.getIncomingClassByUser(userId); // { data: [...] }
+        setClasses(res ?? []);
+      } catch (err) {
+        console.error(err);
+        setClasses([]);
+      }
+    })();
+  }, [userId]);
+
+  if (classes.length === 0) {
+    return (
+      <Box p={4}>
+        <Typography>No upcoming classes.</Typography>
+      </Box>
+    );
+  }
+
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        display={"flex"}
-        alignItems="center"
-        sx={{ mx: 2 }}
-        maxWidth="1137px"
-        marginTop={"50px"}
-      >
+      {classes.map((cls, idx) => (
         <Grid
-          item
-          xs={6}
-          md={8}
-          display={"flex"}
-          flexDirection={{ xs: "column", sm: "row" }}
-          width={"100%"}
-          marginLeft={"50px"}
+          key={idx}
+          container
+          spacing={2}
+          alignItems="center"
+          sx={{ mx: 2 }}
+          maxWidth="1137px"
+          mt="50px"
         >
-          <Box
-            component="img"
-            width={{ xs: "100%", md: "200px" }}
-            height={{ xs: "100%", md: "133px" }}
-            src="./palisade.png"
-          ></Box>
-          <Stack
-            display={"flex"}
-            flexDirection={"column"}
-            margin={"20px"}
-            width={"100%"}
+          <Grid
+            item
+            xs={6}
+            md={8}
+            display="flex"
+            flexDirection={{ xs: "column", sm: "row" }}
+            width="100%"
+            ml="50px"
           >
-            <Typography
-              fontFamily={"Poppins"}
-              fontWeight={"400"}
-              fontSize={"14px"}
-              color="#828282"
-            >
-              SUV
-            </Typography>
-            <Typography
-              fontFamily={"Poppins"}
-              fontWeight={"600"}
-              fontSize={"24px"}
-            >
-              Hyundai Palisade
-            </Typography>
-            <Typography
-              fontFamily={"Montserrat"}
-              fontWeight={"500"}
-              fontSize={"20px"}
-              color="primary.main"
-            >
-              Schedule : Wednesday, 27 July 2022
-            </Typography>
-          </Stack>
+            <Box
+              component="img"
+              src={cls.productImageUrl}
+              alt={cls.productName}
+              width={{ xs: "100%", md: 200 }}
+              height={{ xs: "100%", md: 133 }}
+              sx={{ objectFit: "contain" }}
+            />
+            <Stack flex={1} m={2}>
+              <Typography fontFamily="Poppins" fontSize={14} color="#828282">
+                {cls.productTypeName}
+              </Typography>
+              <Typography fontFamily="Poppins" fontWeight={600} fontSize={24}>
+                {cls.productName}
+              </Typography>
+              <Typography
+                fontFamily="Montserrat"
+                fontWeight={500}
+                fontSize={20}
+                color="primary.main"
+              >
+                Schedule&nbsp;:&nbsp;{formatLongDate(cls.scheduleTime)}
+              </Typography>
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
+      ))}
     </>
   );
 }
