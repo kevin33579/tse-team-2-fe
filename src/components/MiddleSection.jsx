@@ -27,7 +27,7 @@ export default function MiddleSection() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await productApi.getAllProducts(); // { success, data, … }
+        const res = await productApi.getAllProductsLimit(); // { success, data, … }
         setCourses(res.data ?? []); // keep only the list
       } catch (err) {
         console.error(err);

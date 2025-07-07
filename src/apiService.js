@@ -24,6 +24,15 @@ export const productApi = {
       throw error;
     }
   },
+  getAllProductsLimit: async () => {
+    try {
+      const response = await apiClient.get("/products/limit");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
   getProductById: async (id) => {
     try {
       const response = await apiClient.get(`/products/${id}`);
