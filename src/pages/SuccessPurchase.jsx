@@ -7,7 +7,6 @@ export default function SuccessPurchase() {
 
   return (
     <>
-      <Navbar></Navbar>
       <Box
         display={"flex"}
         justifyContent={"center"}

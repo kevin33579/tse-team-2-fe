@@ -66,6 +66,26 @@ export default function Navbar() {
             <IconButton onClick={() => navigate("/checkout")}>
               <ShoppingCartIcon sx={{ color: "primary.main" }} />
             </IconButton>
+            {localStorage.getItem("role") == "Admin" ? (
+              <Button
+                variant="text"
+                onClick={() => navigate("/admin")}
+                sx={{ color: "primary.main", fontSize: "0.875rem" }}
+              >
+                <Typography
+                  sx={{
+                    ml: 0.5,
+                    color: "primari.main",
+                    fontSize: "0.875rem",
+                    textTransform: "none",
+                  }}
+                >
+                  Admin View
+                </Typography>
+              </Button>
+            ) : (
+              ""
+            )}
 
             <Button
               variant="text"

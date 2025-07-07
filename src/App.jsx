@@ -16,6 +16,9 @@ import dayjs from "dayjs";
 import SuccessPurchase from "./pages/SuccessPurchase";
 import MyClass from "./pages/MyClass";
 import Layout from "./pages/Layout";
+import Admin from "./pages/Admin";
+import Profile from "./pages/Profile";
+import LayoutNavbar from "./pages/LayoutNavbar";
 
 function App() {
   return (
@@ -24,8 +27,11 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/success" element={<SuccessPurchase />} />
+          <Route element={<LayoutNavbar />}>
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/success" element={<SuccessPurchase />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route element={<Layout />}>
             <Route path="/" element={<Landing />} />
             <Route path="/list-menu-kelas/:type" element={<ListMenuKelas />} />
@@ -38,6 +44,7 @@ function App() {
               element={<ResetPasswordCreatePassword />}
             />
             <Route path="/my-class" element={<MyClass />} />
+            <Route path="/admin" element={<Admin />} />
           </Route>
         </Routes>
       </BrowserRouter>

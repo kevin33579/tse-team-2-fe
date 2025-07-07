@@ -49,6 +49,8 @@ const Login = () => {
       localStorage.setItem("token", response.token);
       // localStorage.setItem("data", JSON.stringify(response));
       localStorage.setItem("id", response.user.userID);
+      localStorage.setItem("role", response.user.roleName);
+      localStorage.setItem("username", response.user.username);
 
       // Using context login function
       // login({

@@ -173,7 +173,6 @@ export default function Checkout() {
   );
   return (
     <>
-      <Navbar />
       <Grid
         container
         spacing={2}
