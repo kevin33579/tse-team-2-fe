@@ -26,8 +26,7 @@ export default function Navbar() {
   const username = localStorage.getItem("username");
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.clear(); // removes token, username, and anything else in localStorage
     navigate("/login");
   };
 

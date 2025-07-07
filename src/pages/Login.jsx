@@ -43,17 +43,19 @@ const Login = () => {
     try {
       // Login API call using custom hook
       const response = await post("/api/Auth/login", payload);
+      console.log(response);
 
       // Store token in localStorage
       localStorage.setItem("token", response.token);
-      localStorage.setItem("data", JSON.stringify(response));
+      // localStorage.setItem("data", JSON.stringify(response));
+      localStorage.setItem("id", response.user.userID);
 
       // Using context login function
-      login({
-        name: response.user.username,
-        email: payload.email,
-        token: response.token,
-      });
+      // login({
+      //   name: response.user.username,
+      //   email: payload.email,
+      //   token: response.token,
+      // });
       Swal.fire({
         title: "Login Sukses",
         icon: "success",
@@ -66,7 +68,6 @@ const Login = () => {
     }
   };
 
-  console.log(payload);
   return (
     <>
       <Navbar />
