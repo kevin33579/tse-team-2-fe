@@ -14,7 +14,11 @@ export default function BenefitSection() {
         justifyContent={"center"}
         sx={{ maxWidth: 1108, margin: "auto", maxHeight: "280px" }}
       >
-        <Grid item size={{ xs: 12, md: 8 }}>
+        <Grid
+          item
+          size={{ xs: 12, md: 8 }}
+          sx={{ padding: { xs: "20px", md: "0px" } }}
+        >
           <Typography
             sx={{
               fontFamily: "Montserrat",
@@ -28,7 +32,7 @@ export default function BenefitSection() {
           <Typography
             sx={{
               fontFamily: "Montserrat",
-              fontSize: "16px",
+              fontSize: { md: "16px", xs: "12px" },
               fontWeight: "300",
               marginTop: "20px",
             }}
@@ -44,7 +48,7 @@ export default function BenefitSection() {
           <Typography
             sx={{
               fontFamily: "Montserrat",
-              fontSize: "16px",
+              fontSize: { md: "16px", xs: "12px" },
               fontWeight: "300",
               marginTop: "20px",
             }}

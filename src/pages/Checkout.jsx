@@ -236,6 +236,7 @@ export default function Checkout() {
               width: { xs: "50px", md: "233px" },
               height: "40px",
               margin: "20px",
+              marginLeft: { xs: "150px", md: "0px" },
             }}
           >
             Pay now
