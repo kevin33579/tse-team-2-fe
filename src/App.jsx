@@ -12,7 +12,6 @@ import Invoice from "./pages/Invoice";
 import InvoiceDetail from "./pages/InvoiceDetails";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 import SuccessPurchase from "./pages/SuccessPurchase";
 import MyClass from "./pages/MyClass";
 import Layout from "./pages/Layout";

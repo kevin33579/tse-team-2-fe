@@ -102,41 +102,6 @@ export default function AdminProduct() {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* ─── Schedule List ─────────────────────────────────── */}
-      <Button
-        variant="contained"
-        sx={{ mb: 2, mt: 2 }}
-        onClick={() => navigate("/add-schedule")}
-      >
-        Add Schedule
-      </Button>
-
-      <TableContainer component={Paper} sx={{ mt: 4 }}>
-        <Table>
-          <TableHead sx={{ bgcolor: "primary.main" }}>
-            <TableRow>
-              {["ID", "Schedule Time"].map((h) => (
-                <TableCell key={h} sx={{ color: "white" }}>
-                  {h}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {schedule.map((s) => (
-              <TableRow key={s.id}>
-                <TableCell>{s.id}</TableCell>
-                <TableCell>
-                  {formatLongDate
-                    ? formatLongDate(s.time)
-                    : dayjs(s.time).format("dddd, DD MMMM YYYY")}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
     </Box>
   );
 }

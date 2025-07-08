@@ -111,6 +111,15 @@ export const scheduleApi = {
       throw error;
     }
   },
+  createSchedule: async (data) => {
+    try {
+      const response = await apiClient.post("/Schedule", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
 };
 
 export const cartApi = {
