@@ -54,7 +54,7 @@ export default function Navbar() {
           </ListItem>
           {role === "Admin" && (
             <ListItem disablePadding>
-              <ListItemButton onClick={() => navigate("/admin")}>
+              <ListItemButton onClick={() => navigate("/admin-products")}>
                 <ListItemText primary="Admin View" />
               </ListItemButton>
             </ListItem>
@@ -151,7 +151,7 @@ export default function Navbar() {
                   {role === "Admin" && (
                     <Button
                       variant="text"
-                      onClick={() => navigate("/admin")}
+                      onClick={() => navigate("/admin-products")}
                       sx={{ color: "primary.main", fontSize: "0.875rem" }}
                     >
                       Admin View
