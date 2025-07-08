@@ -69,7 +69,7 @@ export default function Navbar() {
             {localStorage.getItem("role") == "Admin" ? (
               <Button
                 variant="text"
-                onClick={() => navigate("/admin")}
+                onClick={() => navigate("/admin-products")}
                 sx={{ color: "primary.main", fontSize: "0.875rem" }}
               >
                 <Typography

@@ -51,6 +51,31 @@ export const productApi = {
       throw error;
     }
   },
+  createProduct: async (data) => {
+    try {
+      const response = await apiClient.post("/products", data);
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  editProduct: async (id, data) => {
+    try {
+      const response = await apiClient.put(`/products/${id}`, data);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deleteProduct: async (id) => {
+    try {
+      const response = await apiClient.delete(`/products/${id}`);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export const productTypeApi = {
