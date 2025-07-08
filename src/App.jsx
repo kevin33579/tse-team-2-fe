@@ -20,6 +20,7 @@ import LayoutNavbar from "./pages/LayoutNavbar";
 import AdminProduct from "./pages/AdminProduct";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import AdminUsers from "./pages/AdminUsers";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/add-product" element={<AddProduct />} />
             <Route path="/edit-product/:id" element={<EditProduct />} />
+            <Route path="/admin-users" element={<AdminUsers />} />
           </Route>
           <Route element={<Layout />}>
             <Route path="/" element={<Landing />} />

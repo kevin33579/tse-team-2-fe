@@ -56,6 +56,13 @@ export default function AdminProduct() {
       >
         Add Product
       </Button>
+      <Button
+        variant="contained"
+        sx={{ mb: 2, ml: 2 }}
+        onClick={() => navigate("/admin-users")}
+      >
+        Users
+      </Button>
       <TableContainer component={Paper}>
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>

@@ -201,6 +201,15 @@ export const user = {
       throw error;
     }
   },
+  getAllUsersApi: async (data) => {
+    try {
+      const response = await apiClient.get("Users", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
 };
 
 export const invoiceDetailApi = {
