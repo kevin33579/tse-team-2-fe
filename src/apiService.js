@@ -51,6 +51,31 @@ export const productApi = {
       throw error;
     }
   },
+  createProduct: async (data) => {
+    try {
+      const response = await apiClient.post("/products", data);
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  editProduct: async (id, data) => {
+    try {
+      const response = await apiClient.put(`/products/${id}`, data);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deleteProduct: async (id) => {
+    try {
+      const response = await apiClient.delete(`/products/${id}`);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export const productTypeApi = {
@@ -80,6 +105,15 @@ export const scheduleApi = {
   getAllSchedule: async () => {
     try {
       const response = await apiClient.get("/Schedule");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
+  createSchedule: async (data) => {
+    try {
+      const response = await apiClient.post("/Schedule", data);
       return response.data;
     } catch (error) {
       console.error("Error fetching schedule:", error);
@@ -161,6 +195,15 @@ export const user = {
   registerApi: async (data) => {
     try {
       const response = await apiClient.post("Auth/register", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+  getAllUsersApi: async (data) => {
+    try {
+      const response = await apiClient.get("Users", data);
       return response.data;
     } catch (error) {
       console.error("Error fetching payment:", error);

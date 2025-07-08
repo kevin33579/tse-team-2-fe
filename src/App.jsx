@@ -12,13 +12,15 @@ import Invoice from "./pages/Invoice";
 import InvoiceDetail from "./pages/InvoiceDetails";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 import SuccessPurchase from "./pages/SuccessPurchase";
 import MyClass from "./pages/MyClass";
 import Layout from "./pages/Layout";
-import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
 import LayoutNavbar from "./pages/LayoutNavbar";
+import AdminProduct from "./pages/AdminProduct";
+import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
+import AdminUsers from "./pages/AdminUsers";
 
 function App() {
   return (
@@ -31,6 +33,9 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/success" element={<SuccessPurchase />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/edit-product/:id" element={<EditProduct />} />
+            <Route path="/admin-users" element={<AdminUsers />} />
           </Route>
           <Route element={<Layout />}>
             <Route path="/" element={<Landing />} />
@@ -44,7 +49,7 @@ function App() {
               element={<ResetPasswordCreatePassword />}
             />
             <Route path="/my-class" element={<MyClass />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin-products" element={<AdminProduct />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -13,22 +13,39 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { productApi } from "../apiService"; // adjust path if different
-import { toRupiah } from "../helper"; // currency formatter
+import { productApi, scheduleApi } from "../apiService"; // adjust path if different
+import { formatLongDate, toRupiah } from "../helper"; // currency formatter
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-export default function Admin() {
+export default function AdminProduct() {
   const [rows, setRows] = useState([]);
+  const [schedule, setSchedule] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       try {
         const res = await productApi.getAllProducts();
+        const res2 = await scheduleApi.getAllSchedule();
+        setSchedule(res2);
         setRows(res.data ?? []); // API wraps in { success,data }
       } catch (err) {
         console.error(err);
       }
     })();
   }, []);
+
+  const deleteProduct = async (id) => {
+    try {
+      const res = await productApi.deleteProduct(id);
+      Swal.fire({
+        title: `Success Delete Product ${id}`,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Box p={4}>
@@ -38,6 +55,13 @@ export default function Admin() {
         onClick={() => navigate("/add-product")}
       >
         Add Product
+      </Button>
+      <Button
+        variant="contained"
+        sx={{ mb: 2, ml: 2 }}
+        onClick={() => navigate("/admin-users")}
+      >
+        Users
       </Button>
       <TableContainer component={Paper}>
         <Table>
@@ -65,7 +89,7 @@ export default function Admin() {
                 <TableCell>
                   <IconButton
                     size="small"
-                    onClick={() => alert(`edit ${p.id}`)}
+                    onClick={() => navigate(`/edit-product/${p.id}`)}
                   >
                     <EditIcon />
                   </IconButton>
@@ -75,7 +99,7 @@ export default function Admin() {
                   <IconButton
                     size="small"
                     color="error"
-                    onClick={() => alert(`delete ${p.id}`)}
+                    onClick={() => deleteProduct(p.id)}
                   >
                     <DeleteIcon />
                   </IconButton>
