@@ -75,9 +75,7 @@ export default function Checkout() {
   };
 
   const children = (
-    <Box
-      sx={{ display: "flex", flexDirection: "column", ml: { xs: 0, md: 3 } }}
-    >
+    <Box sx={{ minHeight: "80vh", display: "flex", flexDirection: "column" }}>
       <Divider></Divider>
       {cart.map((el, index) => {
         return (
@@ -195,7 +193,7 @@ export default function Checkout() {
           {children}
         </Grid>
       </Grid>
-      <Divider sx={{ marginTop: "200px" }}></Divider>
+      <Divider></Divider>
       <Grid
         container
         sx={{

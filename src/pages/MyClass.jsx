@@ -21,7 +21,7 @@ export default function MyClass() {
 
   if (classes.length === 0) {
     return (
-      <Box p={4}>
+      <Box p={4} sx={{ minHeight: "50vh" }}>
         <Typography>No upcoming classes.</Typography>
       </Box>
     );

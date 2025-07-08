@@ -96,6 +96,7 @@ const InvoiceDetail = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Box sx={{ minHeight: "30vh" }}></Box>
       </Box>
     </>
   );
