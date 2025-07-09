@@ -33,8 +33,8 @@ export default function Login() {
       Swal.fire({ title: "Login berhasil", icon: "success", timer: 1500 });
       navigate("/");
     } catch (err) {
-      console.error(err);
       Swal.fire({ title: "Login gagal", icon: "error" });
+      console.error(err);
     }
   };
 

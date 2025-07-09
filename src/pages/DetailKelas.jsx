@@ -51,6 +51,9 @@ export default function DetailKelas() {
     } catch (err) {
       console.error(err);
       // tambahkan penanganan error (toast/snackbar) di sini
+      Swal.fire({
+        title: "Please Login First",
+      });
     }
   };
 
@@ -75,6 +78,9 @@ export default function DetailKelas() {
       });
     } catch (err) {
       console.error(err);
+      Swal.fire({
+        title: "Please Login First",
+      });
       // tambahkan penanganan error (toast/snackbar) di sini
     }
   };

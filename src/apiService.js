@@ -218,6 +218,15 @@ export const user = {
       throw error;
     }
   },
+  deactivateUserApi: async (id) => {
+    try {
+      const response = await apiClient.put(`Users/deactivate/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
 };
 
 export const invoiceDetailApi = {

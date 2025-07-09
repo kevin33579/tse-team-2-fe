@@ -98,7 +98,7 @@ export default function Checkout() {
                 display: "flex",
                 alignItems: "center",
                 width: "100%",
-                flexWrap: { xs: "wrap", md: "nowrap" },
+                flexWrap: "nowrap",
                 margin: "10px",
               }}
             >
