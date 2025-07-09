@@ -64,8 +64,8 @@ export default function BenefitSection() {
           <Box
             component="img"
             sx={{
-              height: { md: "280px", xs: "200px" },
-              width: { md: "373px", xs: "300px" },
+              height: { md: "280px", xs: "300px" },
+              width: { md: "373px", xs: "400px" },
             }}
             alt="logo"
             src={benefitImage}

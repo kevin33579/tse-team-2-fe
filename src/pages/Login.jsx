@@ -1,198 +1,134 @@
 import { useEffect, useState, useContext } from "react";
-import Navbar from "../components/Navbar";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { Box, Stack, Typography, TextField, Button } from "@mui/material";
 import "@fontsource/montserrat";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Navbar from "../components/Navbar";
 import { AppContext } from "../context/AppContext";
 import { usePost } from "../hooks/UseApi";
-const Login = () => {
-  // Using useContext to get values from AppContext
-  const { user, theme, login, logout } = useContext(AppContext);
-  // Using custom hook for POST requests
-  const { post, loading, error } = usePost();
-  const [payload, setPayload] = useState({
-    email: "",
-    password: "",
-  });
+
+export default function Login() {
+  const { user } = useContext(AppContext);
+  const { post } = usePost();
+  const [payload, setPayload] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if user is already logged in
-    const storedData = localStorage.getItem("data");
-    console.log("Stored Data:", JSON.parse(storedData));
-  }, []);
+  /* ─────────────────────────  redirects  ───────────────────────── */
   useEffect(() => {
     if (user.token) navigate("/");
   }, [user.token, navigate]);
 
-  const minChar = payload.password.length > 0;
-  const checkCharac = payload.password.length > 5;
-
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    setPayload({ ...payload, [name]: value });
-  };
+  /* ─────────────────────────  handlers  ───────────────────────── */
+  const handleChange = (e) =>
+    setPayload((p) => ({ ...p, [e.target.name]: e.target.value }));
 
   const handleSubmit = async () => {
     try {
-      // Login API call using custom hook
-      const response = await post("/api/Auth/login", payload);
-      console.log(response);
+      const res = await post("/api/Auth/login", payload);
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("id", res.user.userID);
+      localStorage.setItem("role", res.user.roleName);
+      localStorage.setItem("username", res.user.username);
 
-      // Store token in localStorage
-      localStorage.setItem("token", response.token);
-      // localStorage.setItem("data", JSON.stringify(response));
-      localStorage.setItem("id", response.user.userID);
-      localStorage.setItem("role", response.user.roleName);
-      localStorage.setItem("username", response.user.username);
-
-      // Using context login function
-      // login({
-      //   name: response.user.username,
-      //   email: payload.email,
-      //   token: response.token,
-      // });
-      Swal.fire({
-        title: "Login Sukses",
-        icon: "success",
-      });
-      // Navigate to home page
+      Swal.fire({ title: "Login berhasil", icon: "success", timer: 1500 });
       navigate("/");
     } catch (err) {
-      console.error("Login error:", err);
-      alert(err.message || "Login failed");
+      console.error(err);
+      Swal.fire({ title: "Login gagal", icon: "error" });
     }
   };
+
+  /* ─────────────────────────  ui  ───────────────────────── */
+  const passLen = payload.password.length;
+  const passError = passLen > 0 && passLen < 6;
 
   return (
     <>
       <Navbar />
+
       <Stack
-        sx={{
-          minHeight: "100vh",
-          alignItems: "center",
-          fontFamily: "Montserrat",
-          backgroundColor: "white",
-          pt: 7.5,
-        }}
+        minHeight="100vh"
+        bgcolor="white"
+        alignItems="center"
+        pt={{ xs: 6, md: 10 }}
+        px={2}
+        fontFamily="Montserrat"
       >
-        <Stack
-          spacing={3}
-          sx={{
-            maxWidth: "38rem",
-            width: "100%",
-            alignItems: "flex-start",
-            textAlign: "left",
-          }}
-        >
+        <Box width={{ xs: "100%", sm: "28rem" }} component={Stack} spacing={3}>
           <Typography
-            sx={{ width: "100%", color: "#790B0A", fontSize: "24px" }}
+            color="#790B0A"
+            fontWeight={600}
+            fontSize={{ xs: 20, sm: 24 }}
+            textAlign={{ xs: "left", sm: "left" }}
           >
             Welcome Back!
           </Typography>
 
           <Typography
-            color="#4f4f4f"
-            sx={{ width: "100%", fontSize: "16px", pb: 2 }}
+            color="#4F4F4F"
+            fontSize={{ xs: 14, sm: 16 }}
+            textAlign={{ xs: "left", sm: "left" }}
+            pb={1}
           >
             Please login first
           </Typography>
 
           <TextField
             name="email"
-            size="small"
             label="Email"
             type="email"
             fullWidth
-            variant="outlined"
+            size="small"
             onChange={handleChange}
-            InputProps={{
-              sx: {
-                fontFamily: "Montserrat",
-                fontSize: "16px",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                fontFamily: "Montserrat",
-                fontSize: "14px",
-              },
-            }}
+            InputProps={{ sx: { fontSize: 14 } }}
+            InputLabelProps={{ sx: { fontSize: 13 } }}
           />
 
           <TextField
             name="password"
-            size="small"
-            error={!checkCharac && minChar}
-            helperText={
-              !checkCharac && minChar ? "password minimal 6 karakter" : ""
-            }
             label="Password"
-            fullWidth
             type="password"
-            width="30vw"
-            variant="outlined"
+            fullWidth
+            size="small"
+            error={passError}
+            helperText={passError ? "Password minimal 6 karakter" : ""}
             onChange={handleChange}
-            InputProps={{
-              sx: {
-                fontFamily: "Montserrat",
-                fontSize: "16px",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                fontFamily: "Montserrat",
-                fontSize: "14px",
-              },
-            }}
+            InputProps={{ sx: { fontSize: 14 } }}
+            InputLabelProps={{ sx: { fontSize: 13 } }}
           />
 
           <Typography
-            color="#4f4f4f"
-            sx={{ width: "100%", fontSize: "16px", pb: 2 }}
+            fontSize={14}
+            color="#4F4F4F"
+            textAlign={{ xs: "center", sm: "left" }}
           >
-            Forgot Password?<Link to="/forgot-password">Click Here</Link>
+            Forgot Password?&nbsp;
+            <Link to="/forgot-password">Click here</Link>
           </Typography>
 
-          <Stack
-            direction="row"
-            sx={{ width: "100%", justifyContent: "flex-end" }}
-          >
+          <Stack direction="row" justifyContent="flex-end">
             <Button
               variant="contained"
-              size="medium"
-              color="red"
-              sx={{
-                backgroundColor: "#790b0a",
-                color: "#fff",
-                textTransform: "none",
-                width: "140px",
-                height: "38px",
-              }}
               onClick={handleSubmit}
+              sx={{
+                width: 140,
+                height: 38,
+                textTransform: "none",
+                bgcolor: "#790B0A",
+                fontSize: 14,
+                "&:hover": { bgcolor: "#5a0807" },
+              }}
             >
               Login
             </Button>
           </Stack>
-          <Stack
-            direction="row"
-            spacing={2}
-            sx={{ width: "100%", justifyContent: "center", padding: "36px 0" }}
-          >
-            <Typography color="#4f4f4f" x={{ width: "100%", fontSize: "16px" }}>
-              Don’t have an account? <Link to={"/register"}>Sign Up here</Link>
-            </Typography>
-          </Stack>
-        </Stack>
+
+          <Typography fontSize={14} color="#4F4F4F" textAlign="center" pt={3}>
+            Don’t have an account?&nbsp;
+            <Link to="/register">Sign up here</Link>
+          </Typography>
+        </Box>
       </Stack>
     </>
   );
-};
-
-export default Login;
+}
