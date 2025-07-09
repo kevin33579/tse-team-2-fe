@@ -54,6 +54,31 @@ export default function DetailKelas() {
     }
   };
 
+  const handleBuyNow = async () => {
+    try {
+      const userId = Number(localStorage.getItem("id")); // PENTING: panggil fungsinya, cast ke number
+      const token = localStorage.getItem("token");
+      console.log(userId);
+      const res = await cartApi.createCart(
+        {
+          userId, // atau hilangkan kalau backend ambil dari token
+          productId: Number(id), // pastikan number
+          scheduleId: selectedSchedule?.id,
+          quantity: 1,
+        },
+        token
+      );
+      Swal.fire({
+        title: "Success add to cart",
+        icon: "success",
+        didClose: () => navigate("/checkout")
+      });
+    } catch (err) {
+      console.error(err);
+      // tambahkan penanganan error (toast/snackbar) di sini
+    }
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -199,9 +224,7 @@ export default function DetailKelas() {
                   variant="contained"
                   color="primary"
                   sx={{ width: { xs: "100%", sm: "233px" } }}
-                  onClick={() => {
-                    navigate("/checkout");
-                  }}
+                  onClick={handleBuyNow}
                 >
                   <Typography
                     fontFamily="Montserrat"

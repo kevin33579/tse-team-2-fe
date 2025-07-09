@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -9,8 +9,10 @@ import InputLabel from "@mui/material/InputLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { usePost } from "../hooks/UseApi";
+import { AppContext } from "../context/AppContext";
+import Swal from "sweetalert2";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
 
 const ResetPasswordCreatePassword = () => {
   const [password, setPassword] = useState("");
@@ -20,6 +22,15 @@ const ResetPasswordCreatePassword = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
+
+  const { user } = useContext(AppContext);
+  const { post } = usePost();
+
+  useEffect(() => {
+    if (user?.token) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const handleTogglePassword = () => setShowPassword((prev) => !prev);
   const handleToggleConfirm = () => setShowConfirm((prev) => !prev);
@@ -31,27 +42,27 @@ const ResetPasswordCreatePassword = () => {
 
   const handleResetPassword = async () => {
     try {
-      const response = await axios.post(
-        "https://localhost:7071/api/auth/reset-password",
-        {
-          token,
-          newPassword: password,
-          confirmPassword: password,
-        }
-      );
+      const payload = {
+        token,
+        newPassword: password,
+        confirmPassword: password,
+      };
 
-      if (response.status === 200) {
-        alert("Password successfully reset, please login.");
+      const response = await post("/api/auth/reset-password", payload);
+
+      if (response?.success) {
+        Swal.fire({
+          title: "Success",
+          text: "Password successfully reset, please login.",
+          icon: "success",
+        });
         navigate("/login");
       } else {
-        alert("Failed to reset password. Please try again.");
+        alert(response?.message || "Failed to reset password.");
       }
     } catch (error) {
       console.error(error);
-      alert(
-        error.response?.data?.message ||
-          "An error occurred while resetting password"
-      );
+      alert("An error occurred while resetting password.");
     }
   };
 

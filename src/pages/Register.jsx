@@ -2,14 +2,18 @@ import { useState } from "react";
 import { Grid, Container, Typography, TextField, Button } from "@mui/material";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
+import { usePost } from "../hooks/UseApi";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const [payload, setPayload] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();
+  const {post,loading} = usePost(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,8 +23,34 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log("Send to API:", payload);
+  const handleSubmit = async () => {
+    try {
+    const response = await  post("/api/auth/register", payload);
+    console.log("Register success:", response);
+
+    if(response.success) {
+      // If registration is successful, redirect to login page
+      Swal.fire({
+        title: "Registration Successful",
+        text: "Please login to continue.",
+        icon: "success",
+      });
+      navigate("/login");
+    } else {
+      Swal.fire({
+        title: "Registration Failed",
+        text: response.message || "Please try again.",
+        icon: "error",
+      });
+    }
+    } catch (err) {
+      console.error("Register error:", err);
+      Swal.fire({
+        title: "Error",
+        text: err.message || "An error occurred during registration.",
+        icon: "error",
+      });
+    }
   };
 
   return (
@@ -58,10 +88,10 @@ const Register = () => {
             <Grid item>
               <TextField
                 label="Name"
-                name="name"
+                name="username"
                 variant="outlined"
                 fullWidth
-                value={payload.name}
+                value={payload.username}
                 onChange={handleChange}
               />
             </Grid>
@@ -102,6 +132,7 @@ const Register = () => {
                 variant="contained"
                 sx={{ bgcolor: "#800000", "&:hover": { bgcolor: "#a00000" } }}
                 onClick={handleSubmit}
+                disabled={loading}
               >
                 Sign Up
               </Button>

@@ -60,7 +60,7 @@ export default function BottomSection() {
             <Grid item xs={12} sm={6} md={3} lg={2} key={x.id}>
               <Card
                 sx={{
-                  width: "200px",
+                  width: { md: "200px", xs: "100px" },
                   height: "119px",
                   ":hover": { transform: "scale(1.05)", boxShadow: 3 },
                 }}

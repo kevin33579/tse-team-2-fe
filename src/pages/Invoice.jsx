@@ -11,37 +11,47 @@ import {
   TableContainer,
   Paper,
 } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
 import { invoiceApi } from "../apiService";
 import { formatLongDate } from "../helper";
 
-const Invoice = () => {
+export default function Invoice() {
   const [invoices, setInvoices] = useState([]);
   const navigate = useNavigate();
   const userId = localStorage.getItem("id");
 
   useEffect(() => {
-    const fetchInvoices = async () => {
+    (async () => {
       try {
-        const res = await invoiceApi.getInvoiceByUser(userId); // { success, data }
-        setInvoices(res.data ?? []); // keep only list
+        const res = await invoiceApi.getInvoiceByUser(userId);
+        setInvoices(res.data ?? []);
       } catch (err) {
         console.error(err);
         setInvoices([]);
       }
-    };
-    fetchInvoices();
+    })();
   }, [userId]);
 
   return (
-    <>
-      <Box px={{ xs: 1, sm: 2, md: 4 }} py={4}>
-        <Typography variant="h5" mb={2}>
-          Menu Invoice
-        </Typography>
-
+    <Box sx={{ minHeight: "80vh" }} px={{ xs: 1, sm: 2, md: 4 }} py={4}>
+      {invoices.length === 0 ? (
+        /* ───── empty‑state ───── */
+        <Box
+          sx={{
+            textAlign: "center",
+            mt: 6,
+            color: "text.secondary",
+            fontStyle: "italic",
+          }}
+        >
+          <Typography>No invoices yet.</Typography>
+        </Box>
+      ) : (
+        /* ───── table of invoices ───── */
         <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+          <Typography variant="h5" mb={2}>
+            Menu Invoice
+          </Typography>
           <Table>
             <TableHead>
               <TableRow sx={{ backgroundColor: "primary.main" }}>
@@ -63,21 +73,20 @@ const Invoice = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
-              {invoices.map((invoice, index) => (
-                <TableRow key={invoice.id}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{invoice.invoiceCode}</TableCell>
-                  <TableCell>{formatLongDate(invoice.date)}</TableCell>
-                  <TableCell>{invoice.totalCourse}</TableCell>
-                  <TableCell>
-                    IDR {invoice.totalPrice?.toLocaleString()}
-                  </TableCell>
+              {invoices.map((inv, idx) => (
+                <TableRow key={inv.id}>
+                  <TableCell>{idx + 1}</TableCell>
+                  <TableCell>{inv.invoiceCode}</TableCell>
+                  <TableCell>{formatLongDate(inv.date)}</TableCell>
+                  <TableCell>{inv.totalCourse}</TableCell>
+                  <TableCell>IDR {inv.totalPrice?.toLocaleString()}</TableCell>
                   <TableCell>
                     <Button
                       variant="outlined"
-                      onClick={() => navigate(`/invoice/${invoice.id}`)}
                       size="small"
+                      onClick={() => navigate(`/invoice/${inv.id}`)}
                     >
                       Details
                     </Button>
@@ -87,9 +96,7 @@ const Invoice = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </Box>
-    </>
+      )}
+    </Box>
   );
-};
-
-export default Invoice;
+}

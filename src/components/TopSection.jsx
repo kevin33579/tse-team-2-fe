@@ -47,7 +47,7 @@ export default function TopSection() {
           sx={{
             color: "#fff",
             mb: 2,
-            fontSize: { xs: "20px", sm: "32px" },
+            fontSize: { xs: "14px", sm: "32px" },
             fontFamily: "Montserrat",
           }}
         >
@@ -58,7 +58,7 @@ export default function TopSection() {
           variant="h6"
           sx={{
             color: "#fff",
-            fontSize: { xs: "14px", sm: "18px" },
+            fontSize: { xs: "12px", sm: "18px" },
             fontFamily: "Montserrat",
           }}
         >
@@ -101,14 +101,14 @@ export default function TopSection() {
                 sx={{
                   color: "#fff",
                   mb: 1,
-                  fontSize: { xs: "20px", sm: "28px" },
+                  fontSize: { xs: "14px", sm: "28px" },
                 }}
               >
                 {item.number}
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ color: "#fff", fontSize: { xs: "13px", sm: "16px" } }}
+                sx={{ color: "#fff", fontSize: { xs: "12px", sm: "16px" } }}
               >
                 {item.text}
               </Typography>

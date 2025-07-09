@@ -26,8 +26,9 @@ export default function AnotherCourse({
           <CardActionArea onClick={() => navigate(`/detail/${course_id}`)}>
             <CardMedia
               component="img"
-              height="233px"
-              width="350px"
+              sx={{
+                height: { md: "233px", xs: "100px" },
+              }}
               image={course_image}
               alt={course_title}
             />
