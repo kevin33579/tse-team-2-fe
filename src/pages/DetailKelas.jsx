@@ -71,7 +71,7 @@ export default function DetailKelas() {
       Swal.fire({
         title: "Success add to cart",
         icon: "success",
-        didClose: () => navigate("/checkout")
+        didClose: () => navigate("/checkout"),
       });
     } catch (err) {
       console.error(err);
@@ -112,8 +112,10 @@ export default function DetailKelas() {
         }}
       >
         <Box
-          width="100%"
-          maxWidth="1140px"
+          sx={{
+            maxWidth: { md: "1140px", xs: "600px" },
+            width: { md: "100%", xs: "70%" },
+          }}
           mx="auto"
           display="flex"
           flexDirection={{ xs: "column", md: "row" }}

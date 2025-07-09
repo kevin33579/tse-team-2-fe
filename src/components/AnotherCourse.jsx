@@ -21,7 +21,11 @@ export default function AnotherCourse({
       <Grid item xs={12} sm={6} key={index}>
         <Card
           elevation={0}
-          sx={{ width: { xs: "100%", md: "350px" }, height: "100%" }}
+          sx={{
+            width: { xs: "200px", md: "350px" },
+            height: "100%",
+            ml: { xs: "70px", md: "0px" },
+          }}
         >
           <CardActionArea onClick={() => navigate(`/detail/${course_id}`)}>
             <CardMedia
