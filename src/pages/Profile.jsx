@@ -18,7 +18,10 @@ export default function Profile() {
     .slice(0, 2); // up to 2 letters
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8, textAlign: "center" }}>
+    <Container
+      maxWidth="sm"
+      sx={{ mt: 8, textAlign: "center", minHeight: "60vh" }}
+    >
       <Avatar
         sx={{ width: 96, height: 96, bgcolor: "primary.main", mx: "auto" }}
       >

@@ -74,9 +74,15 @@ export default function Checkout() {
     }
   };
 
+  console.log(cart.length);
   const children = (
     <Box sx={{ minHeight: "80vh", display: "flex", flexDirection: "column" }}>
       <Divider></Divider>
+      {cart.length == 0 ? (
+        <Typography margin={"20px"}>There are no cart yet</Typography>
+      ) : (
+        ""
+      )}
       {cart.map((el, index) => {
         return (
           <>

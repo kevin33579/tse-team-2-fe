@@ -33,7 +33,6 @@ function App() {
           <Route element={<LayoutNavbar />}>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/success" element={<SuccessPurchase />} />
-            <Route path="/profile" element={<Profile />} />
 
             <Route
               path="/add-product"
@@ -61,6 +60,7 @@ function App() {
             />
           </Route>
           <Route element={<Layout />}>
+            <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Landing />} />
             <Route path="/list-menu-kelas/:type" element={<ListMenuKelas />} />
             <Route path="/detail/:id" element={<DetailKelas />} />
