@@ -11,20 +11,21 @@ import {
   TableHead,
   TableRow,
   Typography,
+  TextField,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
-import { user } from "../apiService"; // adjust name/path to match
-// you'll also need userApi.deleteUser(id) – make sure it exists
+import { user as userApi } from "../apiService";
 
 export default function AdminUsers() {
   const [rows, setRows] = useState([]);
+  const [search, setSearch] = useState("");
 
-  // ── fetch users on mount ───────────────────────────────
+  /* fetch users once */
   useEffect(() => {
     (async () => {
       try {
-        const res = await user.getAllUsersApi(); // POST "Users"
+        const res = await userApi.getAllUsersApi(); // adjust if args needed
         setRows(res ?? []);
       } catch (err) {
         console.error(err);
@@ -32,7 +33,7 @@ export default function AdminUsers() {
     })();
   }, []);
 
-  // ── delete handler ─────────────────────────────────────
+  /* delete handler */
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
       title: "Delete this user?",
@@ -43,7 +44,7 @@ export default function AdminUsers() {
     if (!confirm.isConfirmed) return;
 
     try {
-      await userApi.deleteUser(id); // make sure this api exists
+      await userApi.deleteUser(id); // make sure api exists
       setRows((prev) => prev.filter((u) => u.id !== id));
       Swal.fire({ icon: "success", title: "Deleted" });
     } catch (err) {
@@ -52,11 +53,25 @@ export default function AdminUsers() {
     }
   };
 
+  /* filter rows by username */
+  const displayed = rows.filter((u) =>
+    u.username.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Box p={4}>
       <Typography variant="h5" mb={2}>
         User List
       </Typography>
+
+      {/* search bar */}
+      <TextField
+        size="small"
+        placeholder="Search by username…"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        sx={{ mb: 2, width: { xs: "100%", sm: 300 } }}
+      />
 
       <TableContainer component={Paper}>
         <Table>
@@ -71,12 +86,11 @@ export default function AdminUsers() {
           </TableHead>
 
           <TableBody>
-            {rows.map((u) => (
+            {displayed.map((u) => (
               <TableRow key={u.id}>
                 <TableCell>{u.username}</TableCell>
                 <TableCell>{u.email}</TableCell>
                 <TableCell>{u.roleName}</TableCell>
-
                 <TableCell>
                   <IconButton
                     size="small"
@@ -88,6 +102,14 @@ export default function AdminUsers() {
                 </TableCell>
               </TableRow>
             ))}
+
+            {displayed.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={4} align="center" sx={{ py: 4 }}>
+                  No users found.
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
