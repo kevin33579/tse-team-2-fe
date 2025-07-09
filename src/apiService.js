@@ -13,6 +13,14 @@ const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token"); // <— your JWT
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`; // attach it
+  }
+  return config;
+});
+
 export const productApi = {
   // Get all products
   getAllProducts: async () => {
@@ -53,11 +61,11 @@ export const productApi = {
   },
   createProduct: async (data) => {
     try {
-      const response = await apiClient.post("/products", data);
-      return response;
-    } catch (error) {
-      console.log(error);
-      throw error;
+      const res = await apiClient.post("/products", data);
+      return res.data; // return just payload
+    } catch (err) {
+      console.error("Error creating product:", err);
+      throw err;
     }
   },
   editProduct: async (id, data) => {

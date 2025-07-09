@@ -16,6 +16,8 @@ import Swal from "sweetalert2";
 export default function AddProduct() {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
+  const token = localStorage.getItem("token");
+  console.log(token);
 
   const [form, setForm] = useState({
     name: "",
