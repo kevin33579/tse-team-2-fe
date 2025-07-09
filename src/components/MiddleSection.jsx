@@ -63,8 +63,9 @@ export default function MiddleSection() {
           <Grid item key={course.id} xs={12} sm={6} md={4}>
             <Card
               sx={{
-                height: "399px",
-                width: "350px",
+                height: { md: "399px", xs: "200px" },
+                width: { md: "350px", xs: "250px" },
+                margin: { xs: "20px", md: "0px" },
                 ":hover": {
                   transform: "scale(1.03)",
                   boxShadow: 6,
@@ -78,7 +79,7 @@ export default function MiddleSection() {
               <CardActionArea>
                 <CardMedia
                   component="img"
-                  height="233px"
+                  sx={{ height: { xs: "100px", md: "233px" } }}
                   image={course.imageUrl || "/no-image.png"}
                   alt={course.name}
                 />
@@ -86,7 +87,7 @@ export default function MiddleSection() {
                   <Typography
                     sx={{
                       fontFamily: "Montserrat",
-                      fontSize: "16px",
+                      fontSize: { md: "16px", xs: "12px" },
                       fontWeight: "400",
                       color: "#828282",
                     }}
@@ -96,7 +97,7 @@ export default function MiddleSection() {
                   <Typography
                     sx={{
                       fontFamily: "Montserrat",
-                      fontSize: "18px",
+                      fontSize: { md: "18px", xs: "12px" },
                       fontWeight: "600",
                       color: "#333333",
                     }}
@@ -106,7 +107,7 @@ export default function MiddleSection() {
                   <Typography
                     sx={{
                       color: "#790B0A",
-                      fontSize: "20px",
+                      fontSize: { md: "20px", xs: "12px" },
                       marginTop: "20px",
                     }}
                   >
