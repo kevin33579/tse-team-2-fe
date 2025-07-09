@@ -169,7 +169,6 @@ export default function Checkout() {
                   sx={{
                     height: { xs: "20px", md: "30px" },
                     width: { xs: "16px", md: "23px" },
-                    marginLeft: { md: "300px" },
                     cursor: "pointer",
                   }}
                   src="./delete.png"
@@ -193,7 +192,7 @@ export default function Checkout() {
         spacing={2}
         direction={"column"}
         display={"flex"}
-        width={{ xs: "100%", md: "1137px" }}
+        width={{ xs: "100%", md: "90%" }}
         margin={"auto"}
       >
         <Grid item xs={12} sx={{ marginLeft: { xs: "20px" } }}>
