@@ -35,6 +35,7 @@ export default function BenefitSection() {
               fontSize: { md: "16px", xs: "12px" },
               fontWeight: "300",
               marginTop: "20px",
+              textAlign: "justify",
             }}
           >
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
@@ -51,6 +52,7 @@ export default function BenefitSection() {
               fontSize: { md: "16px", xs: "12px" },
               fontWeight: "300",
               marginTop: "20px",
+              textAlign: "justify",
             }}
           >
             Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
@@ -65,7 +67,7 @@ export default function BenefitSection() {
             component="img"
             sx={{
               height: { md: "280px", xs: "300px" },
-              width: { md: "373px", xs: "400px" },
+              width: { md: "373px", xs: "350px" },
             }}
             alt="logo"
             src={benefitImage}
