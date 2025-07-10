@@ -16,9 +16,12 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { productTypeApi } from "../apiService";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function AdminProductType() {
   const [productTypes, setProductTypes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProductTypes();
@@ -34,13 +37,32 @@ export default function AdminProductType() {
   };
 
   const handleEdit = (id) => {
-    console.log("Edit product type with ID:", id);
+    navigate(`/edit-product-type/${id}`);
     // Open modal / navigate / populate form
   };
 
-  const handleDelete = (id) => {
-    console.log("Delete product type with ID:", id);
-    // Confirm and call delete API
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action will delete the product type.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        await productTypeApi.deleteProductsType(id);
+        Swal.fire("Deleted!", "Product type has been deleted.", "success");
+        // Refresh list (call your fetch function here)
+        fetchProductTypes(); // <- replace with your actual fetch function
+      } catch (err) {
+        console.error("Delete failed:", err);
+        Swal.fire("Error", err.message || "Failed to delete.", "error");
+      }
+    }
   };
 
   return (
@@ -54,7 +76,14 @@ export default function AdminProductType() {
         <Typography variant="h5" fontWeight="bold">
           Manage Product Types
         </Typography>
-        <Button variant="contained" startIcon={<AddIcon />} color="primary">
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          color="primary"
+          onClick={() => {
+            navigate("/add-product-type");
+          }}
+        >
           Add Product Type
         </Button>
       </Box>
@@ -63,7 +92,7 @@ export default function AdminProductType() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["ID", "Name", "Actions"].map((h) => (
+              {["ID", "Name", "Description", "ImageUrl", "Actions"].map((h) => (
                 <TableCell key={h} sx={{ color: "white" }}>
                   {h}
                 </TableCell>
@@ -76,6 +105,8 @@ export default function AdminProductType() {
                 <TableRow key={type.id}>
                   <TableCell>{type.id}</TableCell>
                   <TableCell>{type.name}</TableCell>
+                  <TableCell>{type.description}</TableCell>
+                  <TableCell>{type.imageUrl}</TableCell>
                   <TableCell>
                     <IconButton
                       onClick={() => handleEdit(type.id)}

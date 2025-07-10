@@ -124,6 +124,24 @@ export const productTypeApi = {
       throw error;
     }
   },
+  editProductsType: async (data, id) => {
+    try {
+      const response = await apiClient.put(`/ProductTypes/${id}`, data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+  deleteProductsType: async (id) => {
+    try {
+      const response = await apiClient.delete(`/ProductTypes/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
 };
 
 export const scheduleApi = {

@@ -23,6 +23,8 @@ import EditProduct from "./pages/EditProduct";
 import AdminUsers from "./pages/AdminUsers";
 import ProtectedRoute from "./pages/ProtectedRoutes";
 import AdminProductType from "./pages/AdminProductType";
+import AddProductType from "./pages/AddProductType";
+import EditProductType from "./pages/EditProductType";
 
 function App() {
   return (
@@ -34,7 +36,22 @@ function App() {
           <Route element={<LayoutNavbar />}>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/success" element={<SuccessPurchase />} />
-
+            <Route
+              path="/add-product-type"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AddProductType />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-product-type/:id"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <EditProductType />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/add-product"
               element={
