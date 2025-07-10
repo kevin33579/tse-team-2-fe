@@ -22,6 +22,7 @@ import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import AdminUsers from "./pages/AdminUsers";
 import ProtectedRoute from "./pages/ProtectedRoutes";
+import AdminProductType from "./pages/AdminProductType";
 
 function App() {
   return (
@@ -77,6 +78,14 @@ function App() {
               element={
                 <ProtectedRoute allowedRole={"Admin"}>
                   <AdminProduct />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-type"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AdminProductType />
                 </ProtectedRoute>
               }
             />

@@ -106,6 +106,24 @@ export const productTypeApi = {
       throw error;
     }
   },
+  getAllProductsTypeAdmin: async () => {
+    try {
+      const response = await apiClient.get("/ProductTypes/Admin");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+  createProductsType: async (data) => {
+    try {
+      const response = await apiClient.post("/ProductTypes", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
 };
 
 export const scheduleApi = {

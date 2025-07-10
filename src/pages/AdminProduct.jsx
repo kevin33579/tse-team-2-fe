@@ -81,6 +81,13 @@ export default function AdminProduct() {
         >
           Users
         </Button>
+        <Button
+          variant="contained"
+          sx={{ ml: { xs: 0, sm: 1 } }}
+          onClick={() => navigate("/admin-type")}
+        >
+          Product Type
+        </Button>
       </Box>
 
       {/* table */}
