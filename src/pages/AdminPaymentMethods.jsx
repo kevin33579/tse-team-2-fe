@@ -27,7 +27,7 @@ export default function AdminPaymentMethods() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await paymentMethodApi.getPaymentMethod();
+        const res = await paymentMethodApi.getPaymentMethodAdmin();
         setRows(res ?? []);
       } catch (err) {
         console.error(err);
@@ -73,11 +73,13 @@ export default function AdminPaymentMethods() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["No", "ID", "Name", "Image", "Active", "Edit", "Delete"].map((header) => (
-                <TableCell key={header} sx={{ color: "white" }}>
-                  {header}
-                </TableCell>
-              ))}
+              {["No", "ID", "Name", "Image", "Active", "Edit", "Delete"].map(
+                (header) => (
+                  <TableCell key={header} sx={{ color: "white" }}>
+                    {header}
+                  </TableCell>
+                )
+              )}
             </TableRow>
           </TableHead>
 
@@ -100,12 +102,12 @@ export default function AdminPaymentMethods() {
                       "-"
                     )}
                   </TableCell>
-                  <TableCell>
-                    {item.isActive ? "YES" : "NO"}
-                  </TableCell>
+                  <TableCell>{item.isActive ? "YES" : "NO"}</TableCell>
                   <TableCell>
                     <IconButton
-                      onClick={() => navigate(`/edit-payment-method/${item.id}`)}
+                      onClick={() =>
+                        navigate(`/edit-payment-method/${item.id}`)
+                      }
                     >
                       <EditIcon />
                     </IconButton>

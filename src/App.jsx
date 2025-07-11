@@ -31,6 +31,9 @@ import EditInvoice from "./pages/EditInvoice";
 import AdminPaymentMethods from "./pages/AdminPaymentMethods";
 import AddPaymentMethod from "./pages/AddPaymentMethod";
 import EditPaymentMethod from "./pages/EditPaymentMethods";
+import AdminSchedules from "./pages/AdminSchedule";
+import AddSchedule from "./pages/AddSchedule";
+import LayoutAdmin from "./pages/LayoutAdmin";
 
 function App() {
   return (
@@ -42,6 +45,8 @@ function App() {
           <Route element={<LayoutNavbar />}>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/success" element={<SuccessPurchase />} />
+          </Route>
+          <Route element={<LayoutAdmin />}>
             <Route
               path="/add-product-type"
               element={
@@ -90,6 +95,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route
+              path="/admin-schedule"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AdminSchedules />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/add-payment-method"
               element={
@@ -130,20 +144,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-          </Route>
-          <Route element={<Layout />}>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<Landing />} />
-            <Route path="/list-menu-kelas/:type" element={<ListMenuKelas />} />
-            <Route path="/detail/:id" element={<DetailKelas />} />
-            <Route path="/invoice" element={<Invoice />} />
-            <Route path="/invoice/:id" element={<InvoiceDetail />} />
-            <Route path="/forgot-password" element={<ResetPasswordEmail />} />
-            <Route
-              path="/create-new-password"
-              element={<ResetPasswordCreatePassword />}
-            />
-            <Route path="/my-class" element={<MyClass />} />
             <Route
               path="/admin-products"
               element={
@@ -160,6 +160,28 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/add-schedule"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AddSchedule />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+          <Route element={<Layout />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/list-menu-kelas/:type" element={<ListMenuKelas />} />
+            <Route path="/detail/:id" element={<DetailKelas />} />
+            <Route path="/invoice" element={<Invoice />} />
+            <Route path="/invoice/:id" element={<InvoiceDetail />} />
+            <Route path="/forgot-password" element={<ResetPasswordEmail />} />
+            <Route
+              path="/create-new-password"
+              element={<ResetPasswordCreatePassword />}
+            />
+            <Route path="/my-class" element={<MyClass />} />
           </Route>
         </Routes>
       </BrowserRouter>

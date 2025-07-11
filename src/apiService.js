@@ -164,6 +164,15 @@ export const scheduleApi = {
       throw error;
     }
   },
+  deleteSchedule: async (id) => {
+    try {
+      const response = await apiClient.delete(`/Schedule/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
 };
 
 export const cartApi = {
@@ -206,6 +215,15 @@ export const paymentMethodApi = {
   getPaymentMethod: async () => {
     try {
       const response = await apiClient.get("/PaymentMethod");
+      return response.data.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+  getPaymentMethodAdmin: async () => {
+    try {
+      const response = await apiClient.get("/PaymentMethod/Admin");
       return response.data.data;
     } catch (error) {
       console.error("Error fetching payment:", error);
@@ -330,6 +348,15 @@ export const user = {
   deactivateUserApi: async (id) => {
     try {
       const response = await apiClient.put(`Users/deactivate/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+  activateUserApi: async (id) => {
+    try {
+      const response = await apiClient.put(`Users/activate/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching payment:", error);

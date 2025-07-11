@@ -29,6 +29,7 @@ export default function AdminProduct() {
       try {
         const res = await productApi.getAllProducts();
         setRows(res.data ?? []);
+        console.log(res);
       } catch (err) {
         console.error(err);
       }
@@ -74,34 +75,6 @@ export default function AdminProduct() {
         <Button variant="contained" onClick={() => navigate("/add-product")}>
           Add Product
         </Button>
-        <Button
-          variant="contained"
-          sx={{ ml: { xs: 0, sm: 1 } }}
-          onClick={() => navigate("/admin-users")}
-        >
-          Users
-        </Button>
-        <Button
-          variant="contained"
-          sx={{ ml: { xs: 0, sm: 1 } }}
-          onClick={() => navigate("/admin-type")}
-        >
-          Product Type
-        </Button>
-        <Button
-          variant="contained"
-          sx={{ ml: { xs: 0, sm: 1 } }}
-          onClick={() => navigate("/admin-invoices")}
-        >
-          Invoice
-        </Button>
-        <Button
-          variant="contained"
-          sx={{ ml: { xs: 0, sm: 1 } }}
-          onClick={() => navigate("/admin-payment-methods")}
-        >
-          Payment Method
-        </Button>
       </Box>
 
       {/* table */}
@@ -109,13 +82,20 @@ export default function AdminProduct() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["ID", "Name", "Price", "Stock", "Type", "Edit", "Delete"].map(
-                (h) => (
-                  <TableCell key={h} sx={{ color: "white" }}>
-                    {h}
-                  </TableCell>
-                )
-              )}
+              {[
+                "ID",
+                "Name",
+                "Price",
+                "Stock",
+                "Type",
+                "IsActive",
+                "Edit",
+                "Delete",
+              ].map((h) => (
+                <TableCell key={h} sx={{ color: "white" }}>
+                  {h}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
 
@@ -127,7 +107,7 @@ export default function AdminProduct() {
                 <TableCell>{toRupiah(p.price)}</TableCell>
                 <TableCell>{p.stock}</TableCell>
                 <TableCell>{p.productTypeName}</TableCell>
-
+                <TableCell>{p.isActive ? "True" : "False"}</TableCell>
                 <TableCell>
                   <IconButton
                     size="small"

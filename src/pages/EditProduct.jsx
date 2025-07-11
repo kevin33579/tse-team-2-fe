@@ -25,6 +25,7 @@ export default function EditProduct() {
     description: "",
     imageUrl: "",
     productTypeId: "",
+    isActive: true,
   });
 
   // ── fetch product + types ─────────────────────────
@@ -45,6 +46,7 @@ export default function EditProduct() {
           description: data.description ?? "",
           imageUrl: data.imageUrl ?? "",
           productTypeId: data.productTypeId ?? "",
+          isActive: data.isActive ?? true,
         });
       } catch (err) {
         console.error(err);
@@ -68,6 +70,7 @@ export default function EditProduct() {
         price: Number(form.price),
         imageUrl: form.imageUrl,
         stock: Number(form.stock),
+        isActive: form.isActive,
       });
 
       await Swal.fire({
@@ -166,6 +169,21 @@ export default function EditProduct() {
                 ))}
               </TextField>
             </Grid>
+
+            <TextField
+              name="isActive"
+              label="Is Active"
+              select
+              value={form.isActive ? "true" : "false"}
+              onChange={(e) =>
+                setForm({ ...form, isActive: e.target.value === "true" })
+              }
+              fullWidth
+              required
+            >
+              <MenuItem value="true">Active</MenuItem>
+              <MenuItem value="false">Inactive</MenuItem>
+            </TextField>
 
             <Grid item xs={12}>
               <Button type="submit" variant="contained">
