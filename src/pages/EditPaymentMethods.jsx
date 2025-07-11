@@ -5,6 +5,8 @@ import {
   Paper,
   TextField,
   Typography,
+  FormControlLabel,
+  Switch,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { paymentMethodApi } from "../apiService";
@@ -19,8 +21,7 @@ export default function EditPaymentMethod() {
     (async () => {
       try {
         const pmResponse = await paymentMethodApi.getPaymentMethodById(id);
-        // Sesuaikan jika respons API berbentuk { data: { ... } }
-        const pmData = pmResponse.data || pmResponse;
+        const pmData = pmResponse.data || pmResponse; // antisipasi format respons
         setForm(pmData);
       } catch (error) {
         console.error("Failed to fetch payment method:", error);
@@ -38,7 +39,7 @@ export default function EditPaymentMethod() {
     }
 
     try {
-      await paymentMethodApi.updatePaymentMethod(form); // Kirim seluruh objek form termasuk id
+      await paymentMethodApi.updatePaymentMethod(form);
       Swal.fire("Updated", "Payment method berhasil diubah", "success");
       navigate("/admin-payment-methods");
     } catch (err) {
@@ -70,6 +71,18 @@ export default function EditPaymentMethod() {
           label="Image URL"
           value={form.imageUrl || ""}
           onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
+          sx={{ mb: 2 }}
+        />
+
+        <FormControlLabel
+          control={
+            <Switch
+              checked={form.isActive || false}
+              onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
+              color="primary"
+            />
+          }
+          label="Active"
           sx={{ mb: 2 }}
         />
 

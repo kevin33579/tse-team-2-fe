@@ -37,7 +37,6 @@ export default function AdminPaymentMethods() {
 
   const deletePaymentMethod = async (id) => {
     try {
-      // Pastikan Anda punya API delete di paymentMethodApi
       await paymentMethodApi.deletePaymentMethod(id);
       setRows((prev) => prev.filter((item) => item.id !== id));
       Swal.fire({ icon: "success", title: `Payment method ${id} deleted` });
@@ -74,7 +73,7 @@ export default function AdminPaymentMethods() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["No", "ID", "Name", "Image", "Edit", "Delete"].map((header) => (
+              {["No", "ID", "Name", "Image", "Active", "Edit", "Delete"].map((header) => (
                 <TableCell key={header} sx={{ color: "white" }}>
                   {header}
                 </TableCell>
@@ -100,6 +99,9 @@ export default function AdminPaymentMethods() {
                     ) : (
                       "-"
                     )}
+                  </TableCell>
+                  <TableCell>
+                    {item.isActive ? "YES" : "NO"}
                   </TableCell>
                   <TableCell>
                     <IconButton
@@ -131,7 +133,7 @@ export default function AdminPaymentMethods() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
                   No payment methods found.
                 </TableCell>
               </TableRow>
