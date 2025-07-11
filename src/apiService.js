@@ -155,6 +155,15 @@ export const scheduleApi = {
       throw error;
     }
   },
+  getAllScheduleAdmin: async () => {
+    try {
+      const response = await apiClient.get("/Schedule/Admin");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
   createSchedule: async (data) => {
     try {
       const response = await apiClient.post("/Schedule", data);
@@ -167,6 +176,24 @@ export const scheduleApi = {
   deleteSchedule: async (id) => {
     try {
       const response = await apiClient.delete(`/Schedule/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
+  deactivateSchedule: async (id) => {
+    try {
+      const response = await apiClient.put(`/Schedule/deactivate/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
+  activateSchedule: async (id) => {
+    try {
+      const response = await apiClient.put(`/Schedule/activate/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching schedule:", error);

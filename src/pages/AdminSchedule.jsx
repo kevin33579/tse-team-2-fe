@@ -11,10 +11,14 @@ import {
   TableRow,
   Paper,
   Button,
+  IconButton,
 } from "@mui/material";
 import { scheduleApi } from "../apiService"; // ← Adjust path as needed
 import Swal from "sweetalert2";
 import { formatLongDate } from "../helper";
+import BlockIcon from "@mui/icons-material/Block";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export default function AdminSchedules() {
   const [schedules, setSchedules] = useState([]);
@@ -22,7 +26,7 @@ export default function AdminSchedules() {
   useEffect(() => {
     (async () => {
       try {
-        const result = await scheduleApi.getAllSchedule();
+        const result = await scheduleApi.getAllScheduleAdmin();
         setSchedules(result ?? []);
       } catch (err) {
         console.error(err);
@@ -79,7 +83,14 @@ export default function AdminSchedules() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["ID", "Time", "Actions"].map((h) => (
+              {[
+                "ID",
+                "Time",
+                "Active",
+                "Deactivate Schedule",
+                "Activate Schedule",
+                "Actions",
+              ].map((h) => (
                 <TableCell key={h} sx={{ color: "white" }}>
                   {h}
                 </TableCell>
@@ -91,15 +102,66 @@ export default function AdminSchedules() {
               <TableRow key={schedule.id}>
                 <TableCell>{schedule.id}</TableCell>
                 <TableCell> {formatLongDate(schedule.time)}</TableCell>
+                <TableCell> {schedule.isActive ? "True" : "False"}</TableCell>
                 <TableCell>
-                  <Button
-                    color="error"
-                    variant="outlined"
+                  <IconButton
                     size="small"
+                    color="error"
+                    onClick={async () => {
+                      try {
+                        await scheduleApi.deactivateSchedule(schedule.id);
+                        Swal.fire({
+                          icon: "success",
+                          title: "Deactivated",
+                        }).then(() => {
+                          window.location.reload();
+                        });
+                        // optionally refetch or update state
+                      } catch (err) {
+                        console.error(err);
+                        Swal.fire({
+                          icon: "error",
+                          title: "Failed to deactivate",
+                        });
+                      }
+                    }}
+                  >
+                    <BlockIcon />
+                  </IconButton>
+                </TableCell>
+                <TableCell>
+                  <IconButton
+                    size="small"
+                    color="success"
+                    onClick={async () => {
+                      try {
+                        await scheduleApi.activateSchedule(schedule.id);
+                        Swal.fire({ icon: "success", title: "Activated" }).then(
+                          () => {
+                            window.location.reload();
+                          }
+                        );
+                        // optionally refetch or update state
+                      } catch (err) {
+                        console.error(err);
+                        Swal.fire({
+                          icon: "error",
+                          title: "Failed to activate",
+                        });
+                      }
+                    }}
+                  >
+                    <CheckCircleIcon />
+                  </IconButton>
+                </TableCell>
+                <TableCell>
+                  <IconButton
+                    size="small"
+                    color="error"
                     onClick={() => handleDelete(schedule.id)}
                   >
-                    Delete
-                  </Button>
+                    <DeleteIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}

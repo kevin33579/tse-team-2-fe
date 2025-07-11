@@ -92,13 +92,18 @@ export default function AdminUsers() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["Username", "Email", "Role", "Is Active", "Actions"].map(
-                (h) => (
-                  <TableCell key={h} sx={{ color: "white" }}>
-                    {h}
-                  </TableCell>
-                )
-              )}
+              {[
+                "Username",
+                "Email",
+                "Role",
+                "Is Active",
+                "Activate User",
+                "Deactivate User",
+              ].map((h) => (
+                <TableCell key={h} sx={{ color: "white" }}>
+                  {h}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
 
@@ -117,6 +122,8 @@ export default function AdminUsers() {
                   >
                     <CheckCircleIcon />
                   </IconButton>
+                </TableCell>
+                <TableCell>
                   <IconButton
                     size="small"
                     color="error"

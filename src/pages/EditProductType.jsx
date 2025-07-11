@@ -18,6 +18,7 @@ export default function EditProductType() {
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
     const fetchProductType = async () => {
@@ -27,6 +28,7 @@ export default function EditProductType() {
         setName(data.name || "");
         setDescription(data.description || "");
         setImageUrl(data.imageUrl || "");
+        setIsActive(data.isActive ?? true);
       } catch (err) {
         console.error(err);
         Swal.fire("Error", "Failed to fetch product type data", "error");
@@ -39,7 +41,7 @@ export default function EditProductType() {
   const handleUpdate = async () => {
     try {
       setLoading(true);
-      const payload = { id, name, description, imageUrl };
+      const payload = { id, name, description, imageUrl, isActive };
       await productTypeApi.editProductsType(payload, id);
       Swal.fire("Success", "Product type updated successfully", "success");
       navigate("/admin-type"); // redirect after edit
@@ -77,6 +79,18 @@ export default function EditProductType() {
             onChange={(e) => setImageUrl(e.target.value)}
             fullWidth
           />
+          <TextField
+            select
+            label="Status"
+            value={isActive ? "true" : "false"}
+            onChange={(e) => setIsActive(e.target.value === "true")}
+            SelectProps={{ native: true }}
+            fullWidth
+          >
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </TextField>
+
           <Button
             variant="contained"
             color="primary"
