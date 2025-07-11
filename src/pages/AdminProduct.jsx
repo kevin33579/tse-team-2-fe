@@ -81,6 +81,27 @@ export default function AdminProduct() {
         >
           Users
         </Button>
+        <Button
+          variant="contained"
+          sx={{ ml: { xs: 0, sm: 1 } }}
+          onClick={() => navigate("/admin-type")}
+        >
+          Product Type
+        </Button>
+        <Button
+          variant="contained"
+          sx={{ ml: { xs: 0, sm: 1 } }}
+          onClick={() => navigate("/admin-invoices")}
+        >
+          Invoice
+        </Button>
+        <Button
+          variant="contained"
+          sx={{ ml: { xs: 0, sm: 1 } }}
+          onClick={() => navigate("/admin-payment-methods")}
+        >
+          Payment Method
+        </Button>
       </Box>
 
       {/* table */}

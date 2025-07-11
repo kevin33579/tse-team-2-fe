@@ -74,9 +74,21 @@ export default function Checkout() {
     }
   };
 
+  console.log(cart.length);
   const children = (
-    <Box sx={{ minHeight: "80vh", display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{
+        minHeight: "80vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Divider></Divider>
+      {cart.length == 0 ? (
+        <Typography margin={"20px"}>There are no cart yet</Typography>
+      ) : (
+        ""
+      )}
       {cart.map((el, index) => {
         return (
           <>
@@ -86,7 +98,7 @@ export default function Checkout() {
                 display: "flex",
                 alignItems: "center",
                 width: "100%",
-                flexWrap: { xs: "wrap", md: "nowrap" },
+                flexWrap: "nowrap",
                 margin: "10px",
               }}
             >
@@ -121,7 +133,7 @@ export default function Checkout() {
                     flexDirection: "column",
                     marginLeft: 2,
                     flex: 1,
-                    mt: { xs: 1, sm: 0 },
+                    mt: { xs: 0, sm: 0 },
                   }}
                 >
                   <Typography
@@ -132,7 +144,7 @@ export default function Checkout() {
                   >
                     {el.productTypeName}
                   </Typography>
-                  <Typography sx={{ fontSize: { xs: "16px", md: "24px" } }}>
+                  <Typography sx={{ fontSize: { xs: "14px", md: "24px" } }}>
                     {el.productName}
                   </Typography>
                   <Typography
@@ -143,7 +155,12 @@ export default function Checkout() {
                   >
                     {formatLongDate(el.scheduleTime)}
                   </Typography>
-                  <Typography sx={{ fontSize: "20px", color: "primary.main" }}>
+                  <Typography
+                    sx={{
+                      fontSize: { md: "20px", xs: "14px" },
+                      color: "primary.main",
+                    }}
+                  >
                     {toRupiah(el.productPrice)}
                   </Typography>
                 </Box>
@@ -151,8 +168,7 @@ export default function Checkout() {
                   component="img"
                   sx={{
                     height: { xs: "20px", md: "30px" },
-                    width: { xs: "13px", md: "23px" },
-                    marginLeft: { xs: "100px", md: "300px" },
+                    width: { xs: "16px", md: "23px" },
                     cursor: "pointer",
                   }}
                   src="./delete.png"
@@ -176,7 +192,7 @@ export default function Checkout() {
         spacing={2}
         direction={"column"}
         display={"flex"}
-        width={{ xs: "100%", md: "1137px" }}
+        width={{ xs: "100%", md: "90%" }}
         margin={"auto"}
       >
         <Grid item xs={12} sx={{ marginLeft: { xs: "20px" } }}>
@@ -210,7 +226,12 @@ export default function Checkout() {
           xs={12}
         >
           <Typography
-            sx={{ fontSize: "14px", fontWeight: "400", margin: "20px" }}
+            sx={{
+              fontSize: "14px",
+              fontWeight: "400",
+              margin: "20px",
+              marginLeft: { xs: "100px", md: "0px" },
+            }}
           >
             Total Price
           </Typography>
@@ -236,7 +257,7 @@ export default function Checkout() {
               width: { xs: "50px", md: "233px" },
               height: "40px",
               margin: "20px",
-              marginLeft: { xs: "150px", md: "0px" },
+              marginLeft: { xs: "170px", md: "0px" },
             }}
           >
             Pay now

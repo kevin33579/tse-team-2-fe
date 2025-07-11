@@ -51,7 +51,11 @@ const ListMenuKelas = () => {
             component="img"
             image={productType.imageUrl}
             alt="SUV"
-            sx={{ objectFit: "cover", width: "100vw", height: "294px" }}
+            sx={{
+              objectFit: "cover",
+              width: "100vw",
+              height: { md: "500px", xs: "200px" },
+            }}
           />
           <CardContent>
             <Typography

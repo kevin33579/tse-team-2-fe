@@ -13,6 +13,14 @@ const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token"); // <— your JWT
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`; // attach it
+  }
+  return config;
+});
+
 export const productApi = {
   // Get all products
   getAllProducts: async () => {
@@ -53,11 +61,11 @@ export const productApi = {
   },
   createProduct: async (data) => {
     try {
-      const response = await apiClient.post("/products", data);
-      return response;
-    } catch (error) {
-      console.log(error);
-      throw error;
+      const res = await apiClient.post("/products", data);
+      return res.data; // return just payload
+    } catch (err) {
+      console.error("Error creating product:", err);
+      throw err;
     }
   },
   editProduct: async (id, data) => {
@@ -92,6 +100,42 @@ export const productTypeApi = {
   getProductTypeById: async (id) => {
     try {
       const response = await apiClient.get(`/ProductTypes/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+  getAllProductsTypeAdmin: async () => {
+    try {
+      const response = await apiClient.get("/ProductTypes/Admin");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+  createProductsType: async (data) => {
+    try {
+      const response = await apiClient.post("/ProductTypes", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+  editProductsType: async (data, id) => {
+    try {
+      const response = await apiClient.put(`/ProductTypes/${id}`, data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  },
+  deleteProductsType: async (id) => {
+    try {
+      const response = await apiClient.delete(`/ProductTypes/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -161,10 +205,44 @@ export const cartApi = {
 export const paymentMethodApi = {
   getPaymentMethod: async () => {
     try {
-      const response = await apiClient.get("PaymentMethod");
-      return response.data;
+      const response = await apiClient.get("/PaymentMethod");
+      return response.data.data;
     } catch (error) {
       console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+  createPaymentMethod: async (data) => {
+    try {
+      const response = await apiClient.post("/PaymentMethod", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error creating payment method:", error);
+      throw error;
+    }
+  },
+  updatePaymentMethod: async (paymentMethod) => {
+    if (!paymentMethod.id || paymentMethod.id === 0) {
+      throw new Error("Payment method id is required and must not be zero");
+    }
+
+    const response = await apiClient.put("/paymentmethod", paymentMethod);
+    return response.data;
+  },
+  deletePaymentMethod: async (id) => {
+    try {
+      const response = await apiClient.delete(`/PaymentMethod/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting payment method:", error);
+      throw error;
+    }
+  },
+  getPaymentMethodById: async (id) => {
+    try {
+      const res = await apiClient.get(`/PaymentMethod/${id}`);
+      return res.data;
+    } catch (error) {
       throw error;
     }
   },
@@ -189,6 +267,45 @@ export const invoiceApi = {
       throw error;
     }
   },
+  getAllInvoicesAdmin: async () => {
+    try {
+      const response = await apiClient.get("Invoice/all");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching invoices:", error);
+      throw error;
+    }
+  },
+
+  getInvoiceById: async (id) => {
+    try {
+      const response = await apiClient.get(`Invoice/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching invoice ${id}`, error);
+      throw error;
+    }
+  },
+
+  updateInvoice: async (data) => {
+    try {
+      const response = await apiClient.put("Invoice", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error updating invoice:", error);
+      throw error;
+    }
+  },
+
+  deleteInvoice: async (id) => {
+    try {
+      const response = await apiClient.delete(`Invoice/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting invoice:", error);
+      throw error;
+    }
+  },
 };
 
 export const user = {
@@ -201,9 +318,18 @@ export const user = {
       throw error;
     }
   },
-  getAllUsersApi: async (data) => {
+  getAllUsersApi: async () => {
+    const token = localStorage.getItem("token");
+    const res = await axios.get("https://localhost:7071/api/users", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  },
+  deactivateUserApi: async (id) => {
     try {
-      const response = await apiClient.get("Users", data);
+      const response = await apiClient.put(`Users/deactivate/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching payment:", error);

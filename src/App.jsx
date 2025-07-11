@@ -22,6 +22,15 @@ import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import AdminUsers from "./pages/AdminUsers";
 import ProtectedRoute from "./pages/ProtectedRoutes";
+import AdminProductType from "./pages/AdminProductType";
+import AddProductType from "./pages/AddProductType";
+import EditProductType from "./pages/EditProductType";
+import AdminInvoice from "./pages/AdminInvoice";
+import AddInvoice from "./pages/AddInvoice";
+import EditInvoice from "./pages/EditInvoice";
+import AdminPaymentMethods from "./pages/AdminPaymentMethods";
+import AddPaymentMethod from "./pages/AddPaymentMethod";
+import EditPaymentMethod from "./pages/EditPaymentMethods";
 
 function App() {
   return (
@@ -33,8 +42,70 @@ function App() {
           <Route element={<LayoutNavbar />}>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/success" element={<SuccessPurchase />} />
-            <Route path="/profile" element={<Profile />} />
-
+            <Route
+              path="/add-product-type"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AddProductType />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-product-type/:id"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <EditProductType />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-invoices"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AdminInvoice />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/add-invoice"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AddInvoice />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-invoice/:id"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <EditInvoice />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-payment-methods"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AdminPaymentMethods />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/add-payment-method"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AddPaymentMethod />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-payment-method/:id"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <EditPaymentMethod />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/add-product"
               element={
@@ -61,6 +132,7 @@ function App() {
             />
           </Route>
           <Route element={<Layout />}>
+            <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Landing />} />
             <Route path="/list-menu-kelas/:type" element={<ListMenuKelas />} />
             <Route path="/detail/:id" element={<DetailKelas />} />
@@ -77,6 +149,14 @@ function App() {
               element={
                 <ProtectedRoute allowedRole={"Admin"}>
                   <AdminProduct />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-type"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AdminProductType />
                 </ProtectedRoute>
               }
             />

@@ -13,7 +13,7 @@ const Register = () => {
     confirmPassword: "",
   });
   const navigate = useNavigate();
-  const {post,loading} = usePost(); 
+  const { post, loading } = usePost();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,24 +25,24 @@ const Register = () => {
 
   const handleSubmit = async () => {
     try {
-    const response = await  post("/api/auth/register", payload);
-    console.log("Register success:", response);
+      const response = await post("/api/auth/register", payload);
+      console.log("Register success:", response);
 
-    if(response.success) {
-      // If registration is successful, redirect to login page
-      Swal.fire({
-        title: "Registration Successful",
-        text: "Please login to continue.",
-        icon: "success",
-      });
-      navigate("/login");
-    } else {
-      Swal.fire({
-        title: "Registration Failed",
-        text: response.message || "Please try again.",
-        icon: "error",
-      });
-    }
+      if (response.success) {
+        // If registration is successful, redirect to login page
+        Swal.fire({
+          title: "Registration Successful",
+          text: "Please login to continue.",
+          icon: "success",
+        });
+        navigate("/login");
+      } else {
+        Swal.fire({
+          title: "Registration Failed",
+          text: response.message || "Please try again.",
+          icon: "error",
+        });
+      }
     } catch (err) {
       console.error("Register error:", err);
       Swal.fire({
@@ -71,7 +71,7 @@ const Register = () => {
                   color: "#800000",
                   fontWeight: "bold",
                   textAlign: "left",
-                  fontSize: "24px",
+                  fontSize: { md: "24px", xs: "18px" },
                 }}
               >
                 Let’s Join Our Course!
@@ -80,7 +80,11 @@ const Register = () => {
             <Grid item>
               <Typography
                 variant="subtitle1"
-                sx={{ color: "#777", textAlign: "left", fontSize: "16px" }}
+                sx={{
+                  color: "#777",
+                  textAlign: "left",
+                  fontSize: { md: "16px", xs: "14px" },
+                }}
               >
                 Please register first
               </Typography>
@@ -93,6 +97,8 @@ const Register = () => {
                 fullWidth
                 value={payload.username}
                 onChange={handleChange}
+                InputProps={{ sx: { fontSize: 14 } }}
+                InputLabelProps={{ sx: { fontSize: 13 } }}
               />
             </Grid>
             <Grid item>
@@ -103,6 +109,8 @@ const Register = () => {
                 fullWidth
                 value={payload.email}
                 onChange={handleChange}
+                InputProps={{ sx: { fontSize: 14 } }}
+                InputLabelProps={{ sx: { fontSize: 13 } }}
               />
             </Grid>
             <Grid item>
@@ -114,6 +122,8 @@ const Register = () => {
                 fullWidth
                 value={payload.password}
                 onChange={handleChange}
+                InputProps={{ sx: { fontSize: 14 } }}
+                InputLabelProps={{ sx: { fontSize: 13 } }}
               />
             </Grid>
             <Grid item>
@@ -125,6 +135,8 @@ const Register = () => {
                 fullWidth
                 value={payload.confirmPassword}
                 onChange={handleChange}
+                InputProps={{ sx: { fontSize: 14 } }}
+                InputLabelProps={{ sx: { fontSize: 13 } }}
               />
             </Grid>
             <Grid item container justifyContent="flex-end">
@@ -133,12 +145,14 @@ const Register = () => {
                 sx={{ bgcolor: "#800000", "&:hover": { bgcolor: "#a00000" } }}
                 onClick={handleSubmit}
                 disabled={loading}
+                InputProps={{ sx: { fontSize: 14 } }}
+                InputLabelProps={{ sx: { fontSize: 13 } }}
               >
                 Sign Up
               </Button>
             </Grid>
             <Grid item textAlign="center">
-              <Typography sx={{ fontSize: "16px" }}>
+              <Typography sx={{ fontSize: { md: "16px", xs: "14px" } }}>
                 Have an account? <Link to="/login">Login here</Link>
               </Typography>
             </Grid>

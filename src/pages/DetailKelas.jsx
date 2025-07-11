@@ -51,6 +51,9 @@ export default function DetailKelas() {
     } catch (err) {
       console.error(err);
       // tambahkan penanganan error (toast/snackbar) di sini
+      Swal.fire({
+        title: "Please Login First",
+      });
     }
   };
 
@@ -71,10 +74,13 @@ export default function DetailKelas() {
       Swal.fire({
         title: "Success add to cart",
         icon: "success",
-        didClose: () => navigate("/checkout")
+        didClose: () => navigate("/checkout"),
       });
     } catch (err) {
       console.error(err);
+      Swal.fire({
+        title: "Please Login First",
+      });
       // tambahkan penanganan error (toast/snackbar) di sini
     }
   };
@@ -112,8 +118,10 @@ export default function DetailKelas() {
         }}
       >
         <Box
-          width="100%"
-          maxWidth="1140px"
+          sx={{
+            maxWidth: { md: "1140px", xs: "600px" },
+            width: { md: "100%", xs: "70%" },
+          }}
           mx="auto"
           display="flex"
           flexDirection={{ xs: "column", md: "row" }}

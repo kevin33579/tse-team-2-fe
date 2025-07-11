@@ -44,7 +44,7 @@ export default function AdminUsers() {
     if (!confirm.isConfirmed) return;
 
     try {
-      await userApi.deleteUser(id); // make sure api exists
+      await userApi.deactivateUserApi(id); // make sure api exists
       setRows((prev) => prev.filter((u) => u.id !== id));
       Swal.fire({ icon: "success", title: "Deleted" });
     } catch (err) {

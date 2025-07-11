@@ -75,6 +75,7 @@ export default function MyClass() {
           </Grid>
         </Grid>
       ))}
+      <Box sx={{ minHeight: "40vh" }}></Box>
     </>
   );
 }
