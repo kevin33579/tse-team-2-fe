@@ -25,6 +25,12 @@ import ProtectedRoute from "./pages/ProtectedRoutes";
 import AdminProductType from "./pages/AdminProductType";
 import AddProductType from "./pages/AddProductType";
 import EditProductType from "./pages/EditProductType";
+import AdminInvoice from "./pages/AdminInvoice";
+import AddInvoice from "./pages/AddInvoice";
+import EditInvoice from "./pages/EditInvoice";
+import AdminPaymentMethods from "./pages/AdminPaymentMethods";
+import AddPaymentMethod from "./pages/AddPaymentMethod";
+import EditPaymentMethod from "./pages/EditPaymentMethods";
 
 function App() {
   return (
@@ -49,6 +55,54 @@ function App() {
               element={
                 <ProtectedRoute allowedRole={"Admin"}>
                   <EditProductType />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-invoices"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AdminInvoice />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/add-invoice"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AddInvoice />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-invoice/:id"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <EditInvoice />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-payment-methods"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AdminPaymentMethods />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/add-payment-method"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <AddPaymentMethod />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-payment-method/:id"
+              element={
+                <ProtectedRoute allowedRole={"Admin"}>
+                  <EditPaymentMethod />
                 </ProtectedRoute>
               }
             />
