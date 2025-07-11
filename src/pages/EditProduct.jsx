@@ -28,33 +28,35 @@ export default function EditProduct() {
     isActive: true,
   });
 
+  const fetchProductType = async () => {
+    try {
+      const [typeRes, prodRes] = await Promise.all([
+        productTypeApi.getAllProductsType(),
+        productApi.getProductById(id),
+      ]);
+
+      setTypes(typeRes ?? []);
+      const data = prodRes.data;
+      setForm({
+        name: data.name,
+        price: data.price,
+        stock: data.stock,
+        description: data.description ?? "",
+        imageUrl: data.imageUrl ?? "",
+        productTypeId: data.productTypeId ?? "",
+        isActive: data.isActive ?? true, // ← now part of form
+      });
+    } catch (err) {
+      console.error(err);
+      Swal.fire({ icon: "error", title: "Failed to load product" });
+      navigate("/admin-products");
+    }
+  };
+
   // ── fetch product + types ─────────────────────────
   useEffect(() => {
-    (async () => {
-      try {
-        const [typeRes, prodRes] = await Promise.all([
-          productTypeApi.getAllProductsType(), // product types
-          productApi.getProductById(id), // product to edit
-        ]);
-
-        setTypes(typeRes ?? []);
-        const data = prodRes.data;
-        setForm({
-          name: data.name,
-          price: data.price,
-          stock: data.stock,
-          description: data.description ?? "",
-          imageUrl: data.imageUrl ?? "",
-          productTypeId: data.productTypeId ?? "",
-          isActive: data.isActive ?? true,
-        });
-      } catch (err) {
-        console.error(err);
-        Swal.fire({ icon: "error", title: "Failed to load product" });
-        navigate("/admin-products");
-      }
-    })();
-  }, [id, navigate]);
+    fetchProductType();
+  }, []);
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -85,6 +87,7 @@ export default function EditProduct() {
       Swal.fire({ icon: "error", title: "Failed to update product" });
     }
   };
+  console.log(form.isActive);
 
   return (
     <Container maxWidth="md" sx={{ mt: 6 }}>
@@ -170,20 +173,22 @@ export default function EditProduct() {
               </TextField>
             </Grid>
 
-            <TextField
-              name="isActive"
-              label="Is Active"
-              select
-              value={form.isActive ? "true" : "false"}
-              onChange={(e) =>
-                setForm({ ...form, isActive: e.target.value === "true" })
-              }
-              fullWidth
-              required
-            >
-              <MenuItem value="true">Active</MenuItem>
-              <MenuItem value="false">Inactive</MenuItem>
-            </TextField>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="isActive"
+                label="Is Active"
+                select
+                value={form.isActive}
+                onChange={(e) =>
+                  setForm({ ...form, isActive: e.target.value === "true" })
+                }
+                fullWidth
+                required
+              >
+                <MenuItem value={"true"}>Active</MenuItem>
+                <MenuItem value={"false"}>Inactive</MenuItem>
+              </TextField>
+            </Grid>
 
             <Grid item xs={12}>
               <Button type="submit" variant="contained">
