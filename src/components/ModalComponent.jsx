@@ -32,7 +32,7 @@ export default function ModalComponent({
   const fetchData = async () => {
     try {
       const res = await paymentMethodApi.getPaymentMethod(); // <- await promise
-      setData(res.data ?? []); // <- assume { data: [...] }
+      setData(res ?? []); // <- assume { data: [...] }
     } catch (e) {
       console.error(e);
       setData([]); // fallback
