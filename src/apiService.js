@@ -363,6 +363,16 @@ export const user = {
       throw error;
     }
   },
+  loginApi: async (data) => {
+    try {
+      const response = await apiClient.post("/Auth/login", data);
+      return response.data;
+    } catch (error) {
+      // Penting: lempar error agar bisa ditangkap di Login.jsx
+      console.error("Login error:", error);
+      throw error;
+    }
+  },
   getAllUsersApi: async () => {
     const token = localStorage.getItem("token");
     const res = await axios.get("https://localhost:7071/api/users", {

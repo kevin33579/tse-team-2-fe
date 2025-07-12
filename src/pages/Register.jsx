@@ -24,15 +24,32 @@ const Register = () => {
   };
 
   const handleSubmit = async () => {
+    // validasi manual konfirmasi password
+    if (payload.password !== payload.confirmPassword) {
+      Swal.fire({
+        title: "Error",
+        text: "Password dan konfirmasi tidak sama",
+        icon: "warning",
+      });
+      return;
+    }
+
     try {
-      const response = await post("/api/auth/register", payload);
+      // Hanya kirim data yang dibutuhkan backend
+      const { username, email, password } = payload;
+
+      const response = await post("/api/auth/register", {
+        username,
+        email,
+        password,
+      });
+
       console.log("Register success:", response);
 
       if (response.success) {
-        // If registration is successful, redirect to login page
         Swal.fire({
           title: "Registration Successful",
-          text: "Please login to continue.",
+          text: "Please check your email for verification to continue.",
           icon: "success",
         });
         navigate("/login");
