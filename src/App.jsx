@@ -34,6 +34,7 @@ import EditPaymentMethod from "./pages/EditPaymentMethods";
 import AdminSchedules from "./pages/AdminSchedule";
 import AddSchedule from "./pages/AddSchedule";
 import LayoutAdmin from "./pages/LayoutAdmin";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -144,6 +145,21 @@ function App() {
                 </ProtectedRoute>
               }
             />
+          </Route>
+          <Route element={<Layout />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/list-menu-kelas/:type" element={<ListMenuKelas />} />
+            <Route path="/detail/:id" element={<DetailKelas />} />
+            <Route path="/invoice" element={<Invoice />} />
+            <Route path="/invoice/:id" element={<InvoiceDetail />} />
+            <Route path="/forgot-password" element={<ResetPasswordEmail />} />
+            <Route
+              path="/create-new-password"
+              element={<ResetPasswordCreatePassword />}
+            />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/my-class" element={<MyClass />} />
             <Route
               path="/admin-products"
               element={

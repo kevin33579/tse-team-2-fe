@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Navbar from "../components/Navbar";
 import { AppContext } from "../context/AppContext";
 import { usePost } from "../hooks/UseApi";
+import { user as userApi} from "../apiService";
 
 export default function Login() {
   const { user } = useContext(AppContext);
@@ -24,7 +25,7 @@ export default function Login() {
 
   const handleSubmit = async () => {
     try {
-      const res = await post("/api/Auth/login", payload);
+      const res = await userApi.loginApi(payload); // <— ganti ini
       localStorage.setItem("token", res.token);
       localStorage.setItem("id", res.user.userID);
       localStorage.setItem("role", res.user.roleName);
@@ -33,8 +34,11 @@ export default function Login() {
       Swal.fire({ title: "Login berhasil", icon: "success", timer: 1500 });
       navigate("/");
     } catch (err) {
-      Swal.fire({ title: "Login gagal", icon: "error" });
-      console.error(err);
+      console.log("Login failed:", err);
+      Swal.fire({
+        title: err?.response?.data?.message || "Login gagal",
+        icon: "error",
+      });
     }
   };
 
