@@ -15,7 +15,7 @@ export default function VerifyEmail() {
       }
 
       try {
-        const response = await fetch(`https://localhost:7071/api/auth/verify-email?token=${token}`);
+        const response = await fetch(`http://otomobil.local/api/auth/verify-email?token=${token}`);
         if (response.ok) {
           // Jika verifikasi sukses → redirect ke login dengan status sukses
           navigate('/login?verified=true');

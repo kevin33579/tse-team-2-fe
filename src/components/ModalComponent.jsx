@@ -2,7 +2,7 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { invoiceApi, invoiceDetailApi, paymentMethodApi } from "../apiService";
+import { cartApi, invoiceApi, invoiceDetailApi, paymentMethodApi } from "../apiService";
 import Swal from "sweetalert2";
 
 const style = {
@@ -61,7 +61,15 @@ export default function ModalComponent({
 
       // 3. insert them (bulk)
       await invoiceDetailApi.createDetail(detailRows);
+      console.log("Deleting cartIds:", selectedDetails.map((el) => el.cartId));
 
+      // 3b. delete the carts that have been paid
+      await Promise.all(
+        selectedDetails.map(({ cartId }) => {
+          return cartApi.deleteCartById(cartId, localStorage.getItem("token"));
+        })
+      );
+      handleClose();
       // 4. success feedback
       await Swal.fire({
         icon: "success",
@@ -156,6 +164,7 @@ export default function ModalComponent({
               }}
               onClick={() => {
                 if (totalCourse === 0) {
+                  handleClose();
                   Swal.fire({
                     icon: "warning",
                     title: "Pick at least one course first",
@@ -163,6 +172,7 @@ export default function ModalComponent({
                   return;
                 }
                 if (!selectedMethodId) {
+                  handleClose();
                   Swal.fire({
                     icon: "warning",
                     title: "Select a payment method",

@@ -39,11 +39,12 @@ export default function AdminProduct() {
   const deleteProduct = async (id) => {
     try {
       await productApi.deleteProduct(id);
-      Swal.fire(
-        { icon: "success", title: `Product ${id} deleted` }.then(() => {
-          window.location.reload();
-        })
-      );
+      Swal.fire({
+        icon: "success",
+        title: `Product ${id} deleted`,
+      }).then(() => {
+        window.location.reload();
+      });
     } catch (error) {
       console.error(error);
       Swal.fire({ icon: "error", title: "Delete failed" });

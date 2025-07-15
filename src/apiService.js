@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base configuration for API calls
-const API_BASE_URL = "https://localhost:7071/api"; // Adjust based on your backend URL
+const API_BASE_URL = "http://otomobil.local/api"; // Adjust based on your backend URL
 
 // Create axios instance with default configuration
 const apiClient = axios.create({
@@ -375,7 +375,7 @@ export const user = {
   },
   getAllUsersApi: async () => {
     const token = localStorage.getItem("token");
-    const res = await axios.get("https://localhost:7071/api/users", {
+    const res = await axios.get("http://otomobil.local/api/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
