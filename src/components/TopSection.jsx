@@ -15,7 +15,7 @@ export default function TopSection() {
     >
       <Box
         component="img"
-        src="./top.png"
+        src={`${import.meta.env.BASE_URL}top.png`}
         alt="Driving lessons"
         sx={{
           width: "100%",

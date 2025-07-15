@@ -13,13 +13,16 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import { user as userApi } from "../apiService";
+import { useNavigate } from "react-router-dom";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import BlockIcon from "@mui/icons-material/Block";
 
 export default function AdminUsers() {
   const [rows, setRows] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   /* fetch users once */
   useEffect(() => {
@@ -36,17 +39,29 @@ export default function AdminUsers() {
   /* delete handler */
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
-      title: "Delete this user?",
+      title: "Are you sure deactivate this user?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, delete",
+      confirmButtonText: "Yes, deactivate",
     });
     if (!confirm.isConfirmed) return;
 
     try {
       await userApi.deactivateUserApi(id); // make sure api exists
-      setRows((prev) => prev.filter((u) => u.id !== id));
-      Swal.fire({ icon: "success", title: "Deleted" });
+      Swal.fire({ icon: "success", title: "Deactivated" }).then(() => {
+        window.location.reload();
+      });
+    } catch (err) {
+      console.error(err);
+      Swal.fire({ icon: "error", title: "Failed to delete" });
+    }
+  };
+  const handleEdit = async (id) => {
+    try {
+      await userApi.activateUserApi(id); // make sure api exists
+      Swal.fire({ icon: "success", title: "Activate user" }).then(() => {
+        window.location.reload();
+      });
     } catch (err) {
       console.error(err);
       Swal.fire({ icon: "error", title: "Failed to delete" });
@@ -77,7 +92,14 @@ export default function AdminUsers() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["Username", "Email", "Role", "Delete"].map((h) => (
+              {[
+                "Username",
+                "Email",
+                "Role",
+                "Is Active",
+                "Activate User",
+                "Deactivate User",
+              ].map((h) => (
                 <TableCell key={h} sx={{ color: "white" }}>
                   {h}
                 </TableCell>
@@ -91,13 +113,23 @@ export default function AdminUsers() {
                 <TableCell>{u.username}</TableCell>
                 <TableCell>{u.email}</TableCell>
                 <TableCell>{u.roleName}</TableCell>
+                <TableCell>{u.isActive ? "True" : "False"}</TableCell>
+                <TableCell>
+                  <IconButton
+                    size="small"
+                    color="error"
+                    onClick={() => handleEdit(u.id)}
+                  >
+                    <CheckCircleIcon />
+                  </IconButton>
+                </TableCell>
                 <TableCell>
                   <IconButton
                     size="small"
                     color="error"
                     onClick={() => handleDelete(u.id)}
                   >
-                    <DeleteIcon />
+                    <BlockIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>

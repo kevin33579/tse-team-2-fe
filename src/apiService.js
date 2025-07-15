@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base configuration for API calls
-const API_BASE_URL = "https://localhost:7071/api"; // Adjust based on your backend URL
+const API_BASE_URL = "http://otomobil.local/api"; // Adjust based on your backend URL
 
 // Create axios instance with default configuration
 const apiClient = axios.create({
@@ -155,9 +155,45 @@ export const scheduleApi = {
       throw error;
     }
   },
+  getAllScheduleAdmin: async () => {
+    try {
+      const response = await apiClient.get("/Schedule/Admin");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
   createSchedule: async (data) => {
     try {
       const response = await apiClient.post("/Schedule", data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
+  deleteSchedule: async (id) => {
+    try {
+      const response = await apiClient.delete(`/Schedule/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
+  deactivateSchedule: async (id) => {
+    try {
+      const response = await apiClient.put(`/Schedule/deactivate/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      throw error;
+    }
+  },
+  activateSchedule: async (id) => {
+    try {
+      const response = await apiClient.put(`/Schedule/activate/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching schedule:", error);
@@ -206,6 +242,15 @@ export const paymentMethodApi = {
   getPaymentMethod: async () => {
     try {
       const response = await apiClient.get("/PaymentMethod");
+      return response.data.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+  getPaymentMethodAdmin: async () => {
+    try {
+      const response = await apiClient.get("/PaymentMethod/Admin");
       return response.data.data;
     } catch (error) {
       console.error("Error fetching payment:", error);
@@ -318,9 +363,19 @@ export const user = {
       throw error;
     }
   },
+  loginApi: async (data) => {
+    try {
+      const response = await apiClient.post("/Auth/login", data);
+      return response.data;
+    } catch (error) {
+      // Penting: lempar error agar bisa ditangkap di Login.jsx
+      console.error("Login error:", error);
+      throw error;
+    }
+  },
   getAllUsersApi: async () => {
     const token = localStorage.getItem("token");
-    const res = await axios.get("https://localhost:7071/api/users", {
+    const res = await axios.get("http://otomobil.local/api/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -330,6 +385,15 @@ export const user = {
   deactivateUserApi: async (id) => {
     try {
       const response = await apiClient.put(`Users/deactivate/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      throw error;
+    }
+  },
+  activateUserApi: async (id) => {
+    try {
+      const response = await apiClient.put(`Users/activate/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching payment:", error);

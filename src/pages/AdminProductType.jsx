@@ -92,7 +92,14 @@ export default function AdminProductType() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["ID", "Name", "Description", "ImageUrl", "Actions"].map((h) => (
+              {[
+                "ID",
+                "Name",
+                "Description",
+                "ImageUrl",
+                "Active",
+                "Actions",
+              ].map((h) => (
                 <TableCell key={h} sx={{ color: "white" }}>
                   {h}
                 </TableCell>
@@ -105,8 +112,23 @@ export default function AdminProductType() {
                 <TableRow key={type.id}>
                   <TableCell>{type.id}</TableCell>
                   <TableCell>{type.name}</TableCell>
-                  <TableCell>{type.description}</TableCell>
-                  <TableCell>{type.imageUrl}</TableCell>
+                  <TableCell sx={{ maxWidth: 150, wordWrap: "break-word" }}>
+                    {type.description}
+                  </TableCell>
+                  <TableCell>
+                    <Box
+                      component="img"
+                      src={type.imageUrl}
+                      alt="Product Type"
+                      sx={{
+                        maxWidth: 200,
+                        height: "150px",
+                        width: "200px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell>{type.isActive ? "True" : "False"}</TableCell>
                   <TableCell>
                     <IconButton
                       onClick={() => handleEdit(type.id)}

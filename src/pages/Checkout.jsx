@@ -26,10 +26,10 @@ export default function Checkout() {
   const token = localStorage.getItem("token");
   const selectedDetails = cart
     .filter((_, idx) => checked[idx]) // only checked rows
-    .map(({ productId, scheduleId }) => ({
-      // keep just these two fields
-      productId,
-      scheduleId,
+    .map((item) => ({
+      productId: item.productId,
+      scheduleId: item.scheduleId,
+      cartId: item.id,
     }));
 
   const totalCourse = checked.filter(Boolean).length;
@@ -171,7 +171,7 @@ export default function Checkout() {
                     width: { xs: "16px", md: "23px" },
                     cursor: "pointer",
                   }}
-                  src="./delete.png"
+                  src={`${import.meta.env.BASE_URL}delete.png`}
                   onClick={() => handleDelete(el.id)}
                 />
               </Box>

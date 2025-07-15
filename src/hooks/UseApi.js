@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // Base URL dari environment variable
-const BASE_URL = 'https://localhost:7071';
+const BASE_URL = 'http://otomobil.local';
 
 // Create axios instance dengan base configuration
 const apiClient = axios.create({

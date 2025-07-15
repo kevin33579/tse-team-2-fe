@@ -112,7 +112,7 @@ export default function Navbar() {
           }}
         >
           <Stack direction="row" alignItems="center">
-            <Logo src="/logo.png" alt="Logo" />
+            <Logo src={`${import.meta.env.BASE_URL}logo.png`} alt="Logo" />
             <Typography
               variant="h6"
               sx={{

@@ -59,10 +59,6 @@ export default function AdminInvoice() {
           onChange={(e) => setSearch(e.target.value)}
           sx={{ width: { xs: "100%", sm: 280 } }}
         />
-
-        <Button variant="contained" onClick={() => navigate("/add-invoice")}>
-          Create Invoice
-        </Button>
       </Box>
 
       <TableContainer component={Paper}>
@@ -77,8 +73,6 @@ export default function AdminInvoice() {
                 "Total Price",
                 "Total Course",
                 "Payment Method",
-                "Edit",
-                "Delete",
               ].map((h) => (
                 <TableCell key={h} sx={{ color: "white" }}>
                   {h}
@@ -95,19 +89,11 @@ export default function AdminInvoice() {
                 <TableCell>
                   {new Date(inv.date).toLocaleDateString("id-ID")}
                 </TableCell>
-                <TableCell>{Number(inv.totalPrice).toLocaleString("id-ID")}</TableCell>
+                <TableCell>
+                  {Number(inv.totalPrice).toLocaleString("id-ID")}
+                </TableCell>
                 <TableCell>{inv.totalCourse}</TableCell>
                 <TableCell>{inv.paymentMethodName || "-"}</TableCell>
-                <TableCell>
-                  <IconButton onClick={() => navigate(`/edit-invoice/${inv.id}`)}>
-                    <EditIcon />
-                  </IconButton>
-                </TableCell>
-                <TableCell>
-                  <IconButton color="error" onClick={() => deleteInvoice(inv.id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
               </TableRow>
             ))}
 

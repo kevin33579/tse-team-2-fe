@@ -19,7 +19,7 @@ export default function SuccessPurchase() {
       >
         <Box
           component={"img"}
-          src="./success.svg"
+          src={`${import.meta.env.BASE_URL}success.svg`}
           width={"250px"}
           height={"250px"}
           marginRight={"30px"}
@@ -55,7 +55,7 @@ export default function SuccessPurchase() {
           >
             <Box
               component={"img"}
-              src="./home.png"
+              src={`${import.meta.env.BASE_URL}home.png`}
               width={"13px"}
               height={"11px"}
               margin={"10px"}
@@ -75,7 +75,7 @@ export default function SuccessPurchase() {
           >
             <Box
               component={"img"}
-              src="./kanan.png"
+              src={`${import.meta.env.BASE_URL}kanan.png`}
               width={"13px"}
               height={"11px"}
               margin={"10px"}

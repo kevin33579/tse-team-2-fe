@@ -136,7 +136,7 @@ export default function AddProduct() {
                 label="Product Type"
                 value={form.productTypeId}
                 onChange={handleChange}
-                fullWidth
+                sx={{ width: "200px" }}
                 required
               >
                 {types.map((t) => (
