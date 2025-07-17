@@ -187,83 +187,84 @@ export default function Checkout() {
   );
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        direction={"column"}
-        display={"flex"}
-        width={{ xs: "100%", md: "90%" }}
-        margin={"auto"}
-      >
-        <Grid item xs={12} sx={{ marginLeft: { xs: "20px" } }}>
-          <FormControlLabel
-            label="Pilih Semua"
-            control={
-              <Checkbox
-                checked={checked.every(Boolean)}
-                indeterminate={checked.some(Boolean) && !checked.every(Boolean)}
-                onChange={handleSelectAll}
-              />
-            }
-          />
-          {children}
-        </Grid>
-      </Grid>
-      <Divider></Divider>
-      <Grid
-        container
-        sx={{
-          display: "flex",
-          marginRight: "200px",
-        }}
-      >
+      <Box px={{ xs: 2, sm: 4, md: 6 }}>
         <Grid
-          item
-          size={8}
-          display={"flex"}
-          justifyContent={"center"}
-          textAlign={"center"}
-          xs={12}
+          container
+          spacing={2}
+          direction="column"
+          width="100%"
+          maxWidth="1137px"
+          mx="auto"
         >
-          <Typography
-            sx={{
-              fontSize: "14px",
-              fontWeight: "400",
-              margin: "20px",
-              marginLeft: { xs: "100px", md: "0px" },
-            }}
-          >
-            Total Price
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: { xs: "14px", md: "24px" },
-              fontWeight: "600",
-              color: "primary.main",
-              margin: "20px",
-            }}
-          >
-            {toRupiah(totalPrice)}
-          </Typography>
+          <Grid item xs={12}>
+            <FormControlLabel
+              label="Pilih Semua"
+              control={
+                <Checkbox
+                  checked={checked.every(Boolean)}
+                  indeterminate={
+                    checked.some(Boolean) && !checked.every(Boolean)
+                  }
+                  onChange={handleSelectAll}
+                />
+              }
+            />
+            {children}
+          </Grid>
         </Grid>
-        <Grid item size={4} xs={12}>
-          <Button
-            variant="contained"
-            onClick={handleOpen}
-            sx={{
-              px: 2,
-              fontSize: { xs: "0.75rem", sm: "0.875rem" },
-              backgroundColor: "primary.main",
-              width: { xs: "50px", md: "233px" },
-              height: "40px",
-              margin: "20px",
-              marginLeft: { xs: "170px", md: "0px" },
-            }}
+
+        <Divider sx={{ my: 2 }} />
+
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={2}
+          maxWidth="1137px"
+          mx="auto"
+        >
+          <Grid item xs={12} sm={8} display="flex" alignItems="center">
+            <Typography
+              sx={{
+                fontSize: "14px",
+                fontWeight: "400",
+                mr: 2,
+              }}
+            >
+              Total Price
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", md: "24px" },
+                fontWeight: "600",
+                color: "primary.main",
+              }}
+            >
+              {toRupiah(totalPrice)}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={4}
+            display="flex"
+            justifyContent={{ xs: "flex-start", sm: "flex-end" }}
           >
-            Pay now
-          </Button>
+            <Button
+              variant="contained"
+              onClick={handleOpen}
+              sx={{
+                px: 2,
+                fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                width: { xs: "100%", sm: "auto" },
+                height: "40px",
+              }}
+            >
+              Pay now
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
 
       <ModalComponent
         open={open}
@@ -271,7 +272,7 @@ export default function Checkout() {
         totalPrice={totalPrice}
         totalCourse={totalCourse}
         selectedDetails={selectedDetails}
-      ></ModalComponent>
+      />
     </>
   );
 }
