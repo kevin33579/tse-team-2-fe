@@ -29,53 +29,57 @@ export default function MyClass() {
 
   return (
     <>
-      {classes.map((cls, idx) => (
-        <Grid
-          key={idx}
-          container
-          spacing={2}
-          alignItems="center"
-          sx={{ mx: 2 }}
-          maxWidth="1137px"
-          mt="50px"
-        >
+      <Box px={{ xs: 2, sm: 4, md: 6 }} mt={4}>
+        {classes.map((cls, idx) => (
           <Grid
-            item
-            xs={6}
-            md={8}
-            display="flex"
-            flexDirection={{ xs: "column", sm: "row" }}
-            width="100%"
-            ml="50px"
+            key={idx}
+            container
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+            maxWidth="1137px"
+            mx="auto"
+            mb={4}
           >
-            <Box
-              component="img"
-              src={cls.productImageUrl}
-              alt={cls.productName}
-              width={{ xs: "100%", md: 200 }}
-              height={{ xs: "100%", md: 133 }}
-              sx={{ objectFit: "contain" }}
-            />
-            <Stack flex={1} m={2}>
-              <Typography fontFamily="Poppins" fontSize={14} color="#828282">
-                {cls.productTypeName}
-              </Typography>
-              <Typography fontFamily="Poppins" fontWeight={600} fontSize={24}>
-                {cls.productName}
-              </Typography>
-              <Typography
-                fontFamily="Montserrat"
-                fontWeight={500}
-                fontSize={20}
-                color="primary.main"
-              >
-                Schedule&nbsp;:&nbsp;{formatLongDate(cls.scheduleTime)}
-              </Typography>
-            </Stack>
+            <Grid
+              item
+              xs={12}
+              md={10}
+              display="flex"
+              flexDirection={{ xs: "column", sm: "row" }}
+              width="100%"
+              ml={{ xs: 0, sm: "50px" }}
+            >
+              <Box
+                component="img"
+                src={cls.productImageUrl}
+                alt={cls.productName}
+                width={{ xs: "100%", md: 200 }}
+                height={{ xs: "100%", md: 133 }}
+                sx={{ objectFit: "contain" }}
+              />
+              <Stack flex={1} m={2}>
+                <Typography fontFamily="Poppins" fontSize={14} color="#828282">
+                  {cls.productTypeName}
+                </Typography>
+                <Typography fontFamily="Poppins" fontWeight={600} fontSize={24}>
+                  {cls.productName}
+                </Typography>
+                <Typography
+                  fontFamily="Montserrat"
+                  fontWeight={500}
+                  fontSize={20}
+                  color="primary.main"
+                >
+                  Schedule&nbsp;:&nbsp;{formatLongDate(cls.scheduleTime)}
+                </Typography>
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
-      ))}
-      <Box sx={{ minHeight: "40vh" }}></Box>
+        ))}
+
+        <Box sx={{ minHeight: "40vh" }}></Box>
+      </Box>
     </>
   );
 }
