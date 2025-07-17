@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Container,
   Paper,
@@ -14,6 +14,11 @@ import Swal from "sweetalert2";
 export default function AddSchedule() {
   const [time, setTime] = useState("");
   const navigate = useNavigate();
+
+  // Hitung tanggal minimum (besok)
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 1);
+  const minDateStr = minDate.toISOString().split("T")[0]; // format 'YYYY-MM-DD'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,12 +48,15 @@ export default function AddSchedule() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
-                label="Time"
-                type="datetime-local"
+                label="Schedule Date"
+                type="date"
                 fullWidth
                 required
                 InputLabelProps={{ shrink: true }}
                 value={time}
+                inputProps={{
+                  min: minDateStr,
+                }}
                 onChange={(e) => setTime(e.target.value)}
               />
             </Grid>

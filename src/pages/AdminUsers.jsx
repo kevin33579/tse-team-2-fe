@@ -1,5 +1,4 @@
-// src/pages/AdminUsers.jsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   IconButton,
@@ -15,20 +14,17 @@ import {
 } from "@mui/material";
 import Swal from "sweetalert2";
 import { user as userApi } from "../apiService";
-import { useNavigate } from "react-router-dom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import BlockIcon from "@mui/icons-material/Block";
 
 export default function AdminUsers() {
   const [rows, setRows] = useState([]);
   const [search, setSearch] = useState("");
-  const navigate = useNavigate();
 
-  /* fetch users once */
   useEffect(() => {
     (async () => {
       try {
-        const res = await userApi.getAllUsersApi(); // adjust if args needed
+        const res = await userApi.getAllUsersApi();
         setRows(res ?? []);
       } catch (err) {
         console.error(err);
@@ -36,8 +32,7 @@ export default function AdminUsers() {
     })();
   }, []);
 
-  /* delete handler */
-  const handleDelete = async (id) => {
+  const handleDeactivate = async (id) => {
     const confirm = await Swal.fire({
       title: "Are you sure deactivate this user?",
       icon: "warning",
@@ -47,104 +42,125 @@ export default function AdminUsers() {
     if (!confirm.isConfirmed) return;
 
     try {
-      await userApi.deactivateUserApi(id); // make sure api exists
+      await userApi.deactivateUserApi(id);
       Swal.fire({ icon: "success", title: "Deactivated" }).then(() => {
         window.location.reload();
       });
     } catch (err) {
       console.error(err);
-      Swal.fire({ icon: "error", title: "Failed to delete" });
+      Swal.fire({ icon: "error", title: "Failed to deactivate user" });
     }
   };
-  const handleEdit = async (id) => {
+
+  const handleActivate = async (id) => {
     try {
-      await userApi.activateUserApi(id); // make sure api exists
-      Swal.fire({ icon: "success", title: "Activate user" }).then(() => {
+      await userApi.activateUserApi(id);
+      Swal.fire({ icon: "success", title: "User activated" }).then(() => {
         window.location.reload();
       });
     } catch (err) {
       console.error(err);
-      Swal.fire({ icon: "error", title: "Failed to delete" });
+      Swal.fire({ icon: "error", title: "Failed to activate user" });
     }
   };
 
-  /* filter rows by username */
-  const displayed = rows.filter((u) =>
+  const filtered = rows.filter((u) =>
     u.username.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <Box p={4}>
-      <Typography variant="h5" mb={2}>
+      {/* Title */}
+      <Typography variant="h5" mb={2} fontWeight="bold">
         User List
       </Typography>
 
-      {/* search bar */}
-      <TextField
-        size="small"
-        placeholder="Search by username…"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        sx={{ mb: 2, width: { xs: "100%", sm: 300 } }}
-      />
+      {/* Search */}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 2,
+          mb: 2,
+          alignItems: "center",
+        }}
+      >
+        <TextField
+          size="small"
+          placeholder="Search by username…"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{ width: { xs: "100%", sm: 300 } }}
+        />
+      </Box>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead sx={{ bgcolor: "primary.main" }}>
-            <TableRow>
-              {[
-                "Username",
-                "Email",
-                "Role",
-                "Is Active",
-                "Activate User",
-                "Deactivate User",
-              ].map((h) => (
-                <TableCell key={h} sx={{ color: "white" }}>
-                  {h}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {displayed.map((u) => (
-              <TableRow key={u.id}>
-                <TableCell>{u.username}</TableCell>
-                <TableCell>{u.email}</TableCell>
-                <TableCell>{u.roleName}</TableCell>
-                <TableCell>{u.isActive ? "True" : "False"}</TableCell>
-                <TableCell>
-                  <IconButton
-                    size="small"
-                    color="error"
-                    onClick={() => handleEdit(u.id)}
-                  >
-                    <CheckCircleIcon />
-                  </IconButton>
-                </TableCell>
-                <TableCell>
-                  <IconButton
-                    size="small"
-                    color="error"
-                    onClick={() => handleDelete(u.id)}
-                  >
-                    <BlockIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-
-            {displayed.length === 0 && (
+      {/* Table */}
+      <Box sx={{ py: 4 }}>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead sx={{ bgcolor: "primary.main" }}>
               <TableRow>
-                <TableCell colSpan={4} align="center" sx={{ py: 4 }}>
-                  No users found.
+                <TableCell sx={{ color: "white", textAlign: "left" }}>
+                  Username
+                </TableCell>
+                <TableCell sx={{ color: "white", textAlign: "left" }}>
+                  Email
+                </TableCell>
+                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                  Role
+                </TableCell>
+                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                  Is Active
+                </TableCell>
+                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                  Activate
+                </TableCell>
+                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                  Deactivate
                 </TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+
+            <TableBody>
+              {filtered.map((u) => (
+                <TableRow key={u.id}>
+                  <TableCell sx={{ textAlign: "left" }}>{u.username}</TableCell>
+                  <TableCell sx={{ textAlign: "left" }}>{u.email}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{u.roleName}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {u.isActive ? "True" : "False"}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <IconButton
+                      size="small"
+                      color="success"
+                      onClick={() => handleActivate(u.id)}
+                    >
+                      <CheckCircleIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={() => handleDeactivate(u.id)}
+                    >
+                      <BlockIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+              {filtered.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                    No users found.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
     </Box>
   );
 }

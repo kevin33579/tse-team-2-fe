@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -73,13 +73,13 @@ export default function AdminPaymentMethods() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {["No", "ID", "Name", "Image", "Active", "Edit", "Delete"].map(
-                (header) => (
-                  <TableCell key={header} sx={{ color: "white" }}>
-                    {header}
-                  </TableCell>
-                )
-              )}
+              <TableCell sx={{ color: "white", textAlign: "center" }}>No</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>ID</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "left" }}>Name</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Image</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Active</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Edit</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Delete</TableCell>
             </TableRow>
           </TableHead>
 
@@ -87,23 +87,25 @@ export default function AdminPaymentMethods() {
             {filtered.length > 0 ? (
               filtered.map((item, idx) => (
                 <TableRow key={item.id}>
-                  <TableCell>{idx + 1}</TableCell>
-                  <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{idx + 1}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{item.id}</TableCell>
+                  <TableCell sx={{ textAlign: "left" }}>{item.name}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
                     {item.imageUrl ? (
                       <Avatar
                         src={item.imageUrl}
                         alt={item.name}
                         variant="square"
-                        sx={{ width: 56, height: 56 }}
+                        sx={{ width: 56, height: 56, mx: "auto" }}
                       />
                     ) : (
                       "-"
                     )}
                   </TableCell>
-                  <TableCell>{item.isActive ? "YES" : "NO"}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {item.isActive ? "YES" : "NO"}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
                     <IconButton
                       onClick={() =>
                         navigate(`/edit-payment-method/${item.id}`)
@@ -112,7 +114,7 @@ export default function AdminPaymentMethods() {
                       <EditIcon />
                     </IconButton>
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
                     <IconButton
                       color="error"
                       onClick={() =>

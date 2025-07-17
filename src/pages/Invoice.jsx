@@ -47,55 +47,66 @@ export default function Invoice() {
           <Typography>No invoices yet.</Typography>
         </Box>
       ) : (
-        /* ───── table of invoices ───── */
-        <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+        <Box
+          sx={{
+            textAlign: "left",
+            mt: 6,
+            color: "text.primary",
+          }}
+        >
           <Typography variant="h5" mb={2}>
             Menu Invoice
           </Typography>
-          <Table>
-            <TableHead>
-              <TableRow sx={{ backgroundColor: "primary.main" }}>
-                <TableCell sx={{ color: "white", minWidth: 50 }}>No</TableCell>
-                <TableCell sx={{ color: "white", minWidth: 120 }}>
-                  No. Invoice
-                </TableCell>
-                <TableCell sx={{ color: "white", minWidth: 100 }}>
-                  Date
-                </TableCell>
-                <TableCell sx={{ color: "white", minWidth: 120 }}>
-                  Total Course
-                </TableCell>
-                <TableCell sx={{ color: "white", minWidth: 120 }}>
-                  Total Price
-                </TableCell>
-                <TableCell sx={{ color: "white", minWidth: 100 }}>
-                  Action
-                </TableCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {invoices.map((inv, idx) => (
-                <TableRow key={inv.id}>
-                  <TableCell>{idx + 1}</TableCell>
-                  <TableCell>{inv.invoiceCode}</TableCell>
-                  <TableCell>{formatLongDate(inv.date)}</TableCell>
-                  <TableCell>{inv.totalCourse}</TableCell>
-                  <TableCell>IDR {inv.totalPrice?.toLocaleString()}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => navigate(`/invoice/${inv.id}`)}
-                    >
-                      Details
-                    </Button>
+          <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+            <Table>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: "primary.main" }}>
+                  <TableCell sx={{ color: "white", minWidth: 50 }}>
+                    No
+                  </TableCell>
+                  <TableCell sx={{ color: "white", minWidth: 120 }}>
+                    No. Invoice
+                  </TableCell>
+                  <TableCell sx={{ color: "white", minWidth: 100 }}>
+                    Date
+                  </TableCell>
+                  <TableCell sx={{ color: "white", minWidth: 120 }}>
+                    Total Course
+                  </TableCell>
+                  <TableCell sx={{ color: "white", minWidth: 120 }}>
+                    Total Price
+                  </TableCell>
+                  <TableCell sx={{ color: "white", minWidth: 100 }}>
+                    Action
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+
+              <TableBody>
+                {invoices.map((inv, idx) => (
+                  <TableRow key={inv.id}>
+                    <TableCell>{idx + 1}</TableCell>
+                    <TableCell>{inv.invoiceCode}</TableCell>
+                    <TableCell>{formatLongDate(inv.date)}</TableCell>
+                    <TableCell>{inv.totalCourse}</TableCell>
+                    <TableCell>
+                      IDR {inv.totalPrice?.toLocaleString()}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={() => navigate(`/invoice/${inv.id}`)}
+                      >
+                        Details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       )}
     </Box>
   );
