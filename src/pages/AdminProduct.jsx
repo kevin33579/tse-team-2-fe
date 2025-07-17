@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Table,
@@ -11,6 +11,7 @@ import {
   IconButton,
   Button,
   TextField,
+  Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -25,117 +26,113 @@ export default function AdminProduct() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await productApi.getAllProducts();
-        setRows(res.data ?? []);
-        console.log(res);
-      } catch (err) {
-        console.error(err);
-      }
-    })();
+    fetchProducts();
   }, []);
 
-  const deleteProduct = async (id) => {
+  const fetchProducts = async () => {
     try {
-      await productApi.deleteProduct(id);
-      Swal.fire({
-        icon: "success",
-        title: `Product ${id} deleted`,
-      }).then(() => {
-        window.location.reload();
-      });
-    } catch (error) {
-      console.error(error);
-      Swal.fire({ icon: "error", title: "Delete failed" });
+      const res = await productApi.getAllProducts();
+      setRows(res.data ?? []);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  /* Filter rows by name or type (case‑insensitive) */
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action will delete the product.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (confirm.isConfirmed) {
+      try {
+        await productApi.deleteProduct(id);
+        Swal.fire("Deleted!", "Product has been deleted.", "success");
+        fetchProducts();
+      } catch (error) {
+        console.error(error);
+        Swal.fire({ icon: "error", title: "Delete failed" });
+      }
+    }
+  };
+
   const filtered = rows.filter((p) =>
-    `${p.name} `.toLowerCase().includes(search.toLowerCase())
+    p.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <Box p={4}>
-      {/* search + actions row */}
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 2,
-          mb: 2,
-          alignItems: "center",
-        }}
-      >
-        <TextField
-          size="small"
-          placeholder="Search product…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          sx={{ width: { xs: "100%", sm: 280 } }}
-        />
-
-        <Button variant="contained" onClick={() => navigate("/add-product")}>
-          Add Product
-        </Button>
+    <Box sx={{ p: 4 }}>
+      <Box mb={3} display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
+        <Typography variant="h5" fontWeight="bold">
+          Manage Products
+        </Typography>
+        <Box display="flex" gap={2}>
+          <TextField
+            size="small"
+            placeholder="Search product…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            sx={{ width: 250 }}
+          />
+          <Button variant="contained" onClick={() => navigate("/add-product")}>
+            Add Product
+          </Button>
+        </Box>
       </Box>
 
-      {/* table */}
       <TableContainer component={Paper}>
-        <Table>
+        <Table sx={{ minWidth: 900 }}>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {[
-                "ID",
-                "Name",
-                "Price",
-                "Stock",
-                "Type",
-                "IsActive",
-                "Edit",
-                "Delete",
-              ].map((h) => (
-                <TableCell key={h} sx={{ color: "white" }}>
-                  {h}
-                </TableCell>
-              ))}
+              <TableCell sx={{ color: "white", textAlign: "center" }}>ID</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "left" }}>Name</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Price</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Stock</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "left" }}>Type</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Active</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Edit</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Delete</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {filtered.map((p) => (
-              <TableRow key={p.id}>
-                <TableCell>{p.id}</TableCell>
-                <TableCell>{p.name}</TableCell>
-                <TableCell>{toRupiah(p.price)}</TableCell>
-                <TableCell>{p.stock}</TableCell>
-                <TableCell>{p.productTypeName}</TableCell>
-                <TableCell>{p.isActive ? "True" : "False"}</TableCell>
-                <TableCell>
-                  <IconButton
-                    size="small"
-                    onClick={() => navigate(`/edit-product/${p.id}`)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                </TableCell>
-
-                <TableCell>
-                  <IconButton
-                    size="small"
-                    color="error"
-                    onClick={() => deleteProduct(p.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-
-            {filtered.length === 0 && (
+            {filtered.length > 0 ? (
+              filtered.map((p) => (
+                <TableRow key={p.id}>
+                  <TableCell sx={{ textAlign: "center" }}>{p.id}</TableCell>
+                  <TableCell sx={{ textAlign: "left" }}>{p.name}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{toRupiah(p.price)}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{p.stock}</TableCell>
+                  <TableCell sx={{ textAlign: "left" }}>{p.productTypeName}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>{p.isActive ? "True" : "False"}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <IconButton
+                      size="small"
+                      onClick={() => navigate(`/edit-product/${p.id}`)}
+                      color="primary"
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={() => handleDelete(p.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
               <TableRow>
-                <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
+                <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
                   No products found.
                 </TableCell>
               </TableRow>

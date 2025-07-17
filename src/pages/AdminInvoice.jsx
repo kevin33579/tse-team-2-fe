@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
-  Button,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -12,8 +10,6 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { invoiceApi } from "../apiService";
@@ -65,41 +61,35 @@ export default function AdminInvoice() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {[
-                "No",
-                "User",
-                "Invoice Code",
-                "Date",
-                "Total Price",
-                "Total Course",
-                "Payment Method",
-              ].map((h) => (
-                <TableCell key={h} sx={{ color: "white" }}>
-                  {h}
-                </TableCell>
-              ))}
+              <TableCell sx={{ color: "white", textAlign: "center" }}>No</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "left" }}>User</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "left" }}>Invoice Code</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Date</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Total Price</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Total Course</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Payment Method</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filtered.map((inv, idx) => (
               <TableRow key={inv.id}>
-                <TableCell>{idx + 1}</TableCell>
-                <TableCell>{inv.userName || "-"}</TableCell>
-                <TableCell>{inv.invoiceCode}</TableCell>
-                <TableCell>
+                <TableCell sx={{ textAlign: "center" }}>{idx + 1}</TableCell>
+                <TableCell sx={{ textAlign: "left" }}>{inv.userName || "-"}</TableCell>
+                <TableCell sx={{ textAlign: "left" }}>{inv.invoiceCode}</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
                   {new Date(inv.date).toLocaleDateString("id-ID")}
                 </TableCell>
-                <TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
                   {Number(inv.totalPrice).toLocaleString("id-ID")}
                 </TableCell>
-                <TableCell>{inv.totalCourse}</TableCell>
-                <TableCell>{inv.paymentMethodName || "-"}</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>{inv.totalCourse}</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>{inv.paymentMethodName || "-"}</TableCell>
               </TableRow>
             ))}
 
             {filtered.length === 0 && (
               <TableRow>
-                <TableCell colSpan={9} align="center" sx={{ py: 4 }}>
+                <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
                   No invoices found.
                 </TableCell>
               </TableRow>

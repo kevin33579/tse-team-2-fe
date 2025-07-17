@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -38,7 +38,6 @@ export default function AdminProductType() {
 
   const handleEdit = (id) => {
     navigate(`/edit-product-type/${id}`);
-    // Open modal / navigate / populate form
   };
 
   const handleDelete = async (id) => {
@@ -56,8 +55,7 @@ export default function AdminProductType() {
       try {
         await productTypeApi.deleteProductsType(id);
         Swal.fire("Deleted!", "Product type has been deleted.", "success");
-        // Refresh list (call your fetch function here)
-        fetchProductTypes(); // <- replace with your actual fetch function
+        fetchProductTypes();
       } catch (err) {
         console.error("Delete failed:", err);
         Swal.fire("Error", err.message || "Failed to delete.", "error");
@@ -67,79 +65,66 @@ export default function AdminProductType() {
 
   return (
     <Box sx={{ p: 4 }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={3}
-      >
-        <Typography variant="h5" fontWeight="bold">
+      <Box mb={3}>
+        <Typography variant="h5" fontWeight="bold" mb={1}>
           Manage Product Types
         </Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          color="primary"
-          onClick={() => {
-            navigate("/add-product-type");
-          }}
+          onClick={() => navigate("/add-product-type")}
         >
           Add Product Type
         </Button>
       </Box>
 
       <TableContainer component={Paper}>
-        <Table>
+        <Table sx={{ minWidth: 900 }}>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {[
-                "ID",
-                "Name",
-                "Description",
-                "ImageUrl",
-                "Active",
-                "Actions",
-              ].map((h) => (
-                <TableCell key={h} sx={{ color: "white" }}>
-                  {h}
-                </TableCell>
-              ))}
+              <TableCell sx={{ color: "white", textAlign: "center" }}>ID</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "left" }}>Name</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "left" }}>Description</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Image</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Active</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Actions</TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {productTypes.length > 0 ? (
               productTypes.map((type) => (
                 <TableRow key={type.id}>
-                  <TableCell>{type.id}</TableCell>
-                  <TableCell>{type.name}</TableCell>
-                  <TableCell sx={{ maxWidth: 150, wordWrap: "break-word" }}>
+                  <TableCell sx={{ textAlign: "center" }}>{type.id}</TableCell>
+                  <TableCell sx={{ textAlign: "left" }}>{type.name}</TableCell>
+                  <TableCell sx={{ textAlign: "left", maxWidth: 200, wordWrap: "break-word" }}>
                     {type.description}
                   </TableCell>
-                  <TableCell>
-                    <Box
-                      component="img"
-                      src={type.imageUrl}
-                      alt="Product Type"
-                      sx={{
-                        maxWidth: 200,
-                        height: "150px",
-                        width: "200px",
-                        objectFit: "cover",
-                      }}
-                    />
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {type.imageUrl ? (
+                      <Box
+                        component="img"
+                        src={type.imageUrl}
+                        alt="Product Type"
+                        sx={{
+                          height: 120,
+                          width: 160,
+                          objectFit: "cover",
+                          borderRadius: 1,
+                        }}
+                      />
+                    ) : (
+                      "-"
+                    )}
                   </TableCell>
-                  <TableCell>{type.isActive ? "True" : "False"}</TableCell>
-                  <TableCell>
-                    <IconButton
-                      onClick={() => handleEdit(type.id)}
-                      color="primary"
-                    >
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {type.isActive ? "True" : "False"}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <IconButton color="primary" onClick={() => handleEdit(type.id)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton
-                      onClick={() => handleDelete(type.id)}
-                      color="error"
-                    >
+                    <IconButton color="error" onClick={() => handleDelete(type.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -147,7 +132,7 @@ export default function AdminProductType() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={3} align="center">
+                <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
                   No product types available.
                 </TableCell>
               </TableRow>

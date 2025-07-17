@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Container,
@@ -13,7 +13,7 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import { scheduleApi } from "../apiService"; // ← Adjust path as needed
+import { scheduleApi } from "../apiService";
 import Swal from "sweetalert2";
 import { formatLongDate } from "../helper";
 import BlockIcon from "@mui/icons-material/Block";
@@ -24,16 +24,18 @@ export default function AdminSchedules() {
   const [schedules, setSchedules] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const result = await scheduleApi.getAllScheduleAdmin();
-        setSchedules(result ?? []);
-      } catch (err) {
-        console.error(err);
-        Swal.fire({ icon: "error", title: "Failed to fetch schedule" });
-      }
-    })();
+    fetchSchedules();
   }, []);
+
+  const fetchSchedules = async () => {
+    try {
+      const result = await scheduleApi.getAllScheduleAdmin();
+      setSchedules(result ?? []);
+    } catch (err) {
+      console.error(err);
+      Swal.fire({ icon: "error", title: "Failed to fetch schedule" });
+    }
+  };
 
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
@@ -51,13 +53,31 @@ export default function AdminSchedules() {
     try {
       await scheduleApi.deleteSchedule(id);
       Swal.fire("Deleted!", "Schedule has been deleted.", "success").then(
-        () => {
-          window.location.reload();
-        }
+        () => fetchSchedules()
       );
     } catch (error) {
       console.error(error);
       Swal.fire("Error", "Failed to delete schedule", "error");
+    }
+  };
+
+  const handleActivate = async (id) => {
+    try {
+      await scheduleApi.activateSchedule(id);
+      Swal.fire({ icon: "success", title: "Activated" }).then(fetchSchedules);
+    } catch (err) {
+      console.error(err);
+      Swal.fire({ icon: "error", title: "Failed to activate" });
+    }
+  };
+
+  const handleDeactivate = async (id) => {
+    try {
+      await scheduleApi.deactivateSchedule(id);
+      Swal.fire({ icon: "success", title: "Deactivated" }).then(fetchSchedules);
+    } catch (err) {
+      console.error(err);
+      Swal.fire({ icon: "error", title: "Failed to deactivate" });
     }
   };
 
@@ -69,7 +89,9 @@ export default function AdminSchedules() {
         alignItems="center"
         mb={2}
       >
-        <Typography variant="h5">All Schedules</Typography>
+        <Typography variant="h5" fontWeight="bold">
+          All Schedules
+        </Typography>
         <Button
           variant="contained"
           color="primary"
@@ -83,78 +105,44 @@ export default function AdminSchedules() {
         <Table>
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
-              {[
-                "ID",
-                "Time",
-                "Active",
-                "Deactivate Schedule",
-                "Activate Schedule",
-                "Actions",
-              ].map((h) => (
-                <TableCell key={h} sx={{ color: "white" }}>
-                  {h}
-                </TableCell>
-              ))}
+              <TableCell sx={{ color: "white", textAlign: "center" }}>ID</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "left" }}>Time</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Active</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Deactivate</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Activate</TableCell>
+              <TableCell sx={{ color: "white", textAlign: "center" }}>Delete</TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {schedules.map((schedule) => (
               <TableRow key={schedule.id}>
-                <TableCell>{schedule.id}</TableCell>
-                <TableCell> {formatLongDate(schedule.time)}</TableCell>
-                <TableCell> {schedule.isActive ? "True" : "False"}</TableCell>
-                <TableCell>
+                <TableCell sx={{ textAlign: "center" }}>{schedule.id}</TableCell>
+                <TableCell sx={{ textAlign: "left" }}>
+                  {formatLongDate(schedule.time)}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {schedule.isActive ? "True" : "False"}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
                   <IconButton
                     size="small"
                     color="error"
-                    onClick={async () => {
-                      try {
-                        await scheduleApi.deactivateSchedule(schedule.id);
-                        Swal.fire({
-                          icon: "success",
-                          title: "Deactivated",
-                        }).then(() => {
-                          window.location.reload();
-                        });
-                        // optionally refetch or update state
-                      } catch (err) {
-                        console.error(err);
-                        Swal.fire({
-                          icon: "error",
-                          title: "Failed to deactivate",
-                        });
-                      }
-                    }}
+                    onClick={() => handleDeactivate(schedule.id)}
                   >
                     <BlockIcon />
                   </IconButton>
                 </TableCell>
-                <TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
                   <IconButton
                     size="small"
                     color="success"
-                    onClick={async () => {
-                      try {
-                        await scheduleApi.activateSchedule(schedule.id);
-                        Swal.fire({ icon: "success", title: "Activated" }).then(
-                          () => {
-                            window.location.reload();
-                          }
-                        );
-                        // optionally refetch or update state
-                      } catch (err) {
-                        console.error(err);
-                        Swal.fire({
-                          icon: "error",
-                          title: "Failed to activate",
-                        });
-                      }
-                    }}
+                    onClick={() => handleActivate(schedule.id)}
                   >
                     <CheckCircleIcon />
                   </IconButton>
                 </TableCell>
-                <TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
                   <IconButton
                     size="small"
                     color="error"
@@ -165,6 +153,13 @@ export default function AdminSchedules() {
                 </TableCell>
               </TableRow>
             ))}
+            {schedules.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                  No schedules found.
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
