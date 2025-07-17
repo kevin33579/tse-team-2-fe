@@ -164,6 +164,16 @@ export const scheduleApi = {
       throw error;
     }
   },
+  getUserSchedule: async () => {
+    try {
+      const response = await apiClient.get("/Schedule/user");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching user schedule:", error);
+      throw error;
+    }
+  },
+
   createSchedule: async (data) => {
     try {
       const response = await apiClient.post("/Schedule", data);

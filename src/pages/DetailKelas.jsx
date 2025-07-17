@@ -178,27 +178,29 @@ export default function DetailKelas() {
                 {toRupiah(course.price)}
               </Typography>
 
-              <Box sx={{ width: "100%", maxWidth: "100%" }}>
-                <TextField
-                  select
-                  fullWidth
-                  label="Select Schedule"
-                  value={selectedSchedule?.id ?? ""} // pakai id sebagai value
-                  onChange={(e) => {
-                    const sch = schedules.find(
-                      (s) => s.id === Number(e.target.value) // temukan objeknya
-                    );
-                    setSelectedSchedule(sch);
-                  }}
-                  sx={{ mt: 3 }}
-                >
-                  {schedules.map(({ id, time }) => (
-                    <MenuItem key={id} value={id}>
-                      {dayjs(time).format("dddd, DD MMMM YYYY")}{" "}
-                      {/* label tetap tanggal */}
-                    </MenuItem>
-                  ))}
-                </TextField>
+              <Box sx={{ width: "100%", maxWidth: "100%", mt: 3 }}>
+                {schedules.length > 0 ? (
+                  <TextField
+                    select
+                    fullWidth
+                    label="Select Schedule"
+                    value={selectedSchedule?.id ?? ""}
+                    onChange={(e) => {
+                      const sch = schedules.find(
+                        (s) => s.id === Number(e.target.value)
+                      );
+                      setSelectedSchedule(sch);
+                    }}
+                  >
+                    {schedules.map(({ id, time }) => (
+                      <MenuItem key={id} value={id}>
+                        {dayjs(time).format("dddd, DD MMMM YYYY")}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                ) : (
+                  <Typography color="error">No schedule available</Typography>
+                )}
               </Box>
 
               <Box

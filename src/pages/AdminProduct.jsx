@@ -71,13 +71,13 @@ export default function AdminProduct() {
         <Typography variant="h5" fontWeight="bold">
           Manage Products
         </Typography>
-        <Box display="flex" gap={2}>
+        <Box>
           <TextField
             size="small"
             placeholder="Search product…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            sx={{ width: 250 }}
+            sx={{ width: 250, pb:{xs: 2}, pr: 2 }}
           />
           <Button variant="contained" onClick={() => navigate("/add-product")}>
             Add Product
