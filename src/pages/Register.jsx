@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { usePost } from "../hooks/UseApi";
 import Swal from "sweetalert2";
+import { InputAdornment, IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Register = () => {
   const [payload, setPayload] = useState({
@@ -14,6 +16,9 @@ const Register = () => {
   });
   const navigate = useNavigate();
   const { post, loading } = usePost();
+  const passError = passLen > 0 && passLen < 6;
+  const [showPassword, setShowPassword] = useState(false);
+  const handleTogglePassword = () => setShowPassword((prev) => !prev);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,10 +30,36 @@ const Register = () => {
 
   const handleSubmit = async () => {
     // validasi manual konfirmasi password
+    const usernameRegex = /^[A-Za-z\s]+$/;
+    if (!usernameRegex.test(payload.username)) {
+      Swal.fire({
+        title: "Error",
+        text: "Nama hanya boleh berisi huruf.",
+        icon: "warning",
+      });
+      return;
+    }
+    if (payload.password.length < 6) {
+      Swal.fire({
+        title: "Error",
+        text: "Password minimal 6 karakter.",
+        icon: "warning",
+      });
+      return;
+    }
     if (payload.password !== payload.confirmPassword) {
       Swal.fire({
         title: "Error",
         text: "Password dan konfirmasi tidak sama",
+        icon: "warning",
+      });
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|co\.id)$/;
+    if (!emailRegex.test(payload.email)) {
+      Swal.fire({
+        title: "Error",
+        text: "Email tidak valid. Harus mengandung @ dan diakhiri .com atau .co.id.",
         icon: "warning",
       });
       return;
@@ -132,27 +163,49 @@ const Register = () => {
             </Grid>
             <Grid item>
               <TextField
-                label="Password"
                 name="password"
-                type="password"
-                variant="outlined"
+                label="Password"
+                type={showPassword ? "text" : "password"}
                 fullWidth
+                size="small"
                 value={payload.password}
+                error={passError}
+                helperText={passError ? "Password minimal 6 karakter" : ""}
                 onChange={handleChange}
-                InputProps={{ sx: { fontSize: 14 } }}
+                InputProps={{
+                  sx: { fontSize: 14 },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleTogglePassword} edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 InputLabelProps={{ sx: { fontSize: 13 } }}
               />
             </Grid>
             <Grid item>
               <TextField
+                name="ConfirmPassword"
                 label="Confirm Password"
-                name="confirmPassword"
-                type="password"
-                variant="outlined"
+                type={showPassword ? "text" : "password"}
                 fullWidth
-                value={payload.confirmPassword}
+                size="small"
+                value={payload.password}
+                error={passError}
+                helperText={passError ? "Password minimal 6 karakter" : ""}
                 onChange={handleChange}
-                InputProps={{ sx: { fontSize: 14 } }}
+                InputProps={{
+                  sx: { fontSize: 14 },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleTogglePassword} edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 InputLabelProps={{ sx: { fontSize: 13 } }}
               />
             </Grid>
