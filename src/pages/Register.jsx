@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState,useEffect } from "react";
 import { Grid, Container, Typography, TextField, Button } from "@mui/material";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,18 +16,25 @@ const Register = () => {
   });
   const navigate = useNavigate();
   const { post, loading } = usePost();
+  const passLen = payload.password.length;
   const passError = passLen > 0 && passLen < 6;
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const handleTogglePassword = () => setShowPassword((prev) => !prev);
 
+  useEffect(() =>{
+    console.log(payload.email);
+  });
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setConfirmPassword(
+      name === "ConfirmPassword" ? value : confirmPassword
+    );
     setPayload((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-
   const handleSubmit = async () => {
     // validasi manual konfirmasi password
     const usernameRegex = /^[A-Za-z\s]+$/;
@@ -192,7 +199,7 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 fullWidth
                 size="small"
-                value={payload.password}
+                value={confirmPassword}
                 error={passError}
                 helperText={passError ? "Password minimal 6 karakter" : ""}
                 onChange={handleChange}
