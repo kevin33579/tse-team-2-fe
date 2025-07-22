@@ -27,6 +27,9 @@ const Register = () => {
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setConfirmPassword(
+      name === "ConfirmPassword" ? value : confirmPassword
+    );
     setPayload((prev) => ({
       ...prev,
       [name]: value,
